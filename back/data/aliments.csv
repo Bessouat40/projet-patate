@@ -1,0 +1,175 @@
+ALIMENT,LYS,PROTEINES,CALORIES
+ail,363.0,6.0,145.0
+abricot,69.0,0.9,45.0
+amande au chocolat,335.0,4.3,168.0
+amandes,580.0,24.0,611.0
+ananas,35.0,0.5,59.0
+artichaut,158.0,2.4,43.0
+asperges,89.0,2.0,21.0
+aubergines,39.0,0.8,35.0
+avocat,90.0,1.4,138.0
+banane,57.0,1.1,93.0
+basilic,204.0,3.1,47.0
+betterave,82.0,1.5,47.0
+beurre,48.0,0.7,741.0
+beurre de cacahuète,620.0,16.4,630.0
+biscotte heudebert,216.0,11.0,408.0
+bjorg gateau céréales,300.0,8.5,454.0
+Bjorg mijoté de légumes & lait de coco,50.0,1.3,55.0
+blette,84.0,2.1,21.0
+bouillon de légumes (prêt à consommer),11.0,0.2,20.0
+bouillon de viande (prêt à consommer),22.0,0.4,3.0
+brocoli,150.0,3.8,34.0
+butternut au lait de coco,36.0,0.9,35.0
+cacahuète,1100.0,29.8,599.0
+"cacao en poudre, non sucré",983.0,19.6,228.0
+canneberge séchées,0.0,0.0,370.0
+carotte crue,47.0,0.8,39.0
+carotte cuite,25.0,0.55,19.0
+céleri en branche,19.0,1.2,21.0
+céleri-rave,74.0,1.6,27.0
+cèpe,190.0,5.4,39.0
+céréales cacao,280.0,11.0,351.0
+cerise,36.0,0.9,64.0
+champignon de paris,170.0,4.1,24.0
+châtaignes,150.0,2.9,212.0
+chou blanc,65.0,1.4,30.0
+chou chinois,58.0,1.1,16.0
+choucroute égoutée,71.0,1.5,21.0
+chou-fleur,140.0,2.5,28.0
+choux de bruxelles,250.0,4.5,44.0
+christophine,85.0,0.0,19.0
+clémentine,41.0,0.7,50.0
+cocotte de fenouil potimarron et figues,40.0,1.0,57.0
+concentré de tomate,103.0,2.3,43.0
+concombre,26.0,0.6,14.0
+confiture,7.0,0.1,284.0
+coriandre,200.0,3.1,263.0
+courgette,60.0,2.0,23.0
+cranberry,0.0,0.0,310.0
+crème chantilly,150.0,2.1,313.0
+crème de noix de coco,160.0,2.6,247.0
+crème fraiche,168.0,2.4,303.0
+datte,90.0,2.0,297.0
+duocal,0.0,0.0,492.0
+endives,42.0,1.2,20.0
+épeautre cru,300.0,11.4,325.0
+epinards en branche,160.0,2.8,22.0
+fenouil,92.0,1.4,23.0
+feta,1219.0,14.2,264.0
+figue,60.0,1.3,67.0
+flocons d'avoine,457.0,13.2,373.0
+fraise,34.0,0.8,36.0
+framboise,42.0,1.3,43.0
+fromage conté,2000.0,26.0,410.0
+ga1,0.0,13.1,466.0
+ga1 junior,0.0,28.0,367.0
+gâteau Belvita original,297.0,7.8,438.0
+gâteau caramel hypo,10.0,0.35,392.0
+gâteau cuillère,300.0,8.0,363.0
+gâteau petit beurre,308.0,8.1,441.0
+gingembre frais,68.0,1.2,53.0
+glace carte d'or vanille,180.0,2.4,184.0
+glace extreme vanille,87.0,3.2,328.0
+glace hagendaz,335.0,4.3,251.0
+graine de lin,880.0,22.3,488.0
+graine de sézame,640.0,20.9,593.0
+graines de chia,970.0,21.0,461.0
+graines de courges,2283.0,35.5,581.0
+haricots verts,90.0,2.4,37.0
+huiles végétales,0.0,0.0,884.0
+jus de raisin,0.0,0.0,60.0
+kéfir,240.0,3.4,42.0
+kiri,700.0,9.0,305.0
+kiwi,76.0,1.0,62.0
+lait d'amande,15.0,0.5,25.0
+lait d'amande au chocolat,21.0,0.7,60.0
+lait de coco,112.0,2.0,169.0
+lait de vache,283.0,3.4,65.0
+mâis doux,130.0,3.3,95.0
+mangue,58.0,0.6,62.0
+mascarpone,390.0,4.5,387.0
+melon,67.0,0.9,57.0
+miel,17.0,0.4,306.0
+millet,240.0,11.0,392.0
+mozzarella,1440.0,17.1,263.0
+myrtille,16.0,0.6,46.0
+navet,51.0,1.0,32.0
+noisette,450.0,16.3,664.0
+noix,410.0,16.1,71.0
+noix de cajou,1000.0,21.0,598.0
+noix de coco râpé,300.0,7.4,668.0
+oignons,57.0,1.2,30.0
+oignons nouveaux,82.0,1.3,34.0
+orange,39.0,1.0,47.0
+orties,415.0,7.4,48.0
+oseille,196.0,3.2,26.0
+pain blanc,190.0,8.9,278.0
+pain de mie,83.25842696629213,6.9,250.0
+pain epeautre,300.0,6.7,230.0
+panais,78.0,1.3,64.0
+parmesan,2447.0,34.3,407.0
+patate douce,70.0,1.6,117.0
+pâtes cuites,107.0,5.6,110.0
+pâtes crues,240.0,12.5,357.0
+pêche,29.0,0.8,44.0
+persil,280.0,4.4,60.0
+petits pois,360.0,6.5,91.0
+pignons de pins,868.0,24.0,589.0
+pissenlit,189.0,3.1,35.0
+poire ,26.0,0.5,58.0
+poireau,40.0,2.1,29.0
+poivrons,59.0,1.1,23.0
+pomme  ,15.0,0.3,65.0
+pomme de terre,127.0,1.9,76.0
+potiron,53.0,1.1,29.0
+prune,19.0,0.6,48.0
+pruneaux,50.0,2.2,240.0
+radis,71.0,1.1,17.0
+radis noir,58.0,1.1,18.0
+raisin,15.0,0.7,72.0
+ricotta,1170.0,7.5,150.0
+riz au lait,220.0,2.8,142.0
+riz cuit,77.0,2.1,87.0
+sauce 6 légumes solvia,30.0,1.0,80.0
+sauce courgette bio,60.0,1.5,51.0
+semoule de blé,281.0,10.3,342.0
+semoule de blé cuite,90.0,4.0,130.0
+semoule de maïs,237.0,8.8,354.0
+sirop d'agave,0.0,0.0,313.0
+sirop d'érable,0.0,0.0,274.0
+speculos de petit epeautre,260.0,6.4,434.0
+sucre,0.0,0.0,387.0
+tapioca,20.0,0.4,388.0
+tiramisu bonta divina,360.0,4.6,233.0
+tiramisu marie morin,280.0,3.5,294.0
+tomate crue,29.0,0.9,20.0
+tomate coulis,50.0,1.6,37.0
+"yaourt à la grecque ""le petit Basque"" bio",340.0,4.4,120.0
+yaourt à la grecque nestlé,223.0,2.9,104.0
+yaourt activia vanille,312.0,3.6,95.0
+yaourt andros au lait de coco brassé nature,47.0,0.6,74.0
+yaourt andros au lait de coco brassé nature,47.0,0.6,76.0
+yaourt andros choco coco,175.0,2.2,160.0
+yaourt andros délice chocolat,87.5,1.1,111.0
+yaourt andros liegois au chocolas,140.0,1.0,110.0
+yaourt chataigne,328.0,4.1,149.0
+yaourt chèvre choco,335.0,4.3,122.0
+yaourt chèvre nature soignon,328.0,4.1,77.0
+"yaourt crèmeuh chocolat ""les 2 vaches""",335.0,4.3,148.0
+yaourt danette liégois chocolat,223.0,2.9,157.0
+yaourt danette mousse,280.0,3.4,194.0
+yaourt danette saveur chocolat,260.0,3.3,122.0
+yaourt danette saveur vanille,230.0,3.0,107.0
+yaourt danino aux fruits,504.00000000000006,6.3,93.0
+yaourt douceur brebis citron,340.0,4.4,151.0
+yaourt douceur brebis nature,370.0,4.8,128.0
+yaourt famby,103.0,3.1,139.0
+yaourt flamby,250.0,3.1,103.0
+yaourt fromage blanc chèvre nature,504.0,6.3,120.0
+yaourt la laitière vanille,230.0,3.0,95.0
+yaourt panna cotta saveur U,150.0,1.9,273.0
+yaourt perle de lait nature,256.0,3.2,115.0
+yaourt petit suisse,900.0,9.1,136.0
+yaourt petits filous,328.0,4.1,131.0
+yaourt viennois nestlé,250.0,3.1,139.0

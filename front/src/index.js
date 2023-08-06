@@ -9,7 +9,7 @@ root.render(
     sx={{
       backgroundColor: '#ECA059',
       position: 'absolute',
-      height: '100%',
+      minHeight: '100%',
       top: 0,
       right: 0,
       left: 0,
