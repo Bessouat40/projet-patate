@@ -7,6 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Typography from '@mui/material/Typography';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import SearchBar from 'material-ui-search-bar';
+import Tooltip from '@mui/material/Tooltip';
 
 const columns = [
   {
@@ -14,6 +15,11 @@ const columns = [
     headerName: 'ALIMENT',
     width: 200,
     editable: false,
+    renderCell: (params) => (
+      <Tooltip title={params.value}>
+        <span className="csutable-cell-trucate">{params.value}</span>
+      </Tooltip>
+    ),
   },
   {
     field: 'QUANTITY',
@@ -29,6 +35,11 @@ const columns2 = [
     headerName: 'ALIMENT',
     width: 150,
     editable: false,
+    renderCell: (params) => (
+      <Tooltip title={params.value}>
+        <span className="csutable-cell-trucate">{params.value}</span>
+      </Tooltip>
+    ),
   },
   {
     field: 'QUANTITY',
@@ -145,8 +156,9 @@ const DataList = () => {
   return (
     <Stack
       spacing={3}
+      alignItems="center"
       sx={{
-        height: '100%',
+        Height: '100%',
         width: '90%',
         borderRadius: '10px',
         border: 15,
@@ -172,22 +184,29 @@ const DataList = () => {
           backgroundColor: '#FFFFFF',
         }}
       >
-        <DataGrid
-          apiRef={apiRef}
-          rows={filterRows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 9,
+        {filterRows.length > 0 ? (
+          <DataGrid
+            apiRef={apiRef}
+            rows={filterRows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 9,
+                },
               },
-            },
-          }}
-          pageSizeOptions={[5]}
-          disableColumnMenu
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
+            }}
+            pageSizeOptions={[5]}
+            disableColumnMenu
+            checkboxSelection
+            disableRowSelectionOnClick
+          />
+        ) : (
+          <Typography>
+            We don't have any food that match your search...
+          </Typography>
+        )}
+
         <Stack spacing={5}>
           <Button
             variant="contained"
@@ -217,7 +236,7 @@ const DataList = () => {
             }}
             onClick={onDelete}
           >
-            Delete
+            Remove food
           </Button>
         </Stack>
         <Stack
