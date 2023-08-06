@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from back import Configuration
 from back import Menu
 
-Configuration("/Users/labess40/dev/projet-patate/back/data/aliments.csv")
+Configuration("back/data/aliments.csv")
 
 app = FastAPI()
 

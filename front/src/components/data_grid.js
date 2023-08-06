@@ -33,7 +33,7 @@ const columns2 = [
   {
     field: 'ALIMENT',
     headerName: 'ALIMENT',
-    width: 150,
+    width: 200,
     editable: false,
     renderCell: (params) => (
       <Tooltip title={params.value}>

@@ -1,6 +1,5 @@
 import { Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import food from './images/food.png';
 
 const Header = () => {
   return (
