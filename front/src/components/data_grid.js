@@ -9,6 +9,12 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import SearchBar from 'material-ui-search-bar';
 import Tooltip from '@mui/material/Tooltip';
 
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
 const columns = [
   {
     field: 'ALIMENT',
@@ -153,6 +159,13 @@ const DataList = () => {
     setCalories(_calories);
   };
 
+//dark mode const
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+const theme = useTheme();
+const colorMode = React.useContext(ColorModeContext);
+
+
+
   return (
     <Stack
       spacing={3}
@@ -172,7 +185,28 @@ const DataList = () => {
         onCancelSearch={() => cancelSearchFood()}
         placeholder="Search a food"
       />
-      <Stack
+
+      <Box
+      sx={{
+        display: 'flex',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bgcolor: 'background.default',
+        color: 'text.primary',
+        borderRadius: 1,
+        p: 3,
+      }}
+      >
+{/* 
+      button darkmode */}
+         {theme.palette.mode} mode
+      <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+    </Box>
+        
+        <Stack
         direction="row"
         spacing={5}
         alignItems="center"
@@ -302,3 +336,33 @@ const DataList = () => {
 };
 
 export default DataList;
+
+// export dark mode
+export  function ToggleColorMode() {
+  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode],
+  );
+
+  return (
+    <ColorModeContext.Provider value={colorMode}> //c'est ici que ça bloque
+      <ThemeProvider theme={theme}>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  );
+}
