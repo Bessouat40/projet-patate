@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <Stack alignItems="center" direction="row">
       <Typography color="#FFFFFF" variant="h1">
-        Intakelist / FoodCop
+        FoodCop
       </Typography>
     </Stack>
   );

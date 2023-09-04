@@ -1,6 +1,7 @@
-import DataList from './components/data_grid';
+import MainView from './components/mainView';
 import { Stack } from '@mui/material';
 import Header from './components/header';
+import Marmiton from './components/marmiton';
 
 const App = () => {
   return (
@@ -10,7 +11,8 @@ const App = () => {
       sx={{ marginTop: 2, marginBottom: 2 }}
     >
       <Header />
-      <DataList />
+      <MainView />
+      {/* <Marmiton /> */}
     </Stack>
   );
 };

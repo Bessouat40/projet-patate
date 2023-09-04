@@ -7,7 +7,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Stack
     sx={{
-      backgroundColor: '#ECA059',
+      background:
+        'linear-gradient(39deg, #423325 0%, #C17329 35%, #C17329 65%, #423325 100%)',
       position: 'absolute',
       minHeight: '100%',
       top: 0,
@@ -16,6 +17,7 @@ root.render(
       margin: 0,
       marginBottom: 2,
       padding: 0,
+      width: '100%',
     }}
   >
     <App />

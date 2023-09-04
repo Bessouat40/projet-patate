@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from json import loads
 from typing import List
 from pydantic import BaseModel
+from ..src._generic.generic_functions import find_food
+from playwright.async_api import async_playwright
 
 from back import Configuration
 from back import Menu
@@ -15,6 +17,9 @@ class Item(BaseModel):
     QUANTITY: str
     id: str
     ALIMENT: str
+
+class Url(BaseModel):
+    url: str
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,3 +42,11 @@ async def get_data(items: List[Item]):
     menu = Menu(food_dict)
     print(menu.intakes)
     return menu.intakes
+
+@app.post('/food')
+async def get_data(data: Url):
+    url = data.url
+    print(url)
+    async with async_playwright() as playwright:
+        foods = await find_food(playwright, url)
+    return foods
