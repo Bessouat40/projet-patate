@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Stack } from '@mui/material';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,7 +18,6 @@ root.render(
       margin: 0,
       marginBottom: 2,
       padding: 0,
-      width: '100%',
     }}
   >
     <App />

@@ -60,6 +60,7 @@ const MainView = () => {
           setCalories={setCalories}
         />
       </Stack>
+      <br />
     </Stack>
   );
 };
