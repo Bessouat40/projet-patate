@@ -1,7 +1,6 @@
 import React from 'react';
 import { Stack } from '@mui/material';
 import { Typography } from '@mui/material';
-import { Button } from '@mui/material';
 
 const Results = ({
   lysine,

@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Typography } from '@mui/material';
-import columns2 from './subcomponents/columns2';
+import columns2 from './columns2';
 
 const DataGridMenu = ({ rows2, apiRef2 }) => {
   return (

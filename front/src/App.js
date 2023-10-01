@@ -1,5 +1,4 @@
-import MainView from './components/mainView';
-import { Stack } from '@mui/material';
+import MainViewCustomMenu from './components/mainViewCustomMenu';
 import Marmiton from './components/marmiton';
 import React from 'react';
 import NavBar from './components/navbar';
@@ -10,16 +9,7 @@ const App = () => {
     <Router>
       <NavBar />
       <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <Stack>
-              <br />
-              <MainView />
-            </Stack>
-          }
-        />
+        <Route exact path="/" element={<MainViewCustomMenu />} />
         <Route exact path="/marmiton" element={<Marmiton />} />
       </Routes>
     </Router>

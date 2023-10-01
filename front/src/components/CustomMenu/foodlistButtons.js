@@ -21,15 +21,22 @@ const FoodListButton = ({
     const values = rows2.map((value) => {
       return value['ALIMENT'];
     });
+    let rows2_ = rows2;
     for (var idx = 0; idx < selectedRows.size; idx++) {
       const value = iterator.next().value;
       apiRef.current.selectRow(value['id'], null, true);
       if (values.includes(value['ALIMENT'])) {
-        const rows2_ = handleDeleteRow(value['id'], rows2);
-        setRows2(rows2_);
+        console.log('value : ', value.ALIMENT);
+        const rows_clean = handleDeleteRow(value['ALIMENT'], rows2_);
+        console.log('clean : ', rows_clean);
+        rows2_ = [...rows_clean, value];
+        console.log('rows2_ : ', rows2_);
+        // setRows2([...rows2_, value]);
+      } else {
+        rows2_ = [...rows2_, value];
       }
-      if (!rows2.includes(value)) setRows2((prevRows) => [...prevRows, value]);
     }
+    setRows2(rows2_);
   };
 
   const onDelete = () => {
@@ -41,8 +48,8 @@ const FoodListButton = ({
       const iterator = selectedRows.values();
       var rows2_ = rows2;
       for (var idx = 0; idx < selectedRows.size; idx++) {
-        const id = iterator.next().value.id;
-        rows2_ = handleDeleteRow(id, rows2_);
+        const aliment = iterator.next().value.ALIMENT;
+        rows2_ = handleDeleteRow(aliment, rows2_);
       }
       setRows2(rows2_);
     } catch {
@@ -50,9 +57,9 @@ const FoodListButton = ({
     }
   };
 
-  const handleDeleteRow = (id, data) => {
-    const filteredElements = data.filter(function (item, index) {
-      return item.id !== id;
+  const handleDeleteRow = (aliment, data) => {
+    const filteredElements = data.filter((item, index) => {
+      return item.ALIMENT !== aliment;
     });
     return filteredElements;
   };
