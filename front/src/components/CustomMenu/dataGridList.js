@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import columns from './subcomponents/columns';
+import columns from './columns';
 import { Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -19,7 +19,7 @@ const DataGridList = ({ filterRows, apiRef }) => {
               },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[9]}
           disableColumnMenu
           checkboxSelection
           disableRowSelectionOnClick

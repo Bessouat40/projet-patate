@@ -1,11 +1,11 @@
 import React from 'react';
 import { Stack } from '@mui/material';
-import MenuTitle from './subcomponents/menuTitle';
+import MenuTitle from './menuTitle';
 import Results from './results';
 import DataGridMenu from './dataGridMenu';
 import { Button } from '@mui/material';
 
-const CustomMenuPart = ({
+const AnalyzeMenu = ({
   lysine,
   proteines,
   calories,
@@ -61,4 +61,4 @@ const CustomMenuPart = ({
   );
 };
 
-export default CustomMenuPart;
+export default AnalyzeMenu;

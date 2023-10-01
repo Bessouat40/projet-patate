@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useGridApiRef } from '@mui/x-data-grid';
 import { Stack } from '@mui/material';
-import FoodListButton from './subcomponents/foodlistButtons';
-import DataGridList from './dataGridList';
-import SearchFood from './searchFood';
-import CustomMenuPart from './CustomMenuPart';
+import FoodListButton from './CustomMenu/foodlistButtons';
+import DataGridList from './CustomMenu/dataGridList';
+import SearchFood from './CustomMenu/searchFood';
+import AnalyzeMenu from './CustomMenu/AnalyzeMenu';
 
-const MainView = () => {
+const MainViewCustomMenu = () => {
   const [rows, setRows] = useState([]);
   const [rows2, setRows2] = useState([]);
   const [lysine, setLysine] = useState();
@@ -35,11 +35,10 @@ const MainView = () => {
   }, []);
 
   return (
-    <Stack spacing={3} alignItems="center">
+    <Stack spacing={3} alignItems="center" sx={{ marginTop: '20px' }}>
       <SearchFood setFilter={setFilter} rows={rows} />
       <Stack direction="row" spacing={5} alignItems="center">
         <DataGridList filterRows={filterRows} apiRef={apiRef} />
-
         <FoodListButton
           setProteines={setProteines}
           setLysine={setLysine}
@@ -49,7 +48,7 @@ const MainView = () => {
           rows2={rows2}
           setRows2={setRows2}
         />
-        <CustomMenuPart
+        <AnalyzeMenu
           lysine={lysine}
           proteines={proteines}
           calories={calories}
@@ -60,8 +59,9 @@ const MainView = () => {
           setCalories={setCalories}
         />
       </Stack>
+      <br />
     </Stack>
   );
 };
 
-export default MainView;
+export default MainViewCustomMenu;
