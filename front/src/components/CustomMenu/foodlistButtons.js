@@ -26,12 +26,8 @@ const FoodListButton = ({
       const value = iterator.next().value;
       apiRef.current.selectRow(value['id'], null, true);
       if (values.includes(value['ALIMENT'])) {
-        console.log('value : ', value.ALIMENT);
         const rows_clean = handleDeleteRow(value['ALIMENT'], rows2_);
-        console.log('clean : ', rows_clean);
         rows2_ = [...rows_clean, value];
-        console.log('rows2_ : ', rows2_);
-        // setRows2([...rows2_, value]);
       } else {
         rows2_ = [...rows2_, value];
       }
