@@ -1,5 +1,5 @@
 import MainViewCustomMenu from './components/mainViewCustomMenu';
-import Marmiton from './components/marmiton';
+import MainViewMarmiton from './components/mainViewMarmiton';
 import React from 'react';
 import NavBar from './components/navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -10,7 +10,7 @@ const App = () => {
       <NavBar />
       <Routes>
         <Route exact path="/" element={<MainViewCustomMenu />} />
-        <Route exact path="/marmiton" element={<Marmiton />} />
+        <Route exact path="/marmiton" element={<MainViewMarmiton />} />
       </Routes>
     </Router>
   );
