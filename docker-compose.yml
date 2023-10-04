@@ -17,3 +17,15 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - '8000:8000'
+
+  foodDB:
+    image: postgres
+    restart: unless-stopped
+    container_name: foodDB
+    env_file:
+      - .env
+    ports:
+      - '5436:5432'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql

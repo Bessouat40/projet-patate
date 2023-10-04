@@ -4,10 +4,11 @@ from json import loads
 from typing import List
 from pydantic import BaseModel
 from ..src._generic.generic_functions import find_food
-from playwright.async_api import async_playwright
 
 from back import Configuration
 from back import Menu
+
+from back.src.database import Database
 
 Configuration("back/data/aliments.csv")
 
