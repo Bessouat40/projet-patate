@@ -14,6 +14,8 @@ Configuration("back/data/aliments.csv")
 
 app = FastAPI()
 
+db = Database()
+
 class Item(BaseModel):
     QUANTITY: str
     id: str
@@ -30,9 +32,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post('/require')
+@app.post('/requireFood')
 async def get_data():
     data = loads(Configuration().get_food_json())
+    return data
+
+@app.post('/requireWeekMenus')
+async def get_data():
+    data = db.require()
     return data
 
 @app.post('/menu')
@@ -44,10 +51,10 @@ async def get_data(items: List[Item]):
     print(menu.intakes)
     return menu.intakes
 
-@app.post('/food')
-async def get_data(data: Url):
-    url = data.url
-    print(url)
-    async with async_playwright() as playwright:
-        foods = await find_food(playwright, url)
-    return foods
+# @app.post('/food')
+# async def get_data(data: Url):
+#     url = data.url
+#     print(url)
+#     async with async_playwright() as playwright:
+#         foods = await find_food(playwright, url)
+#     return foods

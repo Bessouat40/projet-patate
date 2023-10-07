@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine, text
+
 class Database() :
     
     def __init__(self):
 
-        self.engine = create_engine("postgresql+psycopg2://postgres:postgres@foodDB:5432/foodDB")
+        self.engine = create_engine("postgresql+psycopg2://postgres:postgres@localhost:5436/foodDB")
         self.conn = self.engine.connect()
         self.add_data = []
 
