@@ -11,6 +11,16 @@ import Paper from '@mui/material/Paper';
 
 const WeekMenus = () => {
   const [rows, setRows] = useState();
+  const joursSemaine = [
+    'lundi',
+    'mardi',
+    'mercredi',
+    'jeudi',
+    'vendredi',
+    'samedi',
+    'dimanche',
+  ];
+  const phase = ['matin', 'midi', 'soir'];
 
   useEffect(() => {
     const sendFetch = async () => {
@@ -30,7 +40,7 @@ const WeekMenus = () => {
       data.forEach((d) => {
         row.push(d);
       });
-      setRows(row);
+      formatData(row);
     };
 
     getData();
@@ -46,52 +56,51 @@ const WeekMenus = () => {
     },
   }));
 
-  const formatData = () => {};
+  const formatData = (_rows) => {
+    const phaseMenus = { matin: [], midi: [], soir: [] };
+
+    _rows.forEach((dict) => {
+      const { jour, menu, phase } = dict;
+      phaseMenus[phase].push(menu);
+    });
+
+    Object.keys(phaseMenus).map((phase) => {});
+    setRows(phaseMenus);
+  };
 
   return (
-    <Stack sx={{ height: '100vh', overflow: 'hidden', marginTop: '20px' }}>
-      <Stack spacing={5} alignItems="center">
-        <Stack
-          spacing={2}
-          sx={{
-            maxHeight: 700,
-            backgroundColor: '#FFFFFF',
-            borderRadius: '10px',
-            border: 15,
-            borderColor: '#FFFFFF',
-          }}
-        >
-          {rows ? (
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 1200 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell align="center">Jour</StyledTableCell>
-                    <StyledTableCell align="center">
-                      Phase de la journée
-                    </StyledTableCell>
-                    <StyledTableCell align="center">Menu</StyledTableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row, idx) => (
-                    <TableRow
-                      key={idx}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                      <TableCell align="center" component="th" scope="row">
-                        {row.jour}
-                      </TableCell>
-                      <TableCell align="center">{row.phase}</TableCell>
-                      <TableCell align="center">{row.menu}</TableCell>
-                    </TableRow>
+    <Stack
+      alignItems="center"
+      sx={{
+        height: '100vh',
+        overflow: 'hidden',
+        marginTop: '20px',
+      }}
+    >
+      {rows ? (
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="center"></StyledTableCell>
+                {joursSemaine.map((jour) => (
+                  <StyledTableCell align="center">{jour}</StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.keys(rows).map((phase) => (
+                <TableRow key={phase}>
+                  <StyledTableCell align="center">{phase}</StyledTableCell>
+                  {rows[phase].map((menu) => (
+                    <TableCell align="center">{menu}</TableCell>
                   ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          ) : null}
-        </Stack>
-      </Stack>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : null}
     </Stack>
   );
 };
