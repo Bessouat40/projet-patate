@@ -5,12 +5,14 @@ import FoodListButton from './CustomMenu/foodlistButtons';
 import DataGridList from './CustomMenu/dataGridList';
 import SearchFood from './CustomMenu/searchFood';
 import AnalyzeMenu from './CustomMenu/AnalyzeMenu';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const MainViewCustomMenu = () => {
   const [rows, setRows] = useState([]);
   const [rows2, setRows2] = useState([]);
   const [intakes, setIntakes] = useState({});
   const [filterRows, setFilter] = useState([]);
+  const [loading, setLoading] = useState(true);
   const apiRef = useGridApiRef();
   const apiRef2 = useGridApiRef();
 
@@ -27,6 +29,7 @@ const MainViewCustomMenu = () => {
       const data = await sendFetch();
       setRows(data);
       setFilter(data);
+      setLoading(false);
     };
 
     getData();
@@ -49,7 +52,13 @@ const MainViewCustomMenu = () => {
             gap: '10px',
           }}
         >
-          <DataGridList filterRows={filterRows} apiRef={apiRef} />
+          {loading ? (
+            <Stack>
+              <CircularProgress />
+            </Stack>
+          ) : (
+            <DataGridList filterRows={filterRows} apiRef={apiRef} />
+          )}
           <FoodListButton
             setIntakes={setIntakes}
             apiRef={apiRef}
@@ -57,6 +66,7 @@ const MainViewCustomMenu = () => {
             rows2={rows2}
             setRows2={setRows2}
           />
+
           <AnalyzeMenu
             apiRef2={apiRef2}
             rows2={rows2}
