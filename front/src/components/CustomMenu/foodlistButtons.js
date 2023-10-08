@@ -75,7 +75,7 @@ const FoodListButton = ({
         }}
         onClick={onTransfer}
       >
-        Add to Menu
+        Ajouter au menu
       </Button>
       <Button
         variant="contained"
@@ -91,7 +91,7 @@ const FoodListButton = ({
         }}
         onClick={onDelete}
       >
-        Remove
+        Supprimer du menu
       </Button>
     </Stack>
   );

@@ -25,7 +25,9 @@ const DataGridMenu = ({ rows2, apiRef2 }) => {
           disableRowSelectionOnClick
         />
       ) : (
-        <Typography color="white">Please select food</Typography>
+        <Typography color="white">
+          Veuillez sélectionner des ingrédients
+        </Typography>
       )}
     </Stack>
   );
