@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Tooltip } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 
 const WeekMenus = () => {
   const [rows, setRows] = useState();
@@ -57,8 +57,8 @@ const WeekMenus = () => {
     },
   }));
 
-  const onClickMenu = (menu) => {
-    alert('Menu du jour : ' + menu);
+  const onClickMenu = (menu, phase, menuIdx) => {
+    alert('Menu du ' + joursSemaine[menuIdx] + ' ' + phase + ' : ' + menu);
   };
 
   const formatData = (_rows) => {
@@ -72,6 +72,9 @@ const WeekMenus = () => {
 
   return (
     <Stack
+      spacing={10}
+      alignItems="center"
+      justifyContent="center"
       sx={{
         position: 'absolute',
         top: '50%',
@@ -79,6 +82,9 @@ const WeekMenus = () => {
         transform: 'translate(-50%, -50%)',
       }}
     >
+      <Typography variant="h2" color="white">
+        Vos menus de la semaine :
+      </Typography>
       {rows ? (
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
@@ -108,7 +114,7 @@ const WeekMenus = () => {
                       title="Afficher le repas"
                     >
                       <TableCell
-                        onClick={() => onClickMenu(menu)}
+                        onClick={() => onClickMenu(menu, phase, menuIdx)}
                         key={`cell-${phase}-${menuIdx}`}
                         sx={{
                           borderRight: '1px solid grey',

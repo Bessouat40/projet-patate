@@ -1,4 +1,5 @@
 from back import Food
+from back import Configuration
 
 class Menu:
 
@@ -6,12 +7,16 @@ class Menu:
         Food._instances.clear()
         self.food_dict = food_dict
         self.create_food_objects()
-        self.intakes = {"proteines":0, "calories":0, "glucides":0, "lipides":0, "fructose":0, "sucres":0, "galactose":0, "glucose":0, "lactose":0, "maltose":0, "saccharose":0, "amidon":0}
+        self.intakes = {}
+        intakesNames = Configuration().df_food.columns[1:]
+        for intake in intakesNames :
+            self.intakes[intake.lower()] = 0
         self.fill_df_intakes()
     
     def update_intakes(self, food) :
-        for intake in self.intakes.keys() :
-            self.intakes[intake] += getattr(food, intake)
+        for intake in Configuration().df_food.columns[1:] :
+            value = intake.lower()
+            self.intakes[value] += food.intakes[value]
 
     def create_food_objects(self):
         for food in list(self.food_dict.keys()) :

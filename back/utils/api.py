@@ -49,7 +49,6 @@ async def get_data(items: List[Item]):
     for item in items :
         food_dict[item.ALIMENT] = float(item.QUANTITY)
     menu = Menu(food_dict)
-    print(menu.intakes)
     return menu.intakes
 
 # @app.post('/food')

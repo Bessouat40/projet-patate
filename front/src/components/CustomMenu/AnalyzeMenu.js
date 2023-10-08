@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Stack } from '@mui/material';
 import MenuTitle from './menuTitle';
 import Results from './results';
