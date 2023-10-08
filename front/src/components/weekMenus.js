@@ -20,7 +20,6 @@ const WeekMenus = () => {
     'samedi',
     'dimanche',
   ];
-  const phase = ['matin', 'midi', 'soir'];
 
   useEffect(() => {
     const sendFetch = async () => {
@@ -50,6 +49,7 @@ const WeekMenus = () => {
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#423325',
       color: 'white',
+      borderRight: '1px solid white',
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -60,21 +60,18 @@ const WeekMenus = () => {
     const phaseMenus = { matin: [], midi: [], soir: [] };
 
     _rows.forEach((dict) => {
-      const { jour, menu, phase } = dict;
-      phaseMenus[phase].push(menu);
+      phaseMenus[dict['phase']].push(dict['menu']);
     });
-
-    Object.keys(phaseMenus).map((phase) => {});
     setRows(phaseMenus);
   };
 
   return (
     <Stack
-      alignItems="center"
       sx={{
-        height: '100vh',
-        overflow: 'hidden',
-        marginTop: '20px',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
       }}
     >
       {rows ? (
@@ -91,9 +88,22 @@ const WeekMenus = () => {
             <TableBody>
               {Object.keys(rows).map((phase) => (
                 <TableRow key={phase}>
-                  <StyledTableCell align="center">{phase}</StyledTableCell>
+                  <TableCell
+                    sx={{ backgroundColor: '#423325', color: 'white' }}
+                    align="center"
+                  >
+                    {phase}
+                  </TableCell>
                   {rows[phase].map((menu) => (
-                    <TableCell align="center">{menu}</TableCell>
+                    <TableCell
+                      sx={{
+                        borderRight: '1px solid grey',
+                        borderBottom: '1px solid grey',
+                      }}
+                      align="center"
+                    >
+                      {menu}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))}
