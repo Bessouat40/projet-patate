@@ -9,9 +9,7 @@ import AnalyzeMenu from './CustomMenu/AnalyzeMenu';
 const MainViewCustomMenu = () => {
   const [rows, setRows] = useState([]);
   const [rows2, setRows2] = useState([]);
-  const [lysine, setLysine] = useState();
-  const [calories, setCalories] = useState();
-  const [proteines, setProteines] = useState();
+  const [intakes, setIntakes] = useState({});
   const [filterRows, setFilter] = useState([]);
   const apiRef = useGridApiRef();
   const apiRef2 = useGridApiRef();
@@ -35,30 +33,38 @@ const MainViewCustomMenu = () => {
   }, []);
 
   return (
-    <Stack spacing={3} alignItems="center" sx={{ marginTop: '20px' }}>
+    <Stack
+      spacing={3}
+      alignItems="center"
+      justifyContent="center"
+      sx={{ marginTop: '20px' }}
+    >
       <SearchFood setFilter={setFilter} rows={rows} />
-      <Stack direction="row" spacing={5} alignItems="center">
-        <DataGridList filterRows={filterRows} apiRef={apiRef} />
-        <FoodListButton
-          setProteines={setProteines}
-          setLysine={setLysine}
-          setCalories={setCalories}
-          apiRef={apiRef}
-          apiRef2={apiRef2}
-          rows2={rows2}
-          setRows2={setRows2}
-        />
-        <AnalyzeMenu
-          lysine={lysine}
-          proteines={proteines}
-          calories={calories}
-          apiRef2={apiRef2}
-          rows2={rows2}
-          setLysine={setLysine}
-          setProteines={setProteines}
-          setCalories={setCalories}
-        />
-      </Stack>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            gap: '10px',
+          }}
+        >
+          <DataGridList filterRows={filterRows} apiRef={apiRef} />
+          <FoodListButton
+            setIntakes={setIntakes}
+            apiRef={apiRef}
+            apiRef2={apiRef2}
+            rows2={rows2}
+            setRows2={setRows2}
+          />
+          <AnalyzeMenu
+            apiRef2={apiRef2}
+            rows2={rows2}
+            setIntakes={setIntakes}
+            intakes={intakes}
+          />
+        </div>
+      </div>
       <br />
     </Stack>
   );

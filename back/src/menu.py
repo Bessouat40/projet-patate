@@ -6,7 +6,7 @@ class Menu:
         Food._instances.clear()
         self.food_dict = food_dict
         self.create_food_objects()
-        self.intakes = {"proteines":0, "lysine":0, "calories":0}
+        self.intakes = {"proteines":0, "calories":0, "glucides":0, "lipides":0, "fructose":0, "sucres":0, "galactose":0, "glucose":0, "lactose":0, "maltose":0, "saccharose":0, "amidon":0}
         self.fill_df_intakes()
     
     def update_intakes(self, food) :
