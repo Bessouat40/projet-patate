@@ -4,14 +4,17 @@ from json import loads
 from typing import List
 from pydantic import BaseModel
 from ..src._generic.generic_functions import find_food
-from playwright.async_api import async_playwright
 
 from back import Configuration
 from back import Menu
 
+from back.src.database import Database
+
 Configuration("back/data/aliments.csv")
 
 app = FastAPI()
+
+db = Database()
 
 class Item(BaseModel):
     QUANTITY: str
@@ -29,9 +32,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post('/require')
+@app.post('/requireFood')
 async def get_data():
     data = loads(Configuration().get_food_json())
+    return data
+
+@app.post('/requireWeekMenus')
+async def get_data():
+    rows = db.require()
+    data = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in rows]
     return data
 
 @app.post('/menu')
@@ -43,10 +52,10 @@ async def get_data(items: List[Item]):
     print(menu.intakes)
     return menu.intakes
 
-@app.post('/food')
-async def get_data(data: Url):
-    url = data.url
-    print(url)
-    async with async_playwright() as playwright:
-        foods = await find_food(playwright, url)
-    return foods
+# @app.post('/food')
+# async def get_data(data: Url):
+#     url = data.url
+#     print(url)
+#     async with async_playwright() as playwright:
+#         foods = await find_food(playwright, url)
+#     return foods

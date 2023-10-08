@@ -1,7 +1,6 @@
-playwright==1.15.0
 Pillow==8.3.2
-SQLAlchemy==1.4.25
-psycopg2==2.9.1
+SQLAlchemy
+psycopg2-binary
 pandas==1.5.2
 uvicorn==0.20.0
 fastapi==0.89.1

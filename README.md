@@ -9,7 +9,7 @@ It could be usefull for some diseases that restrict the diet of the sick person.
 docker compose build && docker compose up -d
 ```
 
-Now, you can access UI at http://localhost:8000 and backend run at http://localhost:3000.
+Now, you can access UI at `http://localhost:8000` and backend run at `http://localhost:3000`.
 
 ## Usage without Docker
 
