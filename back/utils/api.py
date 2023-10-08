@@ -39,7 +39,8 @@ async def get_data():
 
 @app.post('/requireWeekMenus')
 async def get_data():
-    data = db.require()
+    rows = db.require()
+    data = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in rows]
     return data
 
 @app.post('/menu')
