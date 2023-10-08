@@ -1,5 +1,6 @@
-typing
-uvicorn
-fastapi
-pandas
-pydantic
+Pillow==8.3.2
+SQLAlchemy
+psycopg2-binary
+pandas==1.5.2
+uvicorn==0.20.0
+fastapi==0.89.1
