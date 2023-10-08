@@ -8,6 +8,7 @@ COPY ./back/requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
 COPY ./back /back
+COPY ./.env /back
 
 # RUN python3 -m playwright install
 
