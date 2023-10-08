@@ -16,7 +16,7 @@ const Results = ({
       {lysine ? (
         <Typography color="white">
           {' '}
-          Lysine : {lysine} mg / Proteines : {proteines} g / Calories :{' '}
+          Lysine : {lysine} mg / Protéines : {proteines} g / Calories :{' '}
           {calories}
         </Typography>
       ) : (

@@ -14,7 +14,7 @@ const columns = [
   },
   {
     field: 'QUANTITY',
-    headerName: 'QUANTITY (g)',
+    headerName: 'QUANTITE (g)',
     width: 150,
     editable: true,
   },

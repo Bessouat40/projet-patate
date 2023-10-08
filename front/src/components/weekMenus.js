@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Tooltip } from '@mui/material';
 
 const WeekMenus = () => {
   const [rows, setRows] = useState();
@@ -56,6 +57,10 @@ const WeekMenus = () => {
     },
   }));
 
+  const onClickMenu = (menu) => {
+    alert('Menu du jour : ' + menu);
+  };
+
   const formatData = (_rows) => {
     const phaseMenus = { matin: [], midi: [], soir: [] };
 
@@ -78,32 +83,46 @@ const WeekMenus = () => {
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
-              <TableRow>
-                <StyledTableCell align="center"></StyledTableCell>
+              <TableRow key="columns">
+                <StyledTableCell key="null" align="center"></StyledTableCell>
                 {joursSemaine.map((jour) => (
-                  <StyledTableCell align="center">{jour}</StyledTableCell>
+                  <StyledTableCell key={`header-${jour}`} align="center">
+                    {jour}
+                  </StyledTableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
               {Object.keys(rows).map((phase) => (
-                <TableRow key={phase}>
+                <TableRow key={`row-${phase}`}>
                   <TableCell
                     sx={{ backgroundColor: '#423325', color: 'white' }}
                     align="center"
+                    key={`cell-phase-${phase}`}
                   >
                     {phase}
                   </TableCell>
-                  {rows[phase].map((menu) => (
-                    <TableCell
-                      sx={{
-                        borderRight: '1px solid grey',
-                        borderBottom: '1px solid grey',
-                      }}
-                      align="center"
+                  {rows[phase].map((menu, menuIdx) => (
+                    <Tooltip
+                      key={`tooltip-${phase}-${menuIdx}`}
+                      title="Afficher le repas"
                     >
-                      {menu}
-                    </TableCell>
+                      <TableCell
+                        onClick={() => onClickMenu(menu)}
+                        key={`cell-${phase}-${menuIdx}`}
+                        sx={{
+                          borderRight: '1px solid grey',
+                          borderBottom: '1px solid grey',
+                          '&:hover': {
+                            backgroundColor: '#E0DFDE',
+                            cursor: 'pointer',
+                          },
+                        }}
+                        align="center"
+                      >
+                        {menu}
+                      </TableCell>
+                    </Tooltip>
                   ))}
                 </TableRow>
               ))}

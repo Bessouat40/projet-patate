@@ -54,7 +54,7 @@ const AnalyzeMenu = ({
         }}
         onClick={onSendMenu}
       >
-        Analyze Menu
+        Analyser le menu
       </Button>
       <Results lysine={lysine} calories={calories} proteines={proteines} />
     </Stack>

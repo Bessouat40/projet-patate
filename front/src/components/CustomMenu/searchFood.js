@@ -20,7 +20,7 @@ const SearchFood = ({ setFilter, rows }) => {
       value={searched}
       onChange={(searchVal) => requestSearchFood(searchVal)}
       onCancelSearch={() => cancelSearchFood()}
-      placeholder="Search a food"
+      placeholder="Rechercher un aliment"
     />
   );
 };

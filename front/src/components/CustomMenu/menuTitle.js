@@ -7,7 +7,7 @@ const MenuTitle = () => {
   return (
     <Stack direction="row" spacing={5} alignItems="center">
       <Typography variant="h4" color="white">
-        Menu List
+        Ingrédients du menu
       </Typography>
       <ShoppingBasketIcon fontSize="large" sx={{ color: 'white' }} />
     </Stack>
