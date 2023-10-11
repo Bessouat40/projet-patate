@@ -1,12 +1,19 @@
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import logo from './images/food.png';
 import { Stack } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import Help from './help';
+import HelpIcon from '@mui/icons-material/Help';
 
 const NavBar = () => {
+  const [open, setOpen] = useState(false);
+
+  const onOpen = () => {
+    setOpen(true);
+  };
   return (
     <>
       <Navbar
@@ -35,6 +42,16 @@ const NavBar = () => {
                 Marmiton
               </Nav.Link>
             </Nav>
+            <HelpIcon
+              onClick={onOpen}
+              sx={{
+                color: 'white',
+                '&:hover': {
+                  color: '#9C6735',
+                },
+              }}
+            />
+            <Help open={open} setOpen={setOpen} />
           </Navbar.Collapse>
         </Container>
       </Navbar>

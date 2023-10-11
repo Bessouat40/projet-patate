@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Tooltip } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 
 const WeekMenus = () => {
   const [rows, setRows] = useState();
@@ -31,9 +31,6 @@ const WeekMenus = () => {
       return data;
     };
 
-    /**
-     * Receive data to display
-     */
     const getData = async () => {
       const data = await sendFetch();
       const row = [];
@@ -57,21 +54,38 @@ const WeekMenus = () => {
     },
   }));
 
-  const onClickMenu = (menu) => {
-    alert('Menu du jour : ' + menu);
+  const onClickMenu = (menu, phase, menuIdx) => {
+    alert('Menu du ' + joursSemaine[menuIdx] + ' ' + phase + ' : ' + menu);
   };
 
   const formatData = (_rows) => {
     const phaseMenus = { matin: [], midi: [], soir: [] };
+    const groupedData = {};
 
-    _rows.forEach((dict) => {
-      phaseMenus[dict['phase']].push(dict['menu']);
+    // Parcourez les données et groupez-les par jour
+    _rows.forEach((item) => {
+      const jour = item.jour;
+      if (!groupedData[jour]) {
+        groupedData[jour] = [];
+      }
+      groupedData[jour].push(item);
     });
+
+    for (const jour in groupedData) {
+      // Parcourez les données associées à ce jour
+      groupedData[jour].forEach((dict) => {
+        phaseMenus[dict['phase']].push(dict['menu']);
+      });
+    }
+
     setRows(phaseMenus);
   };
 
   return (
     <Stack
+      spacing={10}
+      alignItems="center"
+      justifyContent="center"
       sx={{
         position: 'absolute',
         top: '50%',
@@ -79,6 +93,9 @@ const WeekMenus = () => {
         transform: 'translate(-50%, -50%)',
       }}
     >
+      <Typography variant="h2" color="white">
+        Vos menus de la semaine :
+      </Typography>
       {rows ? (
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
@@ -108,7 +125,7 @@ const WeekMenus = () => {
                       title="Afficher le repas"
                     >
                       <TableCell
-                        onClick={() => onClickMenu(menu)}
+                        onClick={() => onClickMenu(menu, phase, menuIdx)}
                         key={`cell-${phase}-${menuIdx}`}
                         sx={{
                           borderRight: '1px solid grey',

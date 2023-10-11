@@ -3,7 +3,7 @@ import MainViewMarmiton from './components/mainViewMarmiton';
 import React from 'react';
 import NavBar from './components/navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import WeekMenus from './components/weekMenus';
+import WeekMenus from './components/mainViewWeekMenus';
 import Home from './components/home';
 
 const App = () => {
