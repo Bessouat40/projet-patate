@@ -3,19 +3,9 @@ import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 
-const FoodListButton = ({
-  setProteines,
-  setLysine,
-  setCalories,
-  apiRef,
-  apiRef2,
-  rows2,
-  setRows2,
-}) => {
+const FoodListButton = ({ setIntakes, apiRef, apiRef2, rows2, setRows2 }) => {
   const onTransfer = () => {
-    setProteines();
-    setLysine();
-    setCalories();
+    setIntakes({});
     const selectedRows = apiRef.current.getSelectedRows();
     const iterator = selectedRows.values();
     const values = rows2.map((value) => {
@@ -37,9 +27,7 @@ const FoodListButton = ({
 
   const onDelete = () => {
     try {
-      setProteines();
-      setLysine();
-      setCalories();
+      setIntakes({});
       const selectedRows = apiRef2.current.getSelectedRows();
       const iterator = selectedRows.values();
       var rows2_ = rows2;

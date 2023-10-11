@@ -1,6 +1,7 @@
 Pillow==8.3.2
 SQLAlchemy
 python-dotenv
+python-multipart
 psycopg2-binary
 pandas==1.5.2
 uvicorn==0.20.0

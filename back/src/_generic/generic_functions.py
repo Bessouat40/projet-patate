@@ -20,6 +20,5 @@ async def find_ingredients(ingredients) :
     ingredients_list = []
     for ingredient in ingredients :
         append_ingredient = await ingredient.text_content()
-        print(append_ingredient)
         ingredients_list.append(append_ingredient)
     return ingredients_list
