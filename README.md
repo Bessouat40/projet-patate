@@ -5,29 +5,31 @@ It could be usefull for some diseases that restrict the diet of the sick person.
 
 ## Usage with Docker
 
+- First create `.env` file :
+
+```bash
+mv .env.example .env
+```
+
+- Now you can fill your `.env` file with your postgres database values.
+
+`Example :`
+
+```bash
+POSTGRES_USER="postgres"
+POSTGRES_PASSWORD="postgres"
+POSTGRES_DB="foodDB"
+HOST="foodDB"
+PORT="5432"
+```
+
+- Run docker :
+
 ```bash
 docker compose build && docker compose up -d
 ```
 
 Now, you can access UI at `http://localhost:8000` and backend run at `http://localhost:3000`.
-
-## Usage without Docker
-
-- Clone this repo
-
-- Go to `front` folder, install npm dependencies and run react frontend :
-
-```bash
-cd front
-npm i -f
-npm start
-```
-
-- Go outside `front` folder and run python backend :
-
-```bash
-python -m back.utils.main
-```
 
 ## IHM
 
