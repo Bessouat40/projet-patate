@@ -25,7 +25,7 @@ const Home = () => {
         color="#423325"
         style={{
           background: '#423325',
-          webkitBackgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           fontFamily: 'skia',
         }}
@@ -34,7 +34,8 @@ const Home = () => {
       </Typography>
       <Typography>
         Ceci est une application permettant de calculer l'apport nutritique de
-        menus
+        menus. Les datas viennent du site :
+        https://www.data.gouv.fr/fr/datasets/table-de-composition-nutritionnelle-des-aliments-ciqual/#/resources
       </Typography>
     </Stack>
   );

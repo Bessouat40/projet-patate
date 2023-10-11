@@ -66,7 +66,6 @@ const MainViewCustomMenu = () => {
             rows2={rows2}
             setRows2={setRows2}
           />
-
           <AnalyzeMenu
             apiRef2={apiRef2}
             rows2={rows2}
