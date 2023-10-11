@@ -29,3 +29,10 @@ class Database() :
         data = self.conn.execute(query).fetchall()
         return data
     
+    def addMenuToDayPhase(self, menu, day, phase) :
+        print('day : ', day)
+        print('phase : ', phase)
+        print('menu : ', menu)
+        query = text(f"UPDATE weekMenus SET menu='{menu}' WHERE weekMenus.phase='{phase}' AND weekMenus.jour='{day}'")
+        self.conn.execute(query)
+    

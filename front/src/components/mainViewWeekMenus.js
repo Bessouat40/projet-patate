@@ -31,9 +31,6 @@ const WeekMenus = () => {
       return data;
     };
 
-    /**
-     * Receive data to display
-     */
     const getData = async () => {
       const data = await sendFetch();
       const row = [];
@@ -63,10 +60,24 @@ const WeekMenus = () => {
 
   const formatData = (_rows) => {
     const phaseMenus = { matin: [], midi: [], soir: [] };
+    const groupedData = {};
 
-    _rows.forEach((dict) => {
-      phaseMenus[dict['phase']].push(dict['menu']);
+    // Parcourez les données et groupez-les par jour
+    _rows.forEach((item) => {
+      const jour = item.jour;
+      if (!groupedData[jour]) {
+        groupedData[jour] = [];
+      }
+      groupedData[jour].push(item);
     });
+
+    for (const jour in groupedData) {
+      // Parcourez les données associées à ce jour
+      groupedData[jour].forEach((dict) => {
+        phaseMenus[dict['phase']].push(dict['menu']);
+      });
+    }
+
     setRows(phaseMenus);
   };
 

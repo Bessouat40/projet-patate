@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
 
 const SaveMenuDialog = ({ open, setOpen }) => {
   const [menu, setMenu] = useState('');
@@ -25,6 +26,18 @@ const SaveMenuDialog = ({ open, setOpen }) => {
   const _phase = ['matin', 'midi', 'soir'];
 
   const onClose = () => {
+    setOpen(false);
+  };
+
+  const onSaveMenu = async () => {
+    const formData = new FormData();
+    formData.append('menu', menu);
+    formData.append('jour', jour);
+    formData.append('phase', phase);
+    await fetch('http://localhost:8000/saveMenu', {
+      body: formData,
+      method: 'POST',
+    });
     setOpen(false);
   };
 
@@ -63,14 +76,20 @@ const SaveMenuDialog = ({ open, setOpen }) => {
                 setMenu(e.target.value);
               }}
             />
-            <Select onChange={(event) => setJour(event)} defaultValue="lundi">
+            <Select
+              onChange={(event) => setJour(event.target.value)}
+              defaultValue="lundi"
+            >
               {_joursSemaine.map((jour) => (
                 <MenuItem key={jour} value={jour}>
                   {jour}
                 </MenuItem>
               ))}
             </Select>
-            <Select onChange={(event) => setPhase(event)} defaultValue="matin">
+            <Select
+              onChange={(event) => setPhase(event.target.value)}
+              defaultValue="matin"
+            >
               {_phase.map((phase) => (
                 <MenuItem key={phase} value={phase}>
                   {phase}
@@ -80,7 +99,19 @@ const SaveMenuDialog = ({ open, setOpen }) => {
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Validate</Button>
+          <IconButton
+            size="large"
+            onClick={onSaveMenu}
+            sx={{
+              justifyContent: 'center',
+              color: '#423325',
+              '&:hover': {
+                color: '#9C6735',
+              },
+            }}
+          >
+            <SaveIcon />
+          </IconButton>
         </DialogActions>
       </Dialog>
     </Stack>
