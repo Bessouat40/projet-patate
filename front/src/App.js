@@ -13,7 +13,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/customMenu" element={<MainViewCustomMenu />} />
-        <Route exact path="/marmiton" element={<MainViewMarmiton />} />
+        {/* <Route exact path="/marmiton" element={<MainViewMarmiton />} /> */}
         <Route exact path="/weekMenus" element={<WeekMenus />} />
       </Routes>
     </Router>

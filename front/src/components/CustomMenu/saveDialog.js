@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-const SaveMenuDialog = ({ open, setOpen }) => {
+const SaveMenuDialog = ({ open, setOpen, rows }) => {
   const [menu, setMenu] = useState('');
   const [jour, setJour] = useState('lundi');
   const [phase, setPhase] = useState('matin');
@@ -34,6 +34,8 @@ const SaveMenuDialog = ({ open, setOpen }) => {
     formData.append('menu', menu);
     formData.append('jour', jour);
     formData.append('phase', phase);
+    const menuDetails = JSON.stringify(rows);
+    formData.append('menuDetails', menuDetails);
     await fetch('http://localhost:8000/saveMenu', {
       body: formData,
       method: 'POST',
