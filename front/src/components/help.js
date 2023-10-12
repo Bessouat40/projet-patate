@@ -1,5 +1,4 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -11,10 +10,12 @@ const Help = ({ open, setOpen }) => {
   };
   return (
     <Stack>
-      <Dialog open={open} onClose={onClose}>
+      <Dialog open={open} onClose={onClose} fullWidth="true" maxWidth="lg">
         <DialogContent>
           <Stack spacing={5}>
-            <Typography>Test du module help</Typography>
+            <video controls>
+              <source src="/demo.mov" type="video/mp4" />
+            </video>
             <Button onClick={onClose}>Fermer</Button>
           </Stack>
         </DialogContent>

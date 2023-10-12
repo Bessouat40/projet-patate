@@ -50,7 +50,7 @@ const AnalyzeMenu = ({ apiRef2, rows2, intakes, setIntakes }) => {
           Analyser le menu
         </Button>
       </Stack>
-      <Results intakes={intakes} />
+      <Results intakes={intakes} rows={rows2} />
     </Stack>
   );
 };
