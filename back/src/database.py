@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv, find_dotenv
 from os import environ
-
+import json
 
 load_dotenv(find_dotenv())
 
@@ -25,14 +25,21 @@ class Database() :
                 Returns:
             data: data stored in Postgres database
         """
-        query = text("SELECT * FROM weekMenus")
-        data = self.conn.execute(query).fetchall()
-        return data
+        query1 = text("SELECT * FROM weekMenus")
+        query2 = text("SELECT * FROM menus")
+        weekMenus = self.conn.execute(query1).fetchall()
+        menus = self.conn.execute(query2).fetchall()
+        return weekMenus, menus
     
-    def addMenuToDayPhase(self, menu, day, phase) :
-        print('day : ', day)
-        print('phase : ', phase)
-        print('menu : ', menu)
-        query = text(f"UPDATE weekMenus SET menu='{menu}' WHERE weekMenus.phase='{phase}' AND weekMenus.jour='{day}'")
-        self.conn.execute(query)
-    
+    def addMenuToDayPhase(self, menu, day, phase, menuDetails) :
+        ingredients, quantite = [], []
+        menuDetails = json.loads(menuDetails)
+        for aliment in menuDetails :
+            ingredients.append(aliment["ALIMENT"].replace("'", " "))
+            quantite.append(aliment["QUANTITY"])
+        ingredients = '#@&@#'.join(ingredients)
+        quantite = ','.join(quantite)
+        query1 = text(f"UPDATE weekMenus SET menu='{menu}' WHERE weekMenus.phase='{phase}' AND weekMenus.jour='{day}'")
+        query2 = text(f"INSERT INTO menus (id, menu, ingredients, quantite) VALUES (default, '{menu}', '{ingredients}', '{quantite}')")
+        self.conn.execute(query1)
+        self.conn.execute(query2)

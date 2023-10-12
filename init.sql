@@ -6,6 +6,14 @@ CREATE TABLE weekMenus
     menu VARCHAR(255)
 );
 
+CREATE TABLE menus
+(
+    id SERIAL PRIMARY KEY,
+    menu VARCHAR(255),
+    ingredients VARCHAR(255),
+    quantite VARCHAR(255)
+);
+
 INSERT INTO weekMenus (id, jour, phase, menu)
 VALUES (default, 'lundi', 'matin', ''),
 (default, 'lundi', 'midi', ''),

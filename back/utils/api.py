@@ -4,7 +4,6 @@ from json import loads
 from typing import List
 from pydantic import BaseModel
 from ..src._generic.generic_functions import find_food
-
 from back import Configuration
 from back import Menu
 
@@ -25,6 +24,7 @@ class SaveMenu(BaseModel):
     menu: str
     jour: str
     phase: str
+    menuDetails: str
 
 class Url(BaseModel):
     url: str
@@ -43,14 +43,15 @@ async def get_data():
     return data
 
 @app.post('/saveMenu')
-async def save_data(menu: str = Form(...), jour: str = Form(...), phase: str = Form(...)):
-    db.addMenuToDayPhase(menu, jour, phase)
+async def save_data(menu: str = Form(...), jour: str = Form(...), phase: str = Form(...), menuDetails: str = Form(...)):
+    db.addMenuToDayPhase(menu, jour, phase, menuDetails)
 
 @app.post('/requireWeekMenus')
 async def require_data():
-    rows = db.require()
-    data = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in rows]
-    return data
+    weekMenus, menus = db.require()
+    weekMenusResp = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in weekMenus]
+    menusResp = [{"id": row[0], "menu": row[1], "ingredients": row[2], "quantite": row[3]} for row in menus]
+    return {'weekMenus' : weekMenusResp, 'menus' : menusResp}
 
 @app.post('/menu')
 async def calcul_menu_intakes(items: List[Item]):

@@ -12,6 +12,7 @@ import { Tooltip, Typography } from '@mui/material';
 
 const WeekMenus = () => {
   const [rows, setRows] = useState();
+  const [menus, setMenus] = useState({});
   const joursSemaine = [
     'lundi',
     'mardi',
@@ -31,13 +32,32 @@ const WeekMenus = () => {
       return data;
     };
 
-    const getData = async () => {
-      const data = await sendFetch();
+    const loadMenus = (resp) => {
+      const _menus = resp['menus'];
+      const dictMenus = {};
+      _menus.forEach((menu) => {
+        dictMenus[menu['menu']] = {
+          ingredients: menu['ingredients'],
+          quantite: menu['quantite'],
+        };
+      });
+      setMenus(dictMenus);
+    };
+
+    const loadRows = (resp) => {
+      const weekMenus = resp['weekMenus'];
       const row = [];
-      data.forEach((d) => {
+      weekMenus.forEach((d) => {
         row.push(d);
       });
       formatData(row);
+    };
+
+    const getData = async () => {
+      await sendFetch().then((resp) => {
+        loadMenus(resp);
+        loadRows(resp);
+      });
     };
 
     getData();
@@ -54,15 +74,22 @@ const WeekMenus = () => {
     },
   }));
 
-  const onClickMenu = (menu, phase, menuIdx) => {
-    alert('Menu du ' + joursSemaine[menuIdx] + ' ' + phase + ' : ' + menu);
+  const onClickMenu = (menu) => {
+    const displayMenu = menus[menu];
+    let displayContent = '';
+    const ingredients = displayMenu['ingredients'].split('#@&@#');
+    const quantite = displayMenu['quantite'].split(',');
+    ingredients.forEach((ingredient, idx) => {
+      displayContent +=
+        ingredient.trim() + ' : ' + quantite[idx] + ' grammes\n\n';
+    });
+    alert(menu + ' :\n\n' + displayContent);
   };
 
   const formatData = (_rows) => {
     const phaseMenus = { matin: [], midi: [], soir: [] };
     const groupedData = {};
 
-    // Parcourez les données et groupez-les par jour
     _rows.forEach((item) => {
       const jour = item.jour;
       if (!groupedData[jour]) {
@@ -72,7 +99,6 @@ const WeekMenus = () => {
     });
 
     for (const jour in groupedData) {
-      // Parcourez les données associées à ce jour
       groupedData[jour].forEach((dict) => {
         phaseMenus[dict['phase']].push(dict['menu']);
       });
@@ -125,7 +151,7 @@ const WeekMenus = () => {
                       title="Afficher le repas"
                     >
                       <TableCell
-                        onClick={() => onClickMenu(menu, phase, menuIdx)}
+                        onClick={() => onClickMenu(menu)}
                         key={`cell-${phase}-${menuIdx}`}
                         sx={{
                           borderRight: '1px solid grey',

@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import SaveIcon from '@mui/icons-material/Save';
 import SaveMenuDialog from './saveDialog';
 
-const Results = ({ intakes }) => {
+const Results = ({ intakes, rows }) => {
   const [open, setOpen] = useState(false);
 
   const openSaveDialog = () => {
@@ -72,7 +72,7 @@ const Results = ({ intakes }) => {
             >
               Sauvegarder le plat
             </Button>
-            <SaveMenuDialog open={open} setOpen={setOpen} />
+            <SaveMenuDialog open={open} setOpen={setOpen} rows={rows} />
           </Stack>
         </Stack>
       ) : null}
