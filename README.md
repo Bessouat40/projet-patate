@@ -33,4 +33,4 @@ Now, you can access UI at `http://localhost:8000` and backend run at `http://loc
 
 ## IHM
 
-![ihm](ihm.png)
+[![Watch the video](ihm.png)](./front/public/demo.mov)
