@@ -9,10 +9,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Tooltip, Typography } from '@mui/material';
+import DialogMenu from './WeekMenus/dialogMenu';
 
 const WeekMenus = () => {
   const [rows, setRows] = useState();
+  const [dayMenu, setDayMenu] = useState({});
   const [menus, setMenus] = useState({});
+  const [open, setOpen] = useState(false);
   const joursSemaine = [
     'lundi',
     'mardi',
@@ -75,15 +78,7 @@ const WeekMenus = () => {
   }));
 
   const onClickMenu = (menu) => {
-    const displayMenu = menus[menu];
-    let displayContent = '';
-    const ingredients = displayMenu['ingredients'].split('#@&@#');
-    const quantite = displayMenu['quantite'].split(',');
-    ingredients.forEach((ingredient, idx) => {
-      displayContent +=
-        ingredient.trim() + ' : ' + quantite[idx] + ' grammes\n\n';
-    });
-    alert(menu + ' :\n\n' + displayContent);
+    setOpen(true);
   };
 
   const formatData = (_rows) => {
@@ -119,6 +114,14 @@ const WeekMenus = () => {
         transform: 'translate(-50%, -50%)',
       }}
     >
+      {open && (
+        <DialogMenu
+          menu={dayMenu}
+          menus={menus}
+          open={open}
+          setOpen={setOpen}
+        />
+      )}
       <Typography variant="h2" color="white">
         Vos menus de la semaine :
       </Typography>
@@ -151,7 +154,10 @@ const WeekMenus = () => {
                       title="Afficher le repas"
                     >
                       <TableCell
-                        onClick={() => onClickMenu(menu)}
+                        onClick={() => {
+                          setDayMenu(menu);
+                          onClickMenu();
+                        }}
                         key={`cell-${phase}-${menuIdx}`}
                         sx={{
                           borderRight: '1px solid grey',
