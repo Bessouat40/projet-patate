@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useGridApiRef } from '@mui/x-data-grid';
 import { Stack } from '@mui/material';
 import FoodListButton from './CustomMenu/foodlistButtons';
+import Results from './CustomMenu/results';
 import DataGridList from './CustomMenu/dataGridList';
 import SearchFood from './CustomMenu/searchFood';
 import AnalyzeMenu from './CustomMenu/AnalyzeMenu';
@@ -74,6 +75,8 @@ const MainViewCustomMenu = () => {
           />
         </div>
       </div>
+      <br />
+      <Results intakes={intakes} rows={rows2} />
       <br />
     </Stack>
   );

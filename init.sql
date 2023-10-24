@@ -11,7 +11,8 @@ CREATE TABLE menus
     id SERIAL PRIMARY KEY,
     menu VARCHAR(255),
     ingredients VARCHAR(255),
-    quantite VARCHAR(255)
+    quantite VARCHAR(255),
+    intakes JSON
 );
 
 INSERT INTO weekMenus (id, jour, phase, menu)

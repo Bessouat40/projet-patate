@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Stack, Typography } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,6 +11,19 @@ import SaveMenuDialog from './saveDialog';
 
 const Results = ({ intakes, rows }) => {
   const [open, setOpen] = useState(false);
+  const [keys, setKeys] = useState([]);
+  const [values, setValues] = useState([]);
+  const [idxCalories, setIdx] = useState();
+
+  useEffect(() => {
+    setKeys(Object.keys(intakes));
+    var _values = [];
+    Object.keys(intakes).forEach(
+      (key) => (_values = [..._values, intakes[key]])
+    );
+    setValues(_values);
+    setIdx(keys.indexOf('calories'));
+  }, [intakes]);
 
   const openSaveDialog = () => {
     setOpen(true);
@@ -18,7 +31,7 @@ const Results = ({ intakes, rows }) => {
 
   return (
     <Stack>
-      {Object.keys(intakes).length > 0 ? (
+      {keys.length > 0 ? (
         <Stack alignItems="center" justifyContent="center">
           <Typography variant="h4" color="white">
             Apports :
@@ -27,31 +40,32 @@ const Results = ({ intakes, rows }) => {
             <TableContainer component={Paper}>
               <Table aria-label="simple table">
                 <TableBody>
-                  {Object.keys(intakes).map((intake) => {
-                    if (intake === 'calories') {
+                  <TableRow key={`row-keys`}>
+                    {keys.map((key) => {
                       return (
-                        <TableRow key={`row-${intake}`}>
-                          <TableCell align="center" key={`cell-${intake}`}>
-                            {intake}
-                          </TableCell>
-                          <TableCell align="center" key={`value-${intake}`}>
-                            {intakes[intake]} kcal
-                          </TableCell>
-                        </TableRow>
+                        <TableCell align="center" key={`value-${key}`}>
+                          {key}
+                        </TableCell>
                       );
-                    } else {
-                      return (
-                        <TableRow key={`row-${intake}`}>
-                          <TableCell align="center" key={`cell-${intake}`}>
-                            {intake}
+                    })}
+                  </TableRow>
+                  <TableRow key={`row-values`}>
+                    {values.map((value, idx) => {
+                      if (idx !== idxCalories) {
+                        return (
+                          <TableCell align="center" key={`value-${value}`}>
+                            {value} g
                           </TableCell>
-                          <TableCell align="center" key={`value-${intake}`}>
-                            {intakes[intake]} g
+                        );
+                      } else {
+                        return (
+                          <TableCell align="center" key={`value-${value}`}>
+                            {value} kcal
                           </TableCell>
-                        </TableRow>
-                      );
-                    }
-                  })}
+                        );
+                      }
+                    })}
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>
@@ -72,7 +86,12 @@ const Results = ({ intakes, rows }) => {
             >
               Sauvegarder le plat
             </Button>
-            <SaveMenuDialog open={open} setOpen={setOpen} rows={rows} />
+            <SaveMenuDialog
+              open={open}
+              setOpen={setOpen}
+              rows={rows}
+              intakes={intakes}
+            />
           </Stack>
         </Stack>
       ) : null}

@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from ..src._generic.generic_functions import find_food
 from back import Configuration
 from back import Menu
+from json import loads, dumps
 
 from back.src.database import Database
 
@@ -25,6 +26,7 @@ class SaveMenu(BaseModel):
     jour: str
     phase: str
     menuDetails: str
+    intakes: str
 
 class Url(BaseModel):
     url: str
@@ -43,8 +45,9 @@ async def get_data():
     return data
 
 @app.post('/saveMenu')
-async def save_data(menu: str = Form(...), jour: str = Form(...), phase: str = Form(...), menuDetails: str = Form(...)):
-    db.addMenuToDayPhase(menu, jour, phase, menuDetails)
+async def save_data(menu: str = Form(...), jour: str = Form(...), phase: str = Form(...), menuDetails: str = Form(...), intakes: str = Form(...)):
+    intakes = dumps(loads(intakes))
+    db.addMenuToDayPhase(menu, jour, phase, menuDetails, intakes)
 
 @app.post('/requireWeekMenus')
 async def require_data():

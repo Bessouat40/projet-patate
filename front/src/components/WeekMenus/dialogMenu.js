@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, IconButton, Select, MenuItem, Typography } from '@mui/material';
+import { Stack, IconButton, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const DialogMenu = ({ open, setOpen, menu, menus }) => {
   useEffect(() => {
@@ -23,6 +29,7 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
   });
 
   const [displayContent, setDisplayContent] = useState();
+  const [intakes, setIntakes] = useState({});
 
   const onClose = () => {
     setOpen(false);
@@ -32,8 +39,6 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
     <Stack>
       <Dialog
         open={open}
-        maxWidth="md"
-        fullWidth={true}
         onClose={onClose}
         aria-describedby="alert-dialog-slide-description"
       >

@@ -31,7 +31,7 @@ class Database() :
         menus = self.conn.execute(query2).fetchall()
         return weekMenus, menus
     
-    def addMenuToDayPhase(self, menu, day, phase, menuDetails) :
+    def addMenuToDayPhase(self, menu, day, phase, menuDetails, intakes) :
         ingredients, quantite = [], []
         menuDetails = json.loads(menuDetails)
         for aliment in menuDetails :
@@ -40,6 +40,6 @@ class Database() :
         ingredients = '#@&@#'.join(ingredients)
         quantite = ','.join(quantite)
         query1 = text(f"UPDATE weekMenus SET menu='{menu}' WHERE weekMenus.phase='{phase}' AND weekMenus.jour='{day}'")
-        query2 = text(f"INSERT INTO menus (id, menu, ingredients, quantite) VALUES (default, '{menu}', '{ingredients}', '{quantite}')")
         self.conn.execute(query1)
+        query2 = text(f"INSERT INTO menus (id, menu, ingredients, quantite, intakes) VALUES (default, '{menu}', '{ingredients}', '{quantite}', '{intakes}')")
         self.conn.execute(query2)
