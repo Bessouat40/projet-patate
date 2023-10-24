@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from ..src._generic.generic_functions import find_food
 from back import Configuration
 from back import Menu
+from json import loads, dumps
 
 from back.src.database import Database
 
@@ -25,6 +26,7 @@ class SaveMenu(BaseModel):
     jour: str
     phase: str
     menuDetails: str
+    intakes: str
 
 class Url(BaseModel):
     url: str
@@ -43,14 +45,15 @@ async def get_data():
     return data
 
 @app.post('/saveMenu')
-async def save_data(menu: str = Form(...), jour: str = Form(...), phase: str = Form(...), menuDetails: str = Form(...)):
-    db.addMenuToDayPhase(menu, jour, phase, menuDetails)
+async def save_data(menu: str = Form(...), jour: str = Form(...), phase: str = Form(...), menuDetails: str = Form(...), intakes: str = Form(...)):
+    intakes = dumps(loads(intakes))
+    db.addMenuToDayPhase(menu, jour, phase, menuDetails, intakes)
 
 @app.post('/requireWeekMenus')
 async def require_data():
     weekMenus, menus = db.require()
     weekMenusResp = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in weekMenus]
-    menusResp = [{"id": row[0], "menu": row[1], "ingredients": row[2], "quantite": row[3]} for row in menus]
+    menusResp = [{"id": row[0], "menu": row[1], "ingredients": row[2], "quantite": row[3], "intakes": row[4]} for row in menus]
     return {'weekMenus' : weekMenusResp, 'menus' : menusResp}
 
 @app.post('/menu')
