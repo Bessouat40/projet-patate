@@ -18,7 +18,8 @@ class Menu:
         for intake in self.intakesNames :
             if intake.lower() != 'id' and intake.lower() != "quantity" :
                 value = intake.lower()
-                self.intakes[value] += round(food.intakes[value], 3)
+                self.intakes[value] += food.intakes[value]
+                self.intakes[value] = round(self.intakes[value], 3)
 
     def create_food_objects(self):
         for food in list(self.food_dict.keys()) :

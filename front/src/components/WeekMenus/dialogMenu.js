@@ -4,12 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import IntakesTable from '../intakesTable';
 
 const DialogMenu = ({ open, setOpen, menu, menus }) => {
   useEffect(() => {
@@ -18,6 +13,8 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
       let _displayContent = '';
       const ingredients = displayMenu['ingredients'].split('#@&@#');
       const quantite = displayMenu['quantite'].split(',');
+      const _intakes = displayMenu['intakes'];
+      setIntakes(_intakes);
       ingredients.forEach((ingredient, idx) => {
         _displayContent +=
           ingredient.trim() + ' : ' + quantite[idx] + ' grammes' + '\n';
@@ -41,6 +38,8 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
         open={open}
         onClose={onClose}
         aria-describedby="alert-dialog-slide-description"
+        maxWidth="md"
+        fullWidth={true}
       >
         <DialogTitle>
           <Stack
@@ -59,6 +58,8 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
           <Typography style={{ whiteSpace: 'pre-line' }}>
             {displayContent}
           </Typography>
+          <br />
+          <IntakesTable intakes={intakes} />
         </DialogContent>
       </Dialog>
     </Stack>

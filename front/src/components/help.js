@@ -10,7 +10,7 @@ const Help = ({ open, setOpen }) => {
   };
   return (
     <Stack>
-      <Dialog open={open} onClose={onClose} fullWidth="true" maxWidth="lg">
+      <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="lg">
         <DialogContent>
           <Stack spacing={5}>
             <video controls>

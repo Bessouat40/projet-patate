@@ -53,7 +53,7 @@ async def save_data(menu: str = Form(...), jour: str = Form(...), phase: str = F
 async def require_data():
     weekMenus, menus = db.require()
     weekMenusResp = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in weekMenus]
-    menusResp = [{"id": row[0], "menu": row[1], "ingredients": row[2], "quantite": row[3]} for row in menus]
+    menusResp = [{"id": row[0], "menu": row[1], "ingredients": row[2], "quantite": row[3], "intakes": row[4]} for row in menus]
     return {'weekMenus' : weekMenusResp, 'menus' : menusResp}
 
 @app.post('/menu')

@@ -42,6 +42,7 @@ const WeekMenus = () => {
         dictMenus[menu['menu']] = {
           ingredients: menu['ingredients'],
           quantite: menu['quantite'],
+          intakes: menu['intakes'],
         };
       });
       setMenus(dictMenus);
@@ -112,6 +113,8 @@ const WeekMenus = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
+        width: '80%',
+        height: '80%',
       }}
     >
       {open && (

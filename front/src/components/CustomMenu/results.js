@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import SaveIcon from '@mui/icons-material/Save';
 import SaveMenuDialog from './saveDialog';
+import IntakesTable from '../intakesTable';
 
 const Results = ({ intakes, rows }) => {
   const [open, setOpen] = useState(false);
@@ -37,38 +38,7 @@ const Results = ({ intakes, rows }) => {
             Apports :
           </Typography>
           <Stack alignItems="center" justifyContent="center" spacing={3}>
-            <TableContainer component={Paper}>
-              <Table aria-label="simple table">
-                <TableBody>
-                  <TableRow key={`row-keys`}>
-                    {keys.map((key) => {
-                      return (
-                        <TableCell align="center" key={`value-${key}`}>
-                          {key}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                  <TableRow key={`row-values`}>
-                    {values.map((value, idx) => {
-                      if (idx !== idxCalories) {
-                        return (
-                          <TableCell align="center" key={`value-${value}`}>
-                            {value} g
-                          </TableCell>
-                        );
-                      } else {
-                        return (
-                          <TableCell align="center" key={`value-${value}`}>
-                            {value} kcal
-                          </TableCell>
-                        );
-                      }
-                    })}
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <IntakesTable intakes={intakes} />
             <Button
               endIcon={<SaveIcon />}
               variant="contained"
