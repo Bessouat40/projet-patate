@@ -8,7 +8,10 @@ import IntakesTable from '../intakesTable';
 
 const DialogMenu = ({ open, setOpen, menu, menus }) => {
   useEffect(() => {
-    const initContent = () => {
+    const initContent = (pass) => {
+      if (pass) {
+        return null;
+      }
       const displayMenu = menus[menu];
       let _ingredients_liste = [];
       let _quantite_liste = [];
@@ -23,8 +26,11 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
       setIngredients(_ingredients_liste);
       setQuantite(_quantite_liste);
     };
-
-    initContent();
+    try {
+      initContent(false);
+    } catch {
+      initContent(true);
+    }
   }, []);
 
   const [intakes, setIntakes] = useState({});
@@ -58,17 +64,21 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
           </Stack>
         </DialogTitle>
         <DialogContent>
-          {ingredients.map((ingredient, idx) => (
-            <Typography key={idx}>
-              <span style={{ color: 'blue' }}>
-                {ingredient.split(':')[0].trim()}
-              </span>
-              <span> </span>
-              <span>:</span>
-              <span> </span>
-              <span style={{ color: 'green' }}>{quantite[idx]} grammes</span>
-            </Typography>
-          ))}
+          {ingredients
+            ? ingredients.map((ingredient, idx) => (
+                <Typography key={idx}>
+                  <span style={{ color: 'blue' }}>
+                    {ingredient.split(':')[0].trim()}
+                  </span>
+                  <span> </span>
+                  <span>:</span>
+                  <span> </span>
+                  <span style={{ color: 'green' }}>
+                    {quantite[idx]} grammes
+                  </span>
+                </Typography>
+              ))
+            : null}
           <br />
           <IntakesTable intakes={intakes} />
         </DialogContent>
