@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Stack, Typography } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import SaveIcon from '@mui/icons-material/Save';
 import SaveMenuDialog from './saveDialog';
 import IntakesTable from '../intakesTable';
@@ -13,8 +7,6 @@ import IntakesTable from '../intakesTable';
 const Results = ({ intakes, rows }) => {
   const [open, setOpen] = useState(false);
   const [keys, setKeys] = useState([]);
-  const [values, setValues] = useState([]);
-  const [idxCalories, setIdx] = useState();
 
   useEffect(() => {
     setKeys(Object.keys(intakes));
@@ -22,8 +14,6 @@ const Results = ({ intakes, rows }) => {
     Object.keys(intakes).forEach(
       (key) => (_values = [..._values, intakes[key]])
     );
-    setValues(_values);
-    setIdx(keys.indexOf('calories'));
   }, [intakes]);
 
   const openSaveDialog = () => {
