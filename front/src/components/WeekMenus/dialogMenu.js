@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IntakesTable from '../intakesTable';
 
 const DialogMenu = ({ open, setOpen, menu, menus }) => {
-  useEffect(() => {
+  useEffect(({ open, setOpen, menu, menus }) => {
     const initContent = (pass) => {
       if (pass) {
         return null;
