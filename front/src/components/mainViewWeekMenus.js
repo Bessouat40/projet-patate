@@ -72,9 +72,12 @@ const WeekMenus = () => {
       backgroundColor: '#423325',
       color: 'white',
       borderRight: '1px solid white',
+      textAlign: 'center',
+      width: '300px',
+      height: '30px',
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
+      fontSize: 16,
     },
   }));
 

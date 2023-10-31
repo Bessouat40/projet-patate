@@ -8,25 +8,34 @@ import IntakesTable from '../intakesTable';
 
 const DialogMenu = ({ open, setOpen, menu, menus }) => {
   useEffect(() => {
-    const initContent = () => {
+    const initContent = (pass) => {
+      if (pass) {
+        return null;
+      }
       const displayMenu = menus[menu];
-      let _displayContent = '';
-      const ingredients = displayMenu['ingredients'].split('#@&@#');
-      const quantite = displayMenu['quantite'].split(',');
+      let _ingredients_liste = [];
+      let _quantite_liste = [];
+      const _ingredients = displayMenu['ingredients'].split('#@&@#');
+      const _quantite = displayMenu['quantite'].split(',');
       const _intakes = displayMenu['intakes'];
       setIntakes(_intakes);
-      ingredients.forEach((ingredient, idx) => {
-        _displayContent +=
-          ingredient.trim() + ' : ' + quantite[idx] + ' grammes' + '\n';
+      _ingredients.forEach((ingredient, idx) => {
+        _quantite_liste = [..._quantite_liste, _quantite[idx]];
+        _ingredients_liste = [..._ingredients_liste, ingredient];
       });
-      setDisplayContent(_displayContent);
+      setIngredients(_ingredients_liste);
+      setQuantite(_quantite_liste);
     };
+    try {
+      initContent(false);
+    } catch {
+      initContent(true);
+    }
+  }, []);
 
-    initContent();
-  });
-
-  const [displayContent, setDisplayContent] = useState();
   const [intakes, setIntakes] = useState({});
+  const [ingredients, setIngredients] = useState([]);
+  const [quantite, setQuantite] = useState([]);
 
   const onClose = () => {
     setOpen(false);
@@ -55,9 +64,21 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
           </Stack>
         </DialogTitle>
         <DialogContent>
-          <Typography style={{ whiteSpace: 'pre-line' }}>
-            {displayContent}
-          </Typography>
+          {ingredients
+            ? ingredients.map((ingredient, idx) => (
+                <Typography key={idx}>
+                  <span style={{ color: 'blue' }}>
+                    {ingredient.split(':')[0].trim()}
+                  </span>
+                  <span> </span>
+                  <span>:</span>
+                  <span> </span>
+                  <span style={{ color: 'green' }}>
+                    {quantite[idx]} grammes
+                  </span>
+                </Typography>
+              ))
+            : null}
           <br />
           <IntakesTable intakes={intakes} />
         </DialogContent>

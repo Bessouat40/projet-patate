@@ -41,6 +41,9 @@ const NavBar = () => {
               {/* <Nav.Link as={Link} to={'/marmiton'} style={{ color: 'white' }}>
                 Marmiton
               </Nav.Link> */}
+              <Nav.Link as={Link} to={'/About'} style={{ color: 'white' }}>
+                About
+              </Nav.Link>
             </Nav>
             <HelpIcon
               onClick={onOpen}
