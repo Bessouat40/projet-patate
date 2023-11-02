@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:latest as builder
+FROM quay.io/keycloak/keycloak:18.0.0 as builder
 
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
@@ -18,7 +18,6 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 # change these values to point to a running postgres instance
 ENV KEYCLOAK_DB=postgres
 ENV KEYCLOAK_DB_URL=http://foodDB:5432/foodDB
-ENV KEYCLOAK_DB_URL_DATABASE=foodDB
 ENV KEYCLOAK_DB_USERNAME=postgres
 ENV KEYCLOAK_DB_PASSWORD=postgres
 ENV KC_DB_SCHEMA=public

@@ -31,16 +31,17 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
 
   keycloak:
-    platform: linux/amd64
-    build:
-      context: ./keycloak
-      dockerfile: ./Dockerfile
+    image: quay.io/keycloak/keycloak:22.0.5
     environment:
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://foodDB:5432/foodDB
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=postgres
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB_SCHEMA=public
+    command: start-dev
     ports:
       - '8080:8080'
-    volumes:
-      - ./keycloak_volumes:/opt/keycloak/data/import
     depends_on:
       - foodDB
