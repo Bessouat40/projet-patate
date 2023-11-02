@@ -38,6 +38,10 @@ chmod +x run.sh
 run.sh
 ```
 
+## KEYCLOAK
+
+For access Keycloak console admin, go to : `http://localhost:8080/admin/master/console/`.
+
 ## IHM
 
 [![Watch the video](ihm.png)](./front/public/demo.mov)
