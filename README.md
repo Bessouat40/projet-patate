@@ -34,7 +34,6 @@ Now, you can access UI at `http://localhost:8000` and backend run at `http://loc
 ## USAGE WITH BASH CMD
 
 ```bash
-chmod +x run.sh
 run.sh
 ```
 
