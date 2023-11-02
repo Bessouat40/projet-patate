@@ -31,6 +31,16 @@ docker compose build && docker compose up -d
 
 Now, you can access UI at `http://localhost:8000` and backend run at `http://localhost:3000`.
 
+## USAGE WITH BASH CMD
+
+```bash
+run.sh
+```
+
+## KEYCLOAK
+
+For access Keycloak console admin, go to : `http://localhost:8080/admin/master/console/`.
+
 ## IHM
 
 [![Watch the video](ihm.png)](./front/public/demo.mov)
