@@ -1,4 +1,4 @@
-version: '3'
+version: '4'
 services:
   frontend:
     platform: linux/amd64
@@ -29,3 +29,18 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  keycloak:
+    platform: linux/amd64
+    build:
+      context: ./keycloak
+      dockerfile: ./Dockerfile
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./keycloak_volumes:/opt/keycloak/data/import
+    depends_on:
+      - foodDB

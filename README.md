@@ -31,6 +31,13 @@ docker compose build && docker compose up -d
 
 Now, you can access UI at `http://localhost:8000` and backend run at `http://localhost:3000`.
 
+# USAGE WITH BASH CMD
+
+```bash
+chmod +x run.sh
+run.sh
+```
+
 ## IHM
 
 [![Watch the video](ihm.png)](./front/public/demo.mov)
