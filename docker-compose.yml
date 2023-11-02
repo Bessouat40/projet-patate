@@ -1,4 +1,4 @@
-version: '3'
+version: '4'
 services:
   frontend:
     platform: linux/amd64
@@ -29,3 +29,19 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    environment:
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://foodDB:5432/foodDB
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=postgres
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB_SCHEMA=public
+    command: start-dev
+    ports:
+      - '8080:8080'
+    depends_on:
+      - foodDB
