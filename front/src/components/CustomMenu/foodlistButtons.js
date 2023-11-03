@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 
