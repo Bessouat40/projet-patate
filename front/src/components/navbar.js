@@ -7,13 +7,20 @@ import { Stack } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import Help from './help';
 import HelpIcon from '@mui/icons-material/Help';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-const NavBar = () => {
+const NavBar = ({ keycloakInstance, authenticated, setAuthenticated }) => {
   const [open, setOpen] = useState(false);
 
   const onOpen = () => {
     setOpen(true);
   };
+
+  const onLogout = () => {
+    keycloakInstance.logout();
+    setAuthenticated(false);
+  };
+
   return (
     <>
       <Navbar
@@ -45,16 +52,29 @@ const NavBar = () => {
                 About
               </Nav.Link>
             </Nav>
-            <HelpIcon
-              onClick={onOpen}
-              sx={{
-                color: 'white',
-                '&:hover': {
-                  color: '#9C6735',
-                },
-              }}
-            />
-            <Help open={open} setOpen={setOpen} />
+            <Stack spacing={2} direction="row">
+              <HelpIcon
+                onClick={onOpen}
+                sx={{
+                  color: 'white',
+                  '&:hover': {
+                    color: '#9C6735',
+                  },
+                }}
+              />
+              <Help open={open} setOpen={setOpen} />
+              {authenticated ? (
+                <LogoutIcon
+                  onClick={onLogout}
+                  sx={{
+                    color: 'white',
+                    '&:hover': {
+                      color: '#9C6735',
+                    },
+                  }}
+                />
+              ) : null}
+            </Stack>
           </Navbar.Collapse>
         </Container>
       </Navbar>
