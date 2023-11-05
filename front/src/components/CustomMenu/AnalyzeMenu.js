@@ -41,7 +41,7 @@ const AnalyzeMenu = ({ apiRef2, rows2, intakes, setIntakes }) => {
             backgroundColor: '#423325',
             color: 'white',
             '&:hover': {
-              color: '#9C6735',
+              backgroundColor: '#9C6735',
             },
           }}
           onClick={onSendMenu}
