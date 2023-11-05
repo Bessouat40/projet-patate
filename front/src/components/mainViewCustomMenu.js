@@ -19,7 +19,7 @@ const MainViewCustomMenu = () => {
 
   useEffect(() => {
     const sendFetch = async () => {
-      const resp = await fetch('http://localhost:8000/requireFood', {
+      const resp = await fetch('/api/requireFood', {
         method: 'POST',
       });
       const data = await resp.json();

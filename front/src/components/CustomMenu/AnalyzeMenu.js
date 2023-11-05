@@ -7,7 +7,7 @@ import { Button } from '@mui/material';
 const AnalyzeMenu = ({ apiRef2, rows2, intakes, setIntakes }) => {
   const onSendMenu = async () => {
     const menu = JSON.stringify(rows2);
-    const resp = await fetch('http://localhost:8000/menu', {
+    const resp = await fetch('/api/menu', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
