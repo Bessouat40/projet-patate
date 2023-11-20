@@ -1,4 +1,4 @@
-version: '4'
+version: '3'
 services:
   frontend:
     platform: linux/amd64
@@ -8,6 +8,17 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - '3000:3000'
+
+  nginx:
+    restart: unless-stopped
+    image: nginx
+    volumes:
+      - ./nginx/:/etc/nginx/
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - '80:80'
 
   backend:
     platform: linux/amd64
