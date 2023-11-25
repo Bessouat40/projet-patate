@@ -116,8 +116,11 @@ const WeekMenus = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '80%',
-        height: '80%',
+        width: '90%',
+        maxEight: '90%',
+        borderRadius: '10px',
+        borderColor: 'rgb(249,249,249,0.8)',
+        backgroundColor: 'rgb(249,249,249,0.8)',
       }}
     >
       {open && (
@@ -128,62 +131,63 @@ const WeekMenus = () => {
           setOpen={setOpen}
         />
       )}
-      <Typography variant="h2" color="white">
-        Vos menus de la semaine :
-      </Typography>
+      <Typography variant="h2">Vos menus de la semaine :</Typography>
       {rows ? (
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow key="columns">
-                <StyledTableCell key="null" align="center"></StyledTableCell>
-                {joursSemaine.map((jour) => (
-                  <StyledTableCell key={`header-${jour}`} align="center">
-                    {jour}
-                  </StyledTableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.keys(rows).map((phase) => (
-                <TableRow key={`row-${phase}`}>
-                  <TableCell
-                    sx={{ backgroundColor: '#423325', color: 'white' }}
-                    align="center"
-                    key={`cell-phase-${phase}`}
-                  >
-                    {phase}
-                  </TableCell>
-                  {rows[phase].map((menu, menuIdx) => (
-                    <Tooltip
-                      key={`tooltip-${phase}-${menuIdx}`}
-                      title="Afficher le repas"
-                    >
-                      <TableCell
-                        onClick={() => {
-                          setDayMenu(menu);
-                          onClickMenu();
-                        }}
-                        key={`cell-${phase}-${menuIdx}`}
-                        sx={{
-                          borderRight: '1px solid grey',
-                          borderBottom: '1px solid grey',
-                          '&:hover': {
-                            backgroundColor: '#E0DFDE',
-                            cursor: 'pointer',
-                          },
-                        }}
-                        align="center"
-                      >
-                        {menu}
-                      </TableCell>
-                    </Tooltip>
+        <Stack sx={{ width: '98%' }}>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow key="columns">
+                  <StyledTableCell key="null" align="center"></StyledTableCell>
+                  {joursSemaine.map((jour) => (
+                    <StyledTableCell key={`header-${jour}`} align="center">
+                      {jour}
+                    </StyledTableCell>
                   ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {Object.keys(rows).map((phase) => (
+                  <TableRow key={`row-${phase}`}>
+                    <TableCell
+                      sx={{ backgroundColor: '#423325', color: 'white' }}
+                      align="center"
+                      key={`cell-phase-${phase}`}
+                    >
+                      {phase}
+                    </TableCell>
+                    {rows[phase].map((menu, menuIdx) => (
+                      <Tooltip
+                        key={`tooltip-${phase}-${menuIdx}`}
+                        title="Afficher le repas"
+                      >
+                        <TableCell
+                          onClick={() => {
+                            setDayMenu(menu);
+                            onClickMenu();
+                          }}
+                          key={`cell-${phase}-${menuIdx}`}
+                          sx={{
+                            borderRight: '1px solid grey',
+                            borderBottom: '1px solid grey',
+                            '&:hover': {
+                              backgroundColor: '#E0DFDE',
+                              cursor: 'pointer',
+                            },
+                          }}
+                          align="center"
+                        >
+                          {menu}
+                        </TableCell>
+                      </Tooltip>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <br />
+        </Stack>
       ) : null}
     </Stack>
   );

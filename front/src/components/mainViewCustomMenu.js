@@ -38,46 +38,65 @@ const MainViewCustomMenu = () => {
 
   return (
     <Stack
-      spacing={3}
-      alignItems="center"
-      justifyContent="center"
-      sx={{ marginTop: '20px' }}
+      sx={{
+        minHeight: '100vh',
+        alignItems: 'center',
+        marginBottom: 20,
+        paddingTop: '30px',
+        overflow: 'auto',
+      }}
     >
-      <SearchFood setFilter={setFilter} rows={rows} />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            gap: '10px',
-          }}
-        >
-          {loading ? (
-            <Stack>
-              <CircularProgress />
-            </Stack>
-          ) : (
-            <DataGridList filterRows={filterRows} apiRef={apiRef} />
-          )}
-          <FoodListButton
-            setIntakes={setIntakes}
-            apiRef={apiRef}
-            apiRef2={apiRef2}
-            rows2={rows2}
-            setRows2={setRows2}
-          />
-          <AnalyzeMenu
-            apiRef2={apiRef2}
-            rows2={rows2}
-            setIntakes={setIntakes}
-            intakes={intakes}
-          />
+      <Stack
+        spacing={3}
+        alignItems="center"
+        sx={{
+          paddingTop: '20px',
+          paddingBottom: '20px',
+          width: '90%',
+          maxWidth: '1200px',
+          margin: '0 auto',
+          borderRadius: '10px',
+          borderColor: 'rgb(249,249,249,0.8)',
+          backgroundColor: 'rgb(249,249,249,0.8)',
+          paddingBottom: 2,
+        }}
+      >
+        <SearchFood setFilter={setFilter} rows={rows} />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              gap: '10px',
+            }}
+          >
+            {loading ? (
+              <Stack>
+                <CircularProgress />
+              </Stack>
+            ) : (
+              <DataGridList filterRows={filterRows} apiRef={apiRef} />
+            )}
+            <FoodListButton
+              setIntakes={setIntakes}
+              apiRef={apiRef}
+              apiRef2={apiRef2}
+              rows2={rows2}
+              setRows2={setRows2}
+            />
+            <AnalyzeMenu
+              apiRef2={apiRef2}
+              rows2={rows2}
+              setIntakes={setIntakes}
+              intakes={intakes}
+            />
+          </div>
         </div>
-      </div>
-      <br />
-      <Results intakes={intakes} rows={rows2} />
-      <br />
+        <br />
+        <Results intakes={intakes} rows={rows2} />
+        <br />
+      </Stack>
     </Stack>
   );
 };
