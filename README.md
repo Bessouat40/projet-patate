@@ -16,38 +16,26 @@ mv .env.example .env
 `Example :`
 
 ```bash
-POSTGRES_USER="postgres"
-POSTGRES_PASSWORD="postgres"
-POSTGRES_DB="foodDB"
-HOST="foodDB"
-PORT="5432"
-
-KC_DB="postgres"
-KC_DB_URL="jdbc:postgresql://foodDB:5432/foodDB"
-KC_DB_USERNAME="postgres"
-KC_DB_PASSWORD="postgres"
-KEYCLOAK_ADMIN="admin"
-KEYCLOAK_ADMIN_PASSWORD="admin"
-KC_DB_SCHEMA="public"
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=foodDB
+HOST=foodDB
+PORT=5432
 ```
 
 - Run docker :
 
 ```bash
-docker compose build && docker compose up -d
+./run.sh
 ```
 
-Now, you can access UI at `http://localhost:8000` and backend run at `http://localhost:3000`.
+Now, you can access `Foodcop` at `http://localhost`.
 
 ## USAGE WITH BASH CMD
 
 ```bash
 run.sh
 ```
-
-## KEYCLOAK
-
-For access Keycloak console admin, go to : `http://localhost:8080/admin/master/console/`.
 
 ## IHM
 

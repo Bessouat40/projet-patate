@@ -16,8 +16,8 @@ const Home = () => {
         width: '90%',
         maxEight: '90%',
         borderRadius: '10px',
-        borderColor: '#FFFFFF',
-        backgroundColor: '#FFFFFF',
+        borderColor: 'rgb(249,249,249,0.8)',
+        backgroundColor: 'rgb(249,249,249,0.8)',
       }}
     >
       <Typography

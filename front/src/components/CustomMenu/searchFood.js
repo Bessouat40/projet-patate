@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SearchBar from 'material-ui-search-bar';
 import TextField from '@mui/material/TextField';
 
 const SearchFood = ({ setFilter, rows }) => {

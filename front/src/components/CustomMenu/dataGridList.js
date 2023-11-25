@@ -25,7 +25,7 @@ const DataGridList = ({ filterRows, apiRef }) => {
           disableRowSelectionOnClick
         />
       ) : (
-        <Typography color="white">
+        <Typography>
           Aucun aliment ne correspond à votre recherche...
         </Typography>
       )}
