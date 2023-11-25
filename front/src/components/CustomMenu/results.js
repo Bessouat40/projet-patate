@@ -24,9 +24,7 @@ const Results = ({ intakes, rows }) => {
     <Stack>
       {keys.length > 0 ? (
         <Stack alignItems="center" justifyContent="center">
-          <Typography variant="h4" color="white">
-            Apports :
-          </Typography>
+          <Typography variant="h4">Apports :</Typography>
           <Stack alignItems="center" justifyContent="center" spacing={3}>
             <IntakesTable intakes={intakes} />
             <Button
