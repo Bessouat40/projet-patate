@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Keycloak from 'keycloak-js';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import MainViewCustomMenu from './components/mainViewCustomMenu';
 import WeekMenus from './components/mainViewWeekMenus';

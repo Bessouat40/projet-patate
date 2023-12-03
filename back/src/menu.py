@@ -8,7 +8,7 @@ class Menu:
         self.food_dict = food_dict
         self.create_food_objects()
         self.intakes = {}
-        self.intakesNames = Configuration().df_food.columns[1:].values
+        self.intakesNames = Configuration().df_food.columns[3:].values
         for intake in self.intakesNames :
             if intake.lower() != 'id' and intake.lower() != "quantity" :
                 self.intakes[intake.lower()] = 0

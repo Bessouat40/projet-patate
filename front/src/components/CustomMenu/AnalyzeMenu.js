@@ -1,10 +1,8 @@
 import React from 'react';
 import { Stack } from '@mui/material';
-import MenuTitle from './menuTitle';
-import DataGridMenu from './dataGridMenu';
 import { Button } from '@mui/material';
 
-const AnalyzeMenu = ({ apiRef2, rows2, intakes, setIntakes }) => {
+const AnalyzeMenu = ({ rows2, intakes, setIntakes }) => {
   const onSendMenu = async () => {
     const menu = JSON.stringify(rows2);
     const resp = await fetch('/api/menu', {
@@ -20,35 +18,26 @@ const AnalyzeMenu = ({ apiRef2, rows2, intakes, setIntakes }) => {
   };
   return (
     <Stack
-      direction="row"
+      spacing={5}
       alignItems="center"
-      justifyContent="center"
-      spacing={10}
+      sx={{ width: '45%', maxHeight: '100%' }}
     >
-      <Stack
-        spacing={5}
-        alignItems="center"
-        sx={{ width: '45%', maxHeight: '100%' }}
+      <Button
+        variant="contained"
+        sx={{
+          height: '10%',
+          width: '50%',
+          justifyContent: 'center',
+          backgroundColor: '#423325',
+          color: 'white',
+          '&:hover': {
+            backgroundColor: '#9C6735',
+          },
+        }}
+        onClick={onSendMenu}
       >
-        <MenuTitle />
-        <DataGridMenu apiRef2={apiRef2} rows2={rows2} />
-        <Button
-          variant="contained"
-          sx={{
-            height: '10%',
-            width: '50%',
-            justifyContent: 'center',
-            backgroundColor: '#423325',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: '#9C6735',
-            },
-          }}
-          onClick={onSendMenu}
-        >
-          Analyser le menu
-        </Button>
-      </Stack>
+        Analyser le menu
+      </Button>
     </Stack>
   );
 };

@@ -12,4 +12,4 @@ class Configuration(metaclass=Singleton):
             self.df_food["QUANTITY"] = [0 for i in range(len(self.df_food))]
         if "id" not in self.df_food.columns :
             self.df_food["id"] = [i for i in range(len(self.df_food))]
-        return self.df_food[["ALIMENT", "QUANTITY", "id"]].to_json(orient="records")
+        return self.df_food[["GROUPE", "SOUSGROUPE", "ALIMENT", "QUANTITY", "id"]].to_json(orient="records")

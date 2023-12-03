@@ -10,7 +10,7 @@ from json import loads, dumps
 
 from back.src.database import Database
 
-Configuration("back/data/aliments2_2020.csv")
+Configuration("back/data/aliments2_2020_sous_groupes.csv")
 
 app = FastAPI()
 
