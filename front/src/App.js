@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Keycloak from 'keycloak-js';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import MainViewCustomMenu from './components/mainViewCustomMenu';
 import WeekMenus from './components/mainViewWeekMenus';
 import Home from './components/home';
 import About from './components/about';
 import NavBar from './components/navbar';
-import Login from './login';
 
 const PrivateComponent = ({ children, authenticated }) => {
   if (!authenticated) {
@@ -55,7 +49,6 @@ const App = () => {
         keycloakInstance={keycloakInstance}
       />
       <Routes>
-        <Route path="/login" element={<Login />} />
         <Route
           path="/"
           element={

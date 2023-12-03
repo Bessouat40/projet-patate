@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import SearchBar from 'material-ui-search-bar';
 import TextField from '@mui/material/TextField';
 
 const SearchFood = ({ setFilter, rows }) => {
@@ -19,7 +18,11 @@ const SearchFood = ({ setFilter, rows }) => {
   };
   return (
     <TextField
-      sx={{ backgroundColor: 'white', borderRadius: '10px', width: '30%' }}
+      sx={{
+        backgroundColor: 'white',
+        width: '30%',
+        borderRadius: '5px',
+      }}
       value={filledValue}
       onChange={(searchVal) => {
         requestSearchFood(searchVal.target.value);
