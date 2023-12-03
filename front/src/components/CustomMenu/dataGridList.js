@@ -3,25 +3,24 @@ import columns from './columns';
 import { Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 
-const DataGridList = ({ filterRows, apiRef }) => {
+const DataGridList = ({ filterRows, apiRef, selected, setSelected }) => {
   return (
     <Stack>
       {filterRows.length > 0 ? (
         <DataGrid
           apiRef={apiRef}
           rows={filterRows}
-          columns={columns}
+          columns={columns(selected, setSelected)}
           sx={{ backgroundColor: 'white' }}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 9,
+                pageSize: 10,
               },
             },
           }}
-          pageSizeOptions={[9]}
+          pageSizeOptions={[10]}
           disableColumnMenu
-          checkboxSelection
           disableRowSelectionOnClick
         />
       ) : (

@@ -6,6 +6,8 @@ services:
     build:
       context: ./front
       dockerfile: ./Dockerfile
+    ports:
+      - '3000:3000'
 
   nginx:
     restart: unless-stopped
@@ -38,3 +40,13 @@ services:
     volumes:
       - ./db:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    env_file:
+      - .env
+    command: start-dev
+    ports:
+      - '8080:8080'
+    depends_on:
+      - foodDB
