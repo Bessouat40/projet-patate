@@ -42,4 +42,5 @@ class Database() :
         query1 = text(f"UPDATE weekMenus SET menu='{menu}' WHERE weekMenus.phase='{phase}' AND weekMenus.jour='{day}'")
         self.conn.execute(query1)
         query2 = text(f"INSERT INTO menus (id, menu, ingredients, quantite, intakes) VALUES (default, '{menu}', '{ingredients}', '{quantite}', '{intakes}')")
+        # query2 = text(f"INSERT INTO menus (menu, ingredients, quantite, intakes) SELECT '{menu}', '{ingredients}', '{quantite}', '{intakes}' WHERE NOT EXISTS ( SELECT menu, ingredients FROM menus WHERE menu = '{menu}' AND ingredients = '{ingredients}');")
         self.conn.execute(query2)

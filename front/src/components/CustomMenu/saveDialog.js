@@ -8,10 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
-const SaveMenuDialog = ({ open, setOpen, rows, intakes }) => {
-  const [menu, setMenu] = useState('');
+const SaveMenuDialog = ({ open, setOpen, rows, intakes, menuName = '' }) => {
+  const [menu, setMenu] = useState(menuName);
   const [jour, setJour] = useState('lundi');
   const [phase, setPhase] = useState('matin');
+  const fixMenu = menuName === '';
 
   const _joursSemaine = [
     'lundi',
@@ -37,7 +38,7 @@ const SaveMenuDialog = ({ open, setOpen, rows, intakes }) => {
     formData.append('intakes', JSON.stringify(intakes));
     const menuDetails = JSON.stringify(rows);
     formData.append('menuDetails', menuDetails);
-    await fetch('/api/saveMenu', {
+    await fetch('http://localhost:8000/saveMenu', {
       body: formData,
       method: 'POST',
     });
@@ -73,12 +74,14 @@ const SaveMenuDialog = ({ open, setOpen, rows, intakes }) => {
             alignItems="center"
             direction="row"
           >
-            <TextField
-              label="Nom du plat"
-              onChange={(e) => {
-                setMenu(e.target.value);
-              }}
-            />
+            {fixMenu && (
+              <TextField
+                label="Nom du plat"
+                onChange={(e) => {
+                  setMenu(e.target.value);
+                }}
+              />
+            )}
             <Select
               onChange={(event) => setJour(event.target.value)}
               defaultValue="lundi"
