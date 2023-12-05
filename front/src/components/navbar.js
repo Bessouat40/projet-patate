@@ -39,6 +39,9 @@ const NavBar = () => {
               <Nav.Link as={Link} to={'/weekMenus'} style={{ color: 'white' }}>
                 Menus de la semaine
               </Nav.Link>
+              <Nav.Link as={Link} to={'/menus'} style={{ color: 'white' }}>
+                Menus
+              </Nav.Link>
               {/* <Nav.Link as={Link} to={'/marmiton'} style={{ color: 'white' }}>
                 Marmiton
               </Nav.Link> */}

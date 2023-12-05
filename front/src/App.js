@@ -7,78 +7,87 @@ import WeekMenus from './components/mainViewWeekMenus';
 import Home from './components/home';
 import About from './components/about';
 import NavBar from './components/navbar';
+import MenuList from './components/menusList';
 
-const PrivateComponent = ({ children, authenticated }) => {
-  if (!authenticated) {
-    return null;
-  }
+// const PrivateComponent = ({ children, authenticated }) => {
+//   if (!authenticated) {
+//     return null;
+//   }
 
-  return children;
-};
+//   return children;
+// };
 
 const App = () => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [keycloakInstance, setKeycloakInstance] = useState();
+  // const [authenticated, setAuthenticated] = useState(false);
+  // const [keycloakInstance, setKeycloakInstance] = useState();
 
-  useEffect(() => {
-    const keycloakConfig = {
-      url: 'http://localhost:8080',
-      realm: 'foodcop-realm',
-      clientId: 'foodcop',
-    };
+  // useEffect(() => {
+  //   const keycloakConfig = {
+  //     url: 'http://localhost:8080',
+  //     realm: 'foodcop-realm',
+  //     clientId: 'foodcop',
+  //   };
 
-    const _keycloakInstance = new Keycloak(keycloakConfig);
+  //   const _keycloakInstance = new Keycloak(keycloakConfig);
 
-    _keycloakInstance.init({ onLoad: 'login-required' }).then((auth) => {
-      console.log('auth : ' + auth);
-      setAuthenticated(auth);
-    });
+  //   _keycloakInstance.init({ onLoad: 'login-required' }).then((auth) => {
+  //     console.log('auth : ' + auth);
+  //     setAuthenticated(auth);
+  //   });
 
-    setKeycloakInstance(_keycloakInstance);
-    return () => {
-      if (keycloakInstance) {
-        keycloakInstance.logout();
-      }
-    };
-  }, []);
+  //   setKeycloakInstance(_keycloakInstance);
+  //   return () => {
+  //     if (keycloakInstance) {
+  //       keycloakInstance.logout();
+  //     }
+  //   };
+  // }, []);
   return (
     <Router>
       <NavBar
-        authenticated={authenticated}
-        setAuthenticated={setAuthenticated}
-        keycloakInstance={keycloakInstance}
+      // authenticated={authenticated}
+      // setAuthenticated={setAuthenticated}
+      // keycloakInstance={keycloakInstance}
       />
       <Routes>
         <Route
           path="/"
           element={
-            <PrivateComponent authenticated={authenticated}>
-              <Home />
-            </PrivateComponent>
+            // <PrivateComponent authenticated={authenticated}>
+            <Home />
+            // </PrivateComponent>
           }
         />
         <Route
           path="/customMenu"
           element={
-            <PrivateComponent authenticated={authenticated}>
-              <MainViewCustomMenu />
-            </PrivateComponent>
+            // <PrivateComponent authenticated={authenticated}>
+            <MainViewCustomMenu />
+            // </PrivateComponent>
           }
         />
         <Route
           path="/weekMenus"
           element={
-            <PrivateComponent authenticated={authenticated}>
-              <WeekMenus />
-            </PrivateComponent>
+            // <PrivateComponent authenticated={authenticated}>
+            <WeekMenus />
+            // </PrivateComponent>
+          }
+        />
+        <Route
+          path="/menus"
+          element={
+            // <PrivateComponent authenticated={authenticated}>
+            <MenuList />
+            // </PrivateComponent>
           }
         />
         <Route
           path="/about"
           element={
-            <PrivateComponent authenticated={authenticated}>
-              <About />
-            </PrivateComponent>
+            // <PrivateComponent authenticated={authenticated}>
+            <About />
+            // </PrivateComponent>
           }
         />
       </Routes>
