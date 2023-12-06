@@ -8,6 +8,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DialogMenu from './WeekMenus/dialogMenu';
 import SaveMenuDialog from './CustomMenu/saveDialog';
+import { IconButton } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import SearchMenu from './MenusList/searchMenu';
 
 const MenuList = () => {
   const [menus, setMenus] = useState({});
@@ -16,10 +20,11 @@ const MenuList = () => {
   const [displayedMenu, setMenu] = useState();
   const [open, setOpen] = useState(false);
   const [openSave, setOpenSave] = useState(false);
+  const [filter, setFilter] = useState(false);
 
   useEffect(() => {
     const sendFetch = async () => {
-      const resp = await fetch('http://localhost:8000/requireWeekMenus', {
+      const resp = await fetch('/api/requireWeekMenus', {
         method: 'POST',
       });
       const data = await resp.json();
@@ -43,7 +48,8 @@ const MenuList = () => {
         };
       });
       setMenus(dictMenus);
-      console.log(dictMenus);
+      setFilter(dictMenus);
+      console.log('menus : ', dictMenus);
     };
 
     getData();
@@ -103,11 +109,12 @@ const MenuList = () => {
     >
       <Stack
         alignItems="center"
-        justifyContent="center"
+        spacing={3}
         sx={{
           paddingTop: '20px',
           paddingBottom: '20px',
           width: '90%',
+          height: '700px',
           maxWidth: '1200px',
           margin: '0 auto',
           borderRadius: '10px',
@@ -115,6 +122,7 @@ const MenuList = () => {
           backgroundColor: 'rgb(249,249,249,0.8)',
         }}
       >
+        <SearchMenu rows={menus} setFilter={setFilter} />
         {open && (
           <DialogMenu
             menu={displayedMenu}
@@ -132,31 +140,44 @@ const MenuList = () => {
             menuName={displayedMenu}
           />
         )}
-        <Grid container spacing={2}>
-          {Object.keys(menus).map((menu) => (
+        <Grid container spacing={2} justifyContent="center" alignItems="center">
+          {Object.keys(filter).map((menu) => (
             <Grid
               item
-              xs={12}
               sm={6}
               md={4}
               key={menu}
               sx={{ display: 'flex', justifyContent: 'center' }}
             >
-              <Card sx={{ maxWidth: 345 }}>
+              <Card
+                sx={{
+                  maxWidth: 345,
+                  height: '250px',
+                  width: '100%',
+                  overflow: 'auto',
+                }}
+              >
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {menu}
-                  </Typography>
+                  <Stack
+                    alignItems="center"
+                    justifyContent="center"
+                    direction="row"
+                    spacing={10}
+                  >
+                    <IconButton onClick={() => openMenu(menu)}>
+                      <AddIcon />
+                    </IconButton>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {menu}
+                    </Typography>
+                    <IconButton onClick={() => transferMenu(menu)}>
+                      <CalendarMonthIcon />
+                    </IconButton>
+                  </Stack>
+
                   {processMenu(menus[menu])}
                 </CardContent>
-                <CardActions>
-                  <Button size="small" onClick={() => openMenu(menu)}>
-                    Voir plus
-                  </Button>
-                  <Button size="small" onClick={() => transferMenu(menu)}>
-                    Ajouter à ma semaine
-                  </Button>
-                </CardActions>
+                <CardActions></CardActions>
               </Card>
             </Grid>
           ))}

@@ -28,7 +28,7 @@ const WeekMenus = () => {
 
   useEffect(() => {
     const sendFetch = async () => {
-      const resp = await fetch('http://localhost:8000/requireWeekMenus', {
+      const resp = await fetch('/api/requireWeekMenus', {
         method: 'POST',
       });
       const data = await resp.json();
