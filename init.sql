@@ -10,7 +10,7 @@ CREATE TABLE menus
 (
     id SERIAL PRIMARY KEY,
     menu VARCHAR(255),
-    ingredients VARCHAR(255),
+    ingredients TEXT,
     quantite VARCHAR(255),
     intakes JSON
 );
