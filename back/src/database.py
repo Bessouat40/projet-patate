@@ -46,10 +46,11 @@ class Database() :
         self.conn.execute(query2)
 
     def delete_menu_from_menu_list(self, menu_name):
-        self.delete_menu_from_week_calendar(menu_name)
+        query = text(f"UPDATE weekMenus SET menu='' WHERE weekMenus.menu='{menu_name}'")
+        self.conn.execute(query)
         query = text(f"DELETE FROM menus WHERE menu='{menu_name}'")
         self.conn.execute(query)
     
-    def delete_menu_from_week_calendar(self, menu_name):
-        query = text(f"UPDATE weekMenus SET menu='' WHERE weekMenus.menu='{menu_name}'")
+    def delete_menu_from_week_calendar(self, menu_name, phase, jour):
+        query = text(f"UPDATE weekMenus SET menu='' WHERE weekMenus.menu='{menu_name}' AND weekMenus.jour='{jour}' AND weekMenus.phase='{phase}'")
         self.conn.execute(query)
