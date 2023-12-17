@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Stack } from '@mui/system';
 import { styled } from '@mui/system';
 import Table from '@mui/material/Table';
@@ -16,15 +16,50 @@ const WeekMenus = () => {
   const [dayMenu, setDayMenu] = useState({});
   const [menus, setMenus] = useState({});
   const [open, setOpen] = useState(false);
-  const joursSemaine = [
-    'lundi',
-    'mardi',
-    'mercredi',
-    'jeudi',
-    'vendredi',
-    'samedi',
-    'dimanche',
-  ];
+  const [reload, setReload] = useState(false);
+
+  const joursSemaine = useMemo(
+    () => [
+      'lundi',
+      'mardi',
+      'mercredi',
+      'jeudi',
+      'vendredi',
+      'samedi',
+      'dimanche',
+    ],
+    []
+  );
+
+  const formatData = useCallback(
+    (_rows) => {
+      _rows.sort((a, b) => {
+        return (
+          joursSemaine.indexOf(a['jour']) - joursSemaine.indexOf(b['jour'])
+        );
+      });
+
+      const phaseMenus = { matin: [], midi: [], soir: [] };
+      const groupedData = {};
+
+      _rows.forEach((item) => {
+        const jour = item.jour;
+        if (!groupedData[jour]) {
+          groupedData[jour] = [];
+        }
+        groupedData[jour].push(item);
+      });
+
+      for (const jour in groupedData) {
+        groupedData[jour].forEach((dict) => {
+          phaseMenus[dict['phase']].push(dict['menu']);
+        });
+      }
+
+      setRows(phaseMenus);
+    },
+    [setRows, joursSemaine]
+  );
 
   useEffect(() => {
     const sendFetch = async () => {
@@ -65,7 +100,48 @@ const WeekMenus = () => {
     };
 
     getData();
-  }, []);
+  }, [formatData]);
+
+  useEffect(() => {
+    const sendFetch = async () => {
+      const resp = await fetch('/api/requireWeekMenus', {
+        method: 'POST',
+      });
+      const data = await resp.json();
+      return data;
+    };
+
+    const loadMenus = (resp) => {
+      const _menus = resp['menus'];
+      const dictMenus = {};
+      _menus.forEach((menu) => {
+        dictMenus[menu['menu']] = {
+          ingredients: menu['ingredients'],
+          quantite: menu['quantite'],
+          intakes: menu['intakes'],
+        };
+      });
+      setMenus(dictMenus);
+    };
+
+    const loadRows = (resp) => {
+      const weekMenus = resp['weekMenus'];
+      const row = [];
+      weekMenus.forEach((d) => {
+        row.push(d);
+      });
+      formatData(row);
+    };
+
+    const getData = async () => {
+      await sendFetch().then((resp) => {
+        loadMenus(resp);
+        loadRows(resp);
+      });
+    };
+
+    getData();
+  }, [reload, formatData]);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -85,29 +161,16 @@ const WeekMenus = () => {
     setOpen(true);
   };
 
-  const formatData = (_rows) => {
-    _rows.sort((a, b) => {
-      return joursSemaine.indexOf(a['jour']) - joursSemaine.indexOf(b['jour']);
+  const onDelete = async () => {
+    const formData = new FormData();
+    formData.append('menu_name', dayMenu);
+    await fetch('/api/delete_week_menu', {
+      body: formData,
+      method: 'POST',
     });
-
-    const phaseMenus = { matin: [], midi: [], soir: [] };
-    const groupedData = {};
-
-    _rows.forEach((item) => {
-      const jour = item.jour;
-      if (!groupedData[jour]) {
-        groupedData[jour] = [];
-      }
-      groupedData[jour].push(item);
-    });
-
-    for (const jour in groupedData) {
-      groupedData[jour].forEach((dict) => {
-        phaseMenus[dict['phase']].push(dict['menu']);
-      });
-    }
-
-    setRows(phaseMenus);
+    alert('Votre menu a bien été retiré pour ce jour de la semaine');
+    setReload(!reload);
+    setOpen(false);
   };
 
   return (
@@ -133,6 +196,7 @@ const WeekMenus = () => {
           menus={menus}
           open={open}
           setOpen={setOpen}
+          onDelete={onDelete}
         />
       )}
       <Typography variant="h2">Vos menus de la semaine :</Typography>

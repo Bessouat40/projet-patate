@@ -28,6 +28,9 @@ class SaveMenu(BaseModel):
     menuDetails: str
     intakes: str
 
+class MenuName(BaseModel):
+    menu_name: str
+
 class Url(BaseModel):
     url: str
 
@@ -63,6 +66,14 @@ async def calcul_menu_intakes(items: List[Item]):
         food_dict[item.ALIMENT] = float(item.QUANTITY)
     menu = Menu(food_dict)
     return menu.intakes
+
+@app.post('/delete_menu')
+async def delete_menu(menu_name: str = Form(...)):
+    db.delete_menu_from_menu_list(menu_name)
+
+@app.post('/delete_week_menu')
+async def delete_menu(menu_name: str = Form(...)):
+    db.delete_menu_from_week_calendar(menu_name)
 
 # @app.post('/food')
 # async def get_data(data: Url):

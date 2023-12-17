@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 
 const SearchMenu = ({ setFilter, rows }) => {
-  const [searched, setSearched] = useState('');
   const [filledValue, setFilledValue] = useState('');
 
   const requestSearchMenu = (searchedVal) => {
@@ -14,10 +13,6 @@ const SearchMenu = ({ setFilter, rows }) => {
     setFilter(newRows);
   };
 
-  const cancelSearchMenu = () => {
-    setSearched('');
-    requestSearchMenu(searched);
-  };
   return (
     <TextField
       sx={{
