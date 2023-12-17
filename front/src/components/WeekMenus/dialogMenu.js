@@ -5,8 +5,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
 import IntakesTable from '../intakesTable';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const DialogMenu = ({ open, setOpen, menu, menus }) => {
+const DialogMenu = ({ open, setOpen, menu, menus, onDelete }) => {
   useEffect(() => {
     const initContent = (pass) => {
       if (pass) {
@@ -31,7 +32,7 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
     } catch {
       initContent(true);
     }
-  }, []);
+  }, [menu, menus]);
 
   const [intakes, setIntakes] = useState({});
   const [ingredients, setIngredients] = useState([]);
@@ -57,7 +58,10 @@ const DialogMenu = ({ open, setOpen, menu, menus }) => {
             alignItems="center"
             justifyContent="center"
           >
-            {'Votre menu du jour'}
+            <IconButton onClick={() => onDelete()}>
+              <DeleteIcon color="error" />
+            </IconButton>
+            <Typography>Votre menu</Typography>
             <IconButton onClick={onClose}>
               <CloseIcon />
             </IconButton>

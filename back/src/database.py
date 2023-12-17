@@ -44,3 +44,12 @@ class Database() :
         query2 = text(f"INSERT INTO menus (id, menu, ingredients, quantite, intakes) VALUES (default, '{menu}', '{ingredients}', '{quantite}', '{intakes}')")
         # query2 = text(f"INSERT INTO menus (menu, ingredients, quantite, intakes) SELECT '{menu}', '{ingredients}', '{quantite}', '{intakes}' WHERE NOT EXISTS ( SELECT menu, ingredients FROM menus WHERE menu = '{menu}' AND ingredients = '{ingredients}');")
         self.conn.execute(query2)
+
+    def delete_menu_from_menu_list(self, menu_name):
+        self.delete_menu_from_week_calendar(menu_name)
+        query = text(f"DELETE FROM menus WHERE menu='{menu_name}'")
+        self.conn.execute(query)
+    
+    def delete_menu_from_week_calendar(self, menu_name):
+        query = text(f"UPDATE weekMenus SET menu='' WHERE weekMenus.menu='{menu_name}'")
+        self.conn.execute(query)

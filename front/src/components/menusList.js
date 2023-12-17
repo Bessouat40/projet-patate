@@ -4,7 +4,6 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DialogMenu from './WeekMenus/dialogMenu';
 import SaveMenuDialog from './CustomMenu/saveDialog';
@@ -21,6 +20,7 @@ const MenuList = () => {
   const [open, setOpen] = useState(false);
   const [openSave, setOpenSave] = useState(false);
   const [filter, setFilter] = useState(false);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const sendFetch = async () => {
@@ -54,6 +54,39 @@ const MenuList = () => {
 
     getData();
   }, []);
+
+  useEffect(() => {
+    const sendFetch = async () => {
+      const resp = await fetch('/api/requireWeekMenus', {
+        method: 'POST',
+      });
+      const data = await resp.json();
+      return data;
+    };
+
+    const getData = async () => {
+      await sendFetch().then((resp) => {
+        loadMenus(resp);
+      });
+    };
+
+    const loadMenus = (resp) => {
+      const _menus = resp['menus'];
+      const dictMenus = {};
+      _menus.forEach((menu) => {
+        dictMenus[menu['menu']] = {
+          ingredients: menu['ingredients'],
+          quantite: menu['quantite'],
+          intakes: menu['intakes'],
+        };
+      });
+      setMenus(dictMenus);
+      setFilter(dictMenus);
+      console.log('menus : ', dictMenus);
+    };
+
+    getData();
+  }, [reload]);
 
   const processMenu = (menu) => {
     const _ingredients = menu['ingredients'].split('#@&@#');
@@ -97,6 +130,20 @@ const MenuList = () => {
     setOpenSave(true);
   };
 
+  const onDelete = async () => {
+    const formData = new FormData();
+    formData.append('menu_name', displayedMenu);
+    await fetch('/api/delete_menu', {
+      body: formData,
+      method: 'POST',
+    });
+    alert(
+      'Votre menu a bien été retiré de votre liste de menus et de vos menus de la semaine (dans le cas où il y était présent)'
+    );
+    setReload(!reload);
+    setOpen(false);
+  };
+
   return (
     <Stack
       sx={{
@@ -116,7 +163,7 @@ const MenuList = () => {
           width: '90%',
           height: '700px',
           maxWidth: '1200px',
-          margin: '0 auto',
+          overflow: 'auto',
           borderRadius: '10px',
           borderColor: 'rgb(249,249,249,0.8)',
           backgroundColor: 'rgb(249,249,249,0.8)',
@@ -129,6 +176,7 @@ const MenuList = () => {
             menus={menus}
             open={open}
             setOpen={setOpen}
+            onDelete={onDelete}
           />
         )}
         {openSave && (
