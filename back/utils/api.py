@@ -72,8 +72,8 @@ async def delete_menu(menu_name: str = Form(...)):
     db.delete_menu_from_menu_list(menu_name)
 
 @app.post('/delete_week_menu')
-async def delete_menu(menu_name: str = Form(...)):
-    db.delete_menu_from_week_calendar(menu_name)
+async def delete_menu(menu_name: str = Form(...), phase: str = Form(...), jour: str = Form(...)):
+    db.delete_menu_from_week_calendar(menu_name, phase, jour)
 
 # @app.post('/food')
 # async def get_data(data: Url):

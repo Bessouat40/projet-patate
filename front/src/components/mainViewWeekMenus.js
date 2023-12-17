@@ -14,6 +14,8 @@ import DialogMenu from './WeekMenus/dialogMenu';
 const WeekMenus = () => {
   const [rows, setRows] = useState();
   const [dayMenu, setDayMenu] = useState({});
+  const [idx, setIdx] = useState({});
+  const [phase, setPhase] = useState({});
   const [menus, setMenus] = useState({});
   const [open, setOpen] = useState(false);
   const [reload, setReload] = useState(false);
@@ -164,6 +166,8 @@ const WeekMenus = () => {
   const onDelete = async () => {
     const formData = new FormData();
     formData.append('menu_name', dayMenu);
+    formData.append('phase', phase);
+    formData.append('jour', joursSemaine[idx]);
     await fetch('/api/delete_week_menu', {
       body: formData,
       method: 'POST',
@@ -232,6 +236,8 @@ const WeekMenus = () => {
                         <TableCell
                           onClick={() => {
                             setDayMenu(menu);
+                            setIdx(menuIdx);
+                            setPhase(phase);
                             onClickMenu();
                           }}
                           key={`cell-${phase}-${menuIdx}`}
