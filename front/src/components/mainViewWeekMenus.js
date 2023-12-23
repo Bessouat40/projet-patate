@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Tooltip, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import DialogMenu from './WeekMenus/dialogMenu';
 
 const WeekMenus = () => {
@@ -229,31 +229,26 @@ const WeekMenus = () => {
                       {phase}
                     </TableCell>
                     {rows[phase].map((menu, menuIdx) => (
-                      <Tooltip
-                        key={`tooltip-${phase}-${menuIdx}`}
-                        title="Afficher le repas"
+                      <TableCell
+                        onClick={() => {
+                          setDayMenu(menu);
+                          setIdx(menuIdx);
+                          setPhase(phase);
+                          onClickMenu();
+                        }}
+                        key={`cell-${phase}-${menuIdx}`}
+                        sx={{
+                          borderRight: '1px solid grey',
+                          borderBottom: '1px solid grey',
+                          '&:hover': {
+                            backgroundColor: '#E0DFDE',
+                            cursor: 'pointer',
+                          },
+                        }}
+                        align="center"
                       >
-                        <TableCell
-                          onClick={() => {
-                            setDayMenu(menu);
-                            setIdx(menuIdx);
-                            setPhase(phase);
-                            onClickMenu();
-                          }}
-                          key={`cell-${phase}-${menuIdx}`}
-                          sx={{
-                            borderRight: '1px solid grey',
-                            borderBottom: '1px solid grey',
-                            '&:hover': {
-                              backgroundColor: '#E0DFDE',
-                              cursor: 'pointer',
-                            },
-                          }}
-                          align="center"
-                        >
-                          {menu}
-                        </TableCell>
-                      </Tooltip>
+                        {menu}
+                      </TableCell>
                     ))}
                   </TableRow>
                 ))}
