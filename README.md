@@ -21,14 +21,6 @@ POSTGRES_PASSWORD=postgres
 POSTGRES_DB=foodDB
 HOST=foodDB
 PORT=5432
-
-KC_DB="postgres"
-KC_DB_URL="jdbc:postgresql://foodDB:5432/foodDB"
-KC_DB_USERNAME="postgres"
-KC_DB_PASSWORD="postgres"
-KEYCLOAK_ADMIN="admin"
-KEYCLOAK_ADMIN_PASSWORD="admin"
-KC_DB_SCHEMA="public"
 ```
 
 - Run docker :
@@ -42,8 +34,16 @@ Now, you can access `Foodcop` at `http://localhost`.
 ## USAGE WITH BASH CMD
 
 ```bash
-run.sh
+make test
 ```
+
+Then you can check app state :
+
+```bash
+docker-compose logs -f
+```
+
+-------------------------------- Working on this feature --------------------------------
 
 ## Keycloak
 
@@ -53,12 +53,3 @@ For access Keycloak console admin, go to : `http://localhost:8080/admin/master/c
 - Create your Client :
   - Setup your client Valid redirect URIs to `http://localhost/*`
   - Setup your Web origins to `http://localhost`
-
-## Tips for dev
-
-Modify `index.js` like this :
-
-```javascript
-// import App from './App';
-import App from './App_dev';
-```
