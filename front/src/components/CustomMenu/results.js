@@ -7,14 +7,26 @@ import IntakesTable from '../intakesTable';
 const Results = ({ intakes, rows }) => {
   const [open, setOpen] = useState(false);
   const [keys, setKeys] = useState([]);
+  const [portion, setPortion] = useState(null);
 
   useEffect(() => {
     setKeys(Object.keys(intakes));
-    var _values = [];
-    Object.keys(intakes).forEach(
-      (key) => (_values = [..._values, intakes[key]])
-    );
+    let _values = [];
+    let _portion = {};
+    const quantity = extract_quantity(rows);
+    Object.keys(intakes).forEach((key) => {
+      _values = [..._values, intakes[key]];
+      _portion[key] = ((Number(intakes[key]) / quantity) * 100).toFixed(2);
+    });
+    setPortion(_portion);
+    console.log('portion : ', _portion);
   }, [intakes]);
+
+  const extract_quantity = (rows) => {
+    let quantity = 0;
+    rows.forEach((row) => (quantity = quantity + Number(row['QUANTITY'])));
+    return quantity;
+  };
 
   const openSaveDialog = () => {
     setOpen(true);
@@ -27,6 +39,8 @@ const Results = ({ intakes, rows }) => {
           <Typography variant="h4">Apports :</Typography>
           <Stack alignItems="center" justifyContent="center" spacing={3}>
             <IntakesTable intakes={intakes} />
+            <Typography variant="h4">Apports pour 100 g :</Typography>
+            <IntakesTable intakes={portion} />
             <Button
               endIcon={<SaveIcon />}
               variant="contained"
