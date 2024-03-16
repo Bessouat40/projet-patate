@@ -23,7 +23,7 @@ const IntakesTable = ({ intakes }) => {
   }, [intakes]);
 
   return (
-    <Stack>
+    <Stack maxWidth="95%">
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableBody>

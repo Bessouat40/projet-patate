@@ -18,7 +18,6 @@ const NavBar = () => {
   return (
     <>
       <Navbar
-        collapseOnSelect
         style={{
           background: '#423325',
         }}
@@ -26,7 +25,7 @@ const NavBar = () => {
       >
         <Container>
           <Navbar.Brand as={Link} to={'/'} style={{ color: 'white' }}>
-            <Stack direction="row" alignItems="center" spacing={10}>
+            <Stack direction="row" alignItems="center">
               <HomeIcon />
             </Stack>
           </Navbar.Brand>
@@ -42,9 +41,6 @@ const NavBar = () => {
               <Nav.Link as={Link} to={'/menus'} style={{ color: 'white' }}>
                 Menus
               </Nav.Link>
-              {/* <Nav.Link as={Link} to={'/marmiton'} style={{ color: 'white' }}>
-                Marmiton
-              </Nav.Link> */}
               <Nav.Link as={Link} to={'/About'} style={{ color: 'white' }}>
                 About
               </Nav.Link>

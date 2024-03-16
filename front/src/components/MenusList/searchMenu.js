@@ -25,7 +25,7 @@ const SearchMenu = ({ setFilter, rows }) => {
         requestSearchMenu(searchVal.target.value);
         setFilledValue(searchVal.target.value);
       }}
-      placeholder="Rechercher un aliment"
+      placeholder="Rechercher un menu"
     />
   );
 };

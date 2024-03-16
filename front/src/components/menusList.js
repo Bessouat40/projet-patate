@@ -151,12 +151,11 @@ const MenuList = () => {
         alignItems: 'center',
         marginBottom: 20,
         paddingTop: '30px',
-        overflow: 'auto',
       }}
     >
       <Stack
         alignItems="center"
-        spacing={3}
+        spacing={1}
         sx={{
           paddingTop: '20px',
           paddingBottom: '20px',
@@ -165,6 +164,7 @@ const MenuList = () => {
           maxWidth: '1200px',
           overflow: 'auto',
           borderRadius: '10px',
+          alignItems: 'center',
           borderColor: 'rgb(249,249,249,0.8)',
           backgroundColor: 'rgb(249,249,249,0.8)',
         }}
@@ -188,21 +188,13 @@ const MenuList = () => {
             menuName={displayedMenu}
           />
         )}
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid container spacing={2} width="95%" alignItems="center">
           {Object.keys(filter).map((menu) => (
-            <Grid
-              item
-              sm={6}
-              md={4}
-              key={menu}
-              sx={{ display: 'flex', justifyContent: 'center' }}
-            >
+            <Grid item alignItems="center" xs="6" key={menu}>
               <Card
                 sx={{
-                  maxWidth: 345,
                   height: '250px',
                   width: '100%',
-                  overflow: 'auto',
                 }}
               >
                 <CardContent>

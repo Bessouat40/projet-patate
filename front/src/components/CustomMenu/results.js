@@ -35,36 +35,32 @@ const Results = ({ intakes, rows }) => {
   return (
     <Stack>
       {keys.length > 0 ? (
-        <Stack alignItems="center" justifyContent="center">
+        <Stack alignItems="center" justifyContent="center" spacing={2}>
           <Typography variant="h4">Apports :</Typography>
-          <Stack alignItems="center" justifyContent="center" spacing={3}>
-            <IntakesTable intakes={intakes} />
-            <Typography variant="h4">Apports pour 100 g :</Typography>
-            <IntakesTable intakes={portion} />
-            <Button
-              endIcon={<SaveIcon />}
-              variant="contained"
-              sx={{
-                height: '10%',
-                width: '50%',
-                justifyContent: 'center',
-                backgroundColor: '#423325',
-                color: 'white',
-                '&:hover': {
-                  backgroundColor: '#9C6735',
-                },
-              }}
-              onClick={openSaveDialog}
-            >
-              Sauvegarder le plat
-            </Button>
-            <SaveMenuDialog
-              open={open}
-              setOpen={setOpen}
-              rows={rows}
-              intakes={intakes}
-            />
-          </Stack>
+          <IntakesTable intakes={intakes} />
+          <Typography variant="h4">Apports pour 100 g :</Typography>
+          <IntakesTable intakes={portion} />
+          <Button
+            endIcon={<SaveIcon />}
+            variant="contained"
+            sx={{
+              justifyContent: 'center',
+              backgroundColor: '#423325',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: '#9C6735',
+              },
+            }}
+            onClick={openSaveDialog}
+          >
+            Sauvegarder le plat
+          </Button>
+          <SaveMenuDialog
+            open={open}
+            setOpen={setOpen}
+            rows={rows}
+            intakes={intakes}
+          />
         </Stack>
       ) : null}
     </Stack>
