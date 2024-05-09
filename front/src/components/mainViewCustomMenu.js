@@ -70,9 +70,7 @@ const MainViewCustomMenu = () => {
   return (
     <Stack
       sx={{
-        minHeight: '100vh',
-        alignItems: 'center',
-        marginBottom: 20,
+        alignItems: 'center',  
         paddingTop: '30px',
         overflow: 'auto',
       }}
