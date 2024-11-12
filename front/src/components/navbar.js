@@ -3,6 +3,8 @@ import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import HelpIcon from '@mui/icons-material/Help';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Help from './help';
 
 const NavBar = () => {
   return (

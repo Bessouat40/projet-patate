@@ -16,8 +16,16 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
+import keycloak from './keycloak';
 
-const SaveMenuDialog = ({ open, setOpen, rows, intakes, menuName = '' }) => {
+const SaveMenuDialog = ({
+  open,
+  setOpen,
+  rows,
+  intakes,
+  userDetails,
+  menuName = '',
+}) => {
   const [menu, setMenu] = useState(menuName);
   const [jour, setJour] = useState('lundi');
   const [phase, setPhase] = useState('matin');

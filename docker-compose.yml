@@ -55,3 +55,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    env_file:
+      - .env
+    command: start-dev
+    ports:
+      - '8080:8080'
+    depends_on:
+      - foodDB
+    volumes:
+      - ./keycloak_data:/opt/keycloak/data

@@ -4,7 +4,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import SaveMenuDialog from './saveDialog';
 import IntakesTable from '../intakesTable';
 
-const Results = ({ intakes, rows }) => {
+const Results = ({ intakes, rows, userDetails }) => {
   const [open, setOpen] = useState(false);
   const [keys, setKeys] = useState([]);
   const [portion, setPortion] = useState(null);
@@ -50,6 +50,7 @@ const Results = ({ intakes, rows }) => {
             Sauvegarder le plat
           </Button>
           <SaveMenuDialog
+            userDetails={userDetails}
             open={open}
             setOpen={setOpen}
             rows={rows}

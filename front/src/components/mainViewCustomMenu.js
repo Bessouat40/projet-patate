@@ -17,7 +17,7 @@ import DataGridList from './CustomMenu/dataGridList';
 import SearchFood from './CustomMenu/searchFood';
 import AnalyzeMenu from './CustomMenu/AnalyzeMenu';
 
-const MainViewCustomMenu = () => {
+const MainViewCustomMenu = ({ userDetails }) => {
   const [rows, setRows] = useState([]);
   const [rows2, setRows2] = useState([]);
   const [intakes, setIntakes] = useState({});
