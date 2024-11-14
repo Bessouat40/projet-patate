@@ -30,7 +30,3 @@ make start
 ```
 
 Now, you can access `Foodcop` at `http://localhost`.
-
-## USAGE WITH BASH CMD
-
-Then you can access app at `http://localhost`
