@@ -3,20 +3,27 @@ import Tooltip from '@mui/material/Tooltip';
 import SendIcon from '@mui/icons-material/Send';
 
 const columns = (selected, setSelected) => {
-  const addData = (data) => {
+  const addData = (params) => {
+    const cellMode = params.api.getCellMode(params.id, 'QUANTITY');
+
+    if (cellMode === 'edit') {
+      params.api.commitCellChange({ id: params.id, field: 'QUANTITY' });
+      params.api.setCellMode(params.id, 'QUANTITY', 'view');
+    }
+
+    const updatedData = params.api.getRow(params.id);
+
     let _selected = [...selected];
-    console.log(_selected);
-    console.log(_selected[0]);
     let conflict = false;
+
     _selected.forEach((food, index) => {
-      if (food['ALIMENT'] === data['ALIMENT']) {
-        console.log(data);
-        _selected[index] = data;
+      if (food['ALIMENT'] === updatedData['ALIMENT']) {
+        _selected[index] = updatedData;
         conflict = true;
       }
     });
     if (!conflict) {
-      _selected = [..._selected, data];
+      _selected = [..._selected, updatedData];
     }
     setSelected(_selected);
   };
@@ -29,13 +36,13 @@ const columns = (selected, setSelected) => {
       editable: false,
       renderCell: (params) => (
         <Tooltip title={params.value}>
-          <span className="csutable-cell-trucate">{params.value}</span>
+          <span className="csutable-cell-truncate">{params.value}</span>
         </Tooltip>
       ),
     },
     {
       field: 'QUANTITY',
-      headerName: 'QUANTITE (g)',
+      headerName: 'QUANTITÉ (g)',
       width: 150,
       editable: true,
     },
@@ -45,7 +52,7 @@ const columns = (selected, setSelected) => {
       width: 150,
       editable: false,
       renderCell: (params) => (
-        <IconButton title={params.value} onClick={() => addData(params.row)}>
+        <IconButton title="Ajouter" onClick={() => addData(params)}>
           <SendIcon />
         </IconButton>
       ),

@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
-import { Stack, IconButton, Select, MenuItem } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Stack,
+  Typography,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 
 const SaveMenuDialog = ({ open, setOpen, rows, intakes, menuName = '' }) => {
   const [menu, setMenu] = useState(menuName);
   const [jour, setJour] = useState('lundi');
   const [phase, setPhase] = useState('matin');
-  const fixMenu = menuName === '';
+  const isMenuNameEditable = menuName === '';
 
-  const _joursSemaine = [
+  const joursSemaine = [
     'lundi',
     'mardi',
     'mercredi',
@@ -24,103 +33,96 @@ const SaveMenuDialog = ({ open, setOpen, rows, intakes, menuName = '' }) => {
     'dimanche',
   ];
 
-  const _phase = ['matin', 'midi', 'soir'];
+  const phases = ['matin', 'midi', 'soir'];
 
-  const onClose = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
-  const onSaveMenu = async () => {
+  const handleSaveMenu = async () => {
     const formData = new FormData();
     formData.append('menu', menu);
     formData.append('jour', jour);
     formData.append('phase', phase);
     formData.append('intakes', JSON.stringify(intakes));
-    const menuDetails = JSON.stringify(rows);
-    formData.append('menuDetails', menuDetails);
-    await fetch('/api/saveMenu', {
-      body: formData,
-      method: 'POST',
-    });
-    setOpen(false);
+    formData.append('menuDetails', JSON.stringify(rows));
+
+    try {
+      await fetch('/api//saveMenu', {
+        method: 'POST',
+        body: formData,
+      });
+      setOpen(false);
+    } catch (error) {
+      console.error("Erreur lors de l'enregistrement du menu :", error);
+    }
   };
 
   return (
-    <Stack>
-      <Dialog
-        open={open}
-        maxWidth="md"
-        fullWidth={true}
-        onClose={onClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>
-          <Stack
-            direction="row"
-            spacing={10}
-            alignItems="center"
-            justifyContent="center"
-          >
-            {'Veuillez rentrer le nom du plat'}
-            <IconButton onClick={onClose}>
-              <CloseIcon />
-            </IconButton>
-          </Stack>
-        </DialogTitle>
-        <DialogContent>
-          <Stack
-            spacing={5}
-            justifyContent="center"
-            alignItems="center"
-            direction="row"
-          >
-            {fixMenu && (
-              <TextField
-                label="Nom du plat"
-                onChange={(e) => {
-                  setMenu(e.target.value);
-                }}
-              />
-            )}
-            <Select
-              onChange={(event) => setJour(event.target.value)}
-              defaultValue="lundi"
-            >
-              {_joursSemaine.map((jour) => (
-                <MenuItem key={jour} value={jour}>
-                  {jour}
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              onChange={(event) => setPhase(event.target.value)}
-              defaultValue="matin"
-            >
-              {_phase.map((phase) => (
-                <MenuItem key={phase} value={phase}>
-                  {phase}
-                </MenuItem>
-              ))}
-            </Select>
-          </Stack>
-        </DialogContent>
-        <DialogActions>
-          <IconButton
-            size="large"
-            onClick={onSaveMenu}
-            sx={{
-              justifyContent: 'center',
-              color: '#423325',
-              '&:hover': {
-                color: '#9C6735',
-              },
-            }}
-          >
-            <SaveIcon />
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogTitle>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="h6">Enregistrer le menu</Typography>
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
           </IconButton>
-        </DialogActions>
-      </Dialog>
-    </Stack>
+        </Stack>
+      </DialogTitle>
+      <DialogContent dividers>
+        <Stack spacing={3}>
+          {isMenuNameEditable && (
+            <TextField
+              label="Nom du plat"
+              value={menu}
+              onChange={(e) => setMenu(e.target.value)}
+              fullWidth
+            />
+          )}
+          <FormControl fullWidth>
+            <InputLabel>Jour</InputLabel>
+            <Select
+              value={jour}
+              onChange={(e) => setJour(e.target.value)}
+              label="Jour"
+            >
+              {joursSemaine.map((jourItem) => (
+                <MenuItem key={jourItem} value={jourItem}>
+                  {jourItem.charAt(0).toUpperCase() + jourItem.slice(1)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel>Phase</InputLabel>
+            <Select
+              value={phase}
+              onChange={(e) => setPhase(e.target.value)}
+              label="Phase"
+            >
+              {phases.map((phaseItem) => (
+                <MenuItem key={phaseItem} value={phaseItem}>
+                  {phaseItem.charAt(0).toUpperCase() + phaseItem.slice(1)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<SaveIcon />}
+          onClick={handleSaveMenu}
+        >
+          Enregistrer
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

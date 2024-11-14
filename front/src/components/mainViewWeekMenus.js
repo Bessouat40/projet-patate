@@ -1,21 +1,33 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Stack } from '@mui/system';
+import {
+  Container,
+  Paper,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Box,
+} from '@mui/material';
 import { styled } from '@mui/system';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
 import DialogMenu from './WeekMenus/dialogMenu';
+import WeekIntakeDashboard from './WeekMenus/weekDashboard';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
+  borderRight: `1px solid ${theme.palette.common.white}`,
+  textAlign: 'center',
+  fontSize: 16,
+}));
 
 const WeekMenus = () => {
-  const [rows, setRows] = useState();
-  const [dayMenu, setDayMenu] = useState({});
-  const [idx, setIdx] = useState({});
-  const [phase, setPhase] = useState({});
+  const [rows, setRows] = useState(null);
+  const [dayMenu, setDayMenu] = useState('');
+  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
+  const [selectedPhase, setSelectedPhase] = useState('');
   const [menus, setMenus] = useState({});
   const [open, setOpen] = useState(false);
   const [reload, setReload] = useState(false);
@@ -33,167 +45,67 @@ const WeekMenus = () => {
     []
   );
 
-  const formatData = useCallback(
-    (_rows) => {
-      _rows.sort((a, b) => {
-        return (
-          joursSemaine.indexOf(a['jour']) - joursSemaine.indexOf(b['jour'])
-        );
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch('/api//requireWeekMenus', {
+        method: 'POST',
       });
+      const data = await response.json();
+      const { menus: fetchedMenus, weekMenus } = data;
 
-      const phaseMenus = { matin: [], midi: [], soir: [] };
-      const groupedData = {};
+      const menusDict = fetchedMenus.reduce((acc, menu) => {
+        acc[menu.menu] = {
+          ingredients: menu.ingredients,
+          quantite: menu.quantite,
+          intakes: menu.intakes,
+        };
+        return acc;
+      }, {});
+      setMenus(menusDict);
 
-      _rows.forEach((item) => {
-        const jour = item.jour;
-        if (!groupedData[jour]) {
-          groupedData[jour] = [];
+      const phaseMenus = { matin: {}, midi: {}, soir: {} };
+      weekMenus.forEach((item) => {
+        const dayIndex = joursSemaine.indexOf(item.jour);
+        if (dayIndex !== -1) {
+          phaseMenus[item.phase][dayIndex] = item.menu;
         }
-        groupedData[jour].push(item);
       });
-
-      for (const jour in groupedData) {
-        groupedData[jour].forEach((dict) => {
-          phaseMenus[dict['phase']].push(dict['menu']);
-        });
-      }
-
       setRows(phaseMenus);
-    },
-    [setRows, joursSemaine]
-  );
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données :', error);
+    }
+  }, [joursSemaine]);
 
   useEffect(() => {
-    const sendFetch = async () => {
-      const resp = await fetch('/api/requireWeekMenus', {
-        method: 'POST',
-      });
-      const data = await resp.json();
-      return data;
-    };
+    fetchData();
+  }, [fetchData, reload]);
 
-    const loadMenus = (resp) => {
-      const _menus = resp['menus'];
-      const dictMenus = {};
-      _menus.forEach((menu) => {
-        dictMenus[menu['menu']] = {
-          ingredients: menu['ingredients'],
-          quantite: menu['quantite'],
-          intakes: menu['intakes'],
-        };
-      });
-      setMenus(dictMenus);
-    };
-
-    const loadRows = (resp) => {
-      const weekMenus = resp['weekMenus'];
-      const row = [];
-      weekMenus.forEach((d) => {
-        row.push(d);
-      });
-      formatData(row);
-    };
-
-    const getData = async () => {
-      await sendFetch().then((resp) => {
-        loadMenus(resp);
-        loadRows(resp);
-      });
-    };
-
-    getData();
-  }, [formatData]);
-
-  useEffect(() => {
-    const sendFetch = async () => {
-      const resp = await fetch('/api/requireWeekMenus', {
-        method: 'POST',
-      });
-      const data = await resp.json();
-      return data;
-    };
-
-    const loadMenus = (resp) => {
-      const _menus = resp['menus'];
-      const dictMenus = {};
-      _menus.forEach((menu) => {
-        dictMenus[menu['menu']] = {
-          ingredients: menu['ingredients'],
-          quantite: menu['quantite'],
-          intakes: menu['intakes'],
-        };
-      });
-      setMenus(dictMenus);
-    };
-
-    const loadRows = (resp) => {
-      const weekMenus = resp['weekMenus'];
-      const row = [];
-      weekMenus.forEach((d) => {
-        row.push(d);
-      });
-      formatData(row);
-    };
-
-    const getData = async () => {
-      await sendFetch().then((resp) => {
-        loadMenus(resp);
-        loadRows(resp);
-      });
-    };
-
-    getData();
-  }, [reload, formatData]);
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#423325',
-      color: 'white',
-      borderRight: '1px solid white',
-      textAlign: 'center',
-      width: '300px',
-      height: '30px',
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 16,
-    },
-  }));
-
-  const onClickMenu = (menu) => {
+  const handleMenuClick = (menu, dayIndex, phase) => {
+    setDayMenu(menu);
+    setSelectedDayIndex(dayIndex);
+    setSelectedPhase(phase);
     setOpen(true);
   };
 
   const onDelete = async () => {
-    const formData = new FormData();
-    formData.append('menu_name', dayMenu);
-    formData.append('phase', phase);
-    formData.append('jour', joursSemaine[idx]);
-    await fetch('/api/delete_week_menu', {
-      body: formData,
-      method: 'POST',
-    });
-    alert('Votre menu a bien été retiré pour ce jour de la semaine');
-    setReload(!reload);
-    setOpen(false);
+    try {
+      const formData = new FormData();
+      formData.append('menu_name', dayMenu);
+      formData.append('phase', selectedPhase);
+      formData.append('jour', joursSemaine[selectedDayIndex]);
+      await fetch('/api//delete_week_menu', {
+        body: formData,
+        method: 'POST',
+      });
+      setReload(!reload);
+      setOpen(false);
+    } catch (error) {
+      console.error('Erreur lors de la suppression du menu :', error);
+    }
   };
 
   return (
-    <Stack
-      spacing={10}
-      alignItems="center"
-      justifyContent="center"
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '90%',
-        maxEight: '90%',
-        borderRadius: '10px',
-        borderColor: 'rgb(249,249,249,0.8)',
-        backgroundColor: 'rgb(249,249,249,0.8)',
-      }}
-    >
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       {open && (
         <DialogMenu
           menu={dayMenu}
@@ -203,62 +115,75 @@ const WeekMenus = () => {
           onDelete={onDelete}
         />
       )}
-      <Typography variant="h2">Vos menus de la semaine :</Typography>
-      {rows ? (
-        <Stack sx={{ width: '98%' }}>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow key="columns">
-                  <StyledTableCell key="null" align="center"></StyledTableCell>
-                  {joursSemaine.map((jour) => (
-                    <StyledTableCell key={`header-${jour}`} align="center">
-                      {jour}
-                    </StyledTableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Object.keys(rows).map((phase) => (
-                  <TableRow key={`row-${phase}`}>
-                    <TableCell
-                      sx={{ backgroundColor: '#423325', color: 'white' }}
-                      align="center"
-                      key={`cell-phase-${phase}`}
-                    >
-                      {phase}
-                    </TableCell>
-                    {rows[phase].map((menu, menuIdx) => (
-                      <TableCell
-                        onClick={() => {
-                          setDayMenu(menu);
-                          setIdx(menuIdx);
-                          setPhase(phase);
-                          onClickMenu();
-                        }}
-                        key={`cell-${phase}-${menuIdx}`}
-                        sx={{
-                          borderRight: '1px solid grey',
-                          borderBottom: '1px solid grey',
-                          '&:hover': {
-                            backgroundColor: '#E0DFDE',
-                            cursor: 'pointer',
-                          },
-                        }}
-                        align="center"
-                      >
-                        {menu}
-                      </TableCell>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Vos menus de la semaine
+        </Typography>
+        {rows ? (
+          <>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell align="center">Phase</StyledTableCell>
+                    {joursSemaine.map((jour) => (
+                      <StyledTableCell key={jour} align="center">
+                        {jour.charAt(0).toUpperCase() + jour.slice(1)}
+                      </StyledTableCell>
                     ))}
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <br />
-        </Stack>
-      ) : null}
-    </Stack>
+                </TableHead>
+                <TableBody>
+                  {['matin', 'midi', 'soir'].map((phase) => (
+                    <TableRow key={phase}>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          backgroundColor: 'primary.main',
+                          color: 'common.white',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        {phase.charAt(0).toUpperCase() + phase.slice(1)}
+                      </TableCell>
+                      {joursSemaine.map((_, dayIndex) => {
+                        const menu = rows[phase][dayIndex];
+                        return (
+                          <TableCell
+                            key={`${phase}-${dayIndex}`}
+                            align="center"
+                            sx={{
+                              cursor: 'pointer',
+                              '&:hover': {
+                                backgroundColor: 'action.hover',
+                              },
+                            }}
+                            onClick={() =>
+                              handleMenuClick(menu, dayIndex, phase)
+                            }
+                          >
+                            {menu}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <WeekIntakeDashboard
+              rows={rows}
+              menus={menus}
+              joursSemaine={joursSemaine}
+            />
+          </>
+        ) : (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Typography>Chargement des menus...</Typography>
+          </Box>
+        )}
+      </Paper>
+    </Container>
   );
 };
 

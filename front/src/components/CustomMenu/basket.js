@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Button, IconButton, Stack } from '@mui/material';
+import {
+  IconButton,
+  Badge,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Button,
+  Stack,
+  Typography,
+} from '@mui/material';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
-import DataGridMenu from './dataGridMenu';
-import Badge from '@mui/material/Badge';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DataGridMenu from './dataGridMenu';
 
 const Panier = ({ rows, api, setRows }) => {
   const [open, setOpen] = useState(false);
@@ -16,80 +21,67 @@ const Panier = ({ rows, api, setRows }) => {
     try {
       const selectedRows = api.current.getSelectedRows();
       const iterator = selectedRows.values();
-      var rows2_ = [...rows];
-      for (var idx = 0; idx < selectedRows.size; idx++) {
+      let rows2_ = [...rows];
+      for (let idx = 0; idx < selectedRows.size; idx++) {
         const aliment = iterator.next().value.ALIMENT;
         rows2_ = handleDeleteRow(aliment, rows2_);
       }
       setRows(rows2_);
     } catch {
-      alert('Your menu list is empty');
+      console.log('Votre liste de menu est vide');
     }
   };
 
   const handleDeleteRow = (aliment, data) => {
-    const filteredElements = data.filter((item, index) => {
-      return item.ALIMENT !== aliment;
-    });
-    return filteredElements;
+    return data.filter((item) => item.ALIMENT !== aliment);
   };
 
   return (
-    <Stack>
+    <>
       <IconButton
-        variant="contained"
+        color="primary"
         size="large"
         sx={{
           position: 'fixed',
           bottom: 16,
           right: 16,
-          borderRadius: '30px',
-          backgroundColor: 'white',
+          backgroundColor: 'background.paper',
           '&:hover': {
-            backgroundColor: '#9C6735',
+            backgroundColor: 'primary.light',
           },
         }}
         onClick={() => setOpen(true)}
       >
         <Badge badgeContent={rows.length} color="error">
-          <ShoppingBasketIcon sx={{ color: '#423325' }} />
+          <ShoppingBasketIcon />
         </Badge>
       </IconButton>
       <Dialog
         open={open}
         maxWidth="md"
-        fullWidth={true}
+        fullWidth
         onClose={() => setOpen(false)}
-        aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>
           <Stack
-            spacing={10}
-            alignItems="center"
-            justifyContent="center"
             direction="row"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            {'Voici votre panier'}
+            <Typography variant="h6">Votre panier</Typography>
             <IconButton onClick={() => setOpen(false)}>
               <CloseIcon />
             </IconButton>
           </Stack>
         </DialogTitle>
         <DialogContent>
-          <Stack spacing={5} justifyContent="center" alignItems="center">
+          <Stack spacing={2}>
             <DataGridMenu apiRef2={api} rows2={rows} />
             <Button
               variant="contained"
-              endIcon={<DeleteIcon />}
-              sx={{
-                height: '10%',
-                justifyContent: 'center',
-                backgroundColor: '#423325',
-                color: 'white',
-                '&:hover': {
-                  backgroundColor: '#9C6735',
-                },
-              }}
+              color="primary"
+              size="large"
+              startIcon={<DeleteIcon />}
               onClick={onDelete}
             >
               Supprimer du menu
@@ -97,7 +89,7 @@ const Panier = ({ rows, api, setRows }) => {
           </Stack>
         </DialogContent>
       </Dialog>
-    </Stack>
+    </>
   );
 };
 

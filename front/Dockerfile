@@ -2,11 +2,15 @@ FROM node:20.4.0
 
 WORKDIR /app
 
-COPY ./package.json /app/package.json
-COPY ./package-lock.json /app/package-lock.json
+COPY package.json package-lock.json ./
 RUN npm install -f
 
-COPY ./public /app/public
-COPY ./src /app/src
+COPY . ./
 
-CMD npm run start
+RUN npm run build
+
+RUN npm install -g serve
+
+EXPOSE 3000
+
+CMD ["serve", "-s", "build", "-l", "3000"]

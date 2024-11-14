@@ -1,43 +1,28 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import { Container, Typography, Box } from '@mui/material';
 
 const Home = () => {
   return (
-    <Stack
-      justifyContent="center"
-      alignItems="center"
-      spacing={5}
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '90%',
-        maxEight: '90%',
-        borderRadius: '10px',
-        borderColor: 'rgb(249,249,249,0.8)',
-        backgroundColor: 'rgb(249,249,249,0.8)',
-      }}
-    >
-      <Typography
-        variant="h1"
-        color="#423325"
-        style={{
-          background: '#423325',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          fontFamily: 'skia',
+    <Container maxWidth="md">
+      <Box
+        sx={{
+          textAlign: 'center',
+          paddingTop: 8,
+          paddingBottom: 8,
         }}
       >
-        FoodCop
-      </Typography>
-      <Typography>
-        Ceci est une application permettant de calculer l'apport nutritique de
-        menus. Les datas viennent du site :
-        https://www.data.gouv.fr/fr/datasets/table-de-composition-nutritionnelle-des-aliments-ciqual/#/resources
-      </Typography>
-    </Stack>
+        <Typography variant="h2" color="primary" gutterBottom>
+          FoodCop
+        </Typography>
+        <Typography variant="body1" color="textSecondary">
+          Ceci est une application permettant de calculer l'apport nutritionnel
+          de menus. Les données proviennent du site :{' '}
+          <a href="https://www.data.gouv.fr/fr/datasets/table-de-composition-nutritionnelle-des-aliments-ciqual/">
+            CIQUAL
+          </a>
+        </Typography>
+      </Box>
+    </Container>
   );
 };
 

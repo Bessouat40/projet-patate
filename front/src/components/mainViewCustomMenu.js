@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useGridApiRef } from '@mui/x-data-grid';
-import { Stack } from '@mui/material';
+import {
+  Container,
+  Box,
+  Paper,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
 import Panier from './CustomMenu/basket';
 import Results from './CustomMenu/results';
 import DataGridList from './CustomMenu/dataGridList';
 import SearchFood from './CustomMenu/searchFood';
 import AnalyzeMenu from './CustomMenu/AnalyzeMenu';
-import CircularProgress from '@mui/material/CircularProgress';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 
 const MainViewCustomMenu = () => {
   const [rows, setRows] = useState([]);
@@ -25,7 +30,7 @@ const MainViewCustomMenu = () => {
 
   useEffect(() => {
     const sendFetch = async () => {
-      const resp = await fetch('/api/requireFood', {
+      const resp = await fetch('/api//requireFood', {
         method: 'POST',
       });
       const data = await resp.json();
@@ -68,56 +73,38 @@ const MainViewCustomMenu = () => {
   };
 
   return (
-    <Stack
-      sx={{
-        minHeight: '100vh',
-        alignItems: 'center',
-        marginBottom: 20,
-        paddingTop: '30px',
-        overflow: 'auto',
-      }}
-    >
-      <Stack
-        spacing={3}
-        alignItems="center"
-        sx={{
-          paddingTop: '20px',
-          paddingBottom: '20px',
-          width: '90%',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          borderRadius: '10px',
-          borderColor: 'rgb(249,249,249,0.8)',
-          backgroundColor: 'rgb(249,249,249,0.8)',
-        }}
-      >
-        <Panier rows={rows2} api={apiRef2} setRows={setRows2} />
-        <FormControl
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Panier rows={rows2} api={apiRef2} setRows={setRows2} />
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Créer un menu personnalisé
+        </Typography>
+        <Box
           sx={{
-            backgroundColor: 'white',
-            width: '30%',
-            borderRadius: '5px',
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 2,
+            mb: 4,
           }}
         >
-          <InputLabel>Groupes</InputLabel>
-          <Select
-            value={group}
-            onChange={handleChangeGroup}
-            autoWidth
-            label="Groupes"
-          >
-            {groups.map((group) => (
-              <MenuItem key={group} value={group}>
-                {group}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <SearchFood setFilter={setFilter} rows={rows} />
+          <FormControl sx={{ minWidth: 200 }}>
+            <InputLabel>Groupes</InputLabel>
+            <Select value={group} onChange={handleChangeGroup} label="Groupes">
+              {groups.map((group) => (
+                <MenuItem key={group} value={group}>
+                  {group}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <SearchFood setFilter={setFilter} rows={rows} />
+        </Box>
         {loading ? (
-          <Stack>
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
             <CircularProgress />
-          </Stack>
+          </Box>
         ) : (
           <DataGridList
             filterRows={filterRows}
@@ -133,8 +120,8 @@ const MainViewCustomMenu = () => {
           intakes={intakes}
         />
         <Results intakes={intakes} rows={rows2} />
-      </Stack>
-    </Stack>
+      </Paper>
+    </Container>
   );
 };
 
