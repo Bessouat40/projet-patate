@@ -6,7 +6,8 @@ COPY package.json package-lock.json ./
 RUN npm install -f
 
 COPY . ./
-
+RUN npx browserslist@latest --update-db
+ENV NODE_OPTIONS="--max_old_space_size=512"
 RUN npm run build
 
 RUN npm install -g serve
