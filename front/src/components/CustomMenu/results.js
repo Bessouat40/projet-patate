@@ -20,7 +20,7 @@ const Results = ({ intakes, rows }) => {
     });
     setPortion(_portion);
     console.log('portion : ', _portion);
-  }, [intakes]);
+  }, [intakes, rows]);
 
   const extract_quantity = (rows) => {
     let quantity = 0;
@@ -43,14 +43,8 @@ const Results = ({ intakes, rows }) => {
           <Button
             endIcon={<SaveIcon />}
             variant="contained"
-            sx={{
-              justifyContent: 'center',
-              backgroundColor: '#423325',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: '#9C6735',
-              },
-            }}
+            color="primary"
+            size="large"
             onClick={openSaveDialog}
           >
             Sauvegarder le plat

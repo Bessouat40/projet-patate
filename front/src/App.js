@@ -6,6 +6,7 @@ import Home from './components/home';
 import About from './components/about';
 import NavBar from './components/navbar';
 import MenuList from './components/menusList';
+import Help from './components/help';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/weekMenus" element={<WeekMenus />} />
         <Route path="/menus" element={<MenuList />} />
         <Route path="/about" element={<About />} />
+        <Route path="/help" element={<Help />} />
       </Routes>
     </Router>
   );

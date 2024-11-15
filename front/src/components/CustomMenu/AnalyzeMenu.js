@@ -1,11 +1,10 @@
 import React from 'react';
-import { Stack } from '@mui/material';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 const AnalyzeMenu = ({ rows2, intakes, setIntakes }) => {
   const onSendMenu = async () => {
     const menu = JSON.stringify(rows2);
-    const resp = await fetch('/api/menu', {
+    const resp = await fetch('/api//menu', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -14,31 +13,19 @@ const AnalyzeMenu = ({ rows2, intakes, setIntakes }) => {
     });
     const _intakes = await resp.json();
     setIntakes(_intakes);
-    console.log(intakes);
   };
+
   return (
-    <Stack
-      spacing={5}
-      alignItems="center"
-      sx={{ width: '45%', maxHeight: '100%' }}
-    >
+    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
       <Button
         variant="contained"
-        sx={{
-          height: '10%',
-          width: '50%',
-          justifyContent: 'center',
-          backgroundColor: '#423325',
-          color: 'white',
-          '&:hover': {
-            backgroundColor: '#9C6735',
-          },
-        }}
+        color="primary"
+        size="large"
         onClick={onSendMenu}
       >
         Analyser le menu
       </Button>
-    </Stack>
+    </Box>
   );
 };
 

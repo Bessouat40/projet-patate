@@ -26,30 +26,7 @@ PORT=5432
 - Run docker :
 
 ```bash
-./run.sh
+make start
 ```
 
 Now, you can access `Foodcop` at `http://localhost`.
-
-## USAGE WITH BASH CMD
-
-```bash
-make test
-```
-
-Then you can check app state :
-
-```bash
-docker-compose logs -f
-```
-
--------------------------------- Working on this feature --------------------------------
-
-## Keycloak
-
-For access Keycloak console admin, go to : `http://localhost:8080/admin/master/console/`.
-
-- Create your realm
-- Create your Client :
-  - Setup your client Valid redirect URIs to `http://localhost/*`
-  - Setup your Web origins to `http://localhost`

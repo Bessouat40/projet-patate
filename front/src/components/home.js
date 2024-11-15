@@ -1,43 +1,51 @@
+// Home.js
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import { Container, Typography, Box, Paper } from '@mui/material';
 
 const Home = () => {
   return (
-    <Stack
-      justifyContent="center"
-      alignItems="center"
-      spacing={5}
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '90%',
-        maxEight: '90%',
-        borderRadius: '10px',
-        borderColor: 'rgb(249,249,249,0.8)',
-        backgroundColor: 'rgb(249,249,249,0.8)',
-      }}
-    >
-      <Typography
-        variant="h1"
-        color="#423325"
-        style={{
-          background: '#423325',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          fontFamily: 'skia',
-        }}
-      >
-        FoodCop
-      </Typography>
-      <Typography>
-        Ceci est une application permettant de calculer l'apport nutritique de
-        menus. Les datas viennent du site :
-        https://www.data.gouv.fr/fr/datasets/table-de-composition-nutritionnelle-des-aliments-ciqual/#/resources
-      </Typography>
-    </Stack>
+    <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Bienvenue sur FoodCop
+        </Typography>
+        <Typography variant="body1" align="center" paragraph>
+          FoodCop est votre application de référence pour calculer l'apport
+          nutritionnel de vos menus. Composez vos repas et obtenez
+          instantanément des informations nutritionnelles détaillées.
+        </Typography>
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h5" gutterBottom>
+            Commencez dès maintenant
+          </Typography>
+          <Typography variant="body1" paragraph>
+            Utilisez notre outil simple et intuitif pour sélectionner des
+            aliments et créer vos menus personnalisés. Découvrez comment
+            équilibrer votre alimentation en fonction de vos besoins.
+          </Typography>
+        </Box>
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h5" gutterBottom>
+            Données Fiables
+          </Typography>
+          <Typography variant="body1" paragraph>
+            Toutes nos données proviennent de sources officielles et fiables.
+            Nous utilisons la table de composition nutritionnelle des aliments
+            CIQUAL pour vous fournir des informations précises.
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Source des données :{' '}
+            <a
+              href="https://www.data.gouv.fr/fr/datasets/table-de-composition-nutritionnelle-des-aliments-ciqual/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CIQUAL
+            </a>
+          </Typography>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

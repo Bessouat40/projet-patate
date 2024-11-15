@@ -36,7 +36,7 @@ class Database() :
         menuDetails = json.loads(menuDetails)
         for aliment in menuDetails :
             ingredients.append(aliment["ALIMENT"].replace("'", " "))
-            quantite.append(aliment["QUANTITY"])
+            quantite.append(str(aliment["QUANTITY"]))
         ingredients = '#@&@#'.join(ingredients)
         quantite = ','.join(quantite)
         query1 = text(f"UPDATE weekMenus SET menu='{menu}' WHERE weekMenus.phase='{phase}' AND weekMenus.jour='{day}'")

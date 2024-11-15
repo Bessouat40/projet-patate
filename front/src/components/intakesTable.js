@@ -1,62 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { Stack } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import React from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  TableHead,
+} from '@mui/material';
 
 const IntakesTable = ({ intakes }) => {
-  const [keys, setKeys] = useState([]);
-  const [values, setValues] = useState([]);
-  const [idxCalories, setIdx] = useState();
-
-  useEffect(() => {
-    setKeys(Object.keys(intakes));
-    var _values = [];
-    Object.keys(intakes).forEach(
-      (key) => (_values = [..._values, intakes[key]])
-    );
-    setValues(_values);
-    setIdx(keys.indexOf('calories'));
-  }, [intakes]);
+  const keys = Object.keys(intakes);
+  const values = Object.values(intakes);
 
   return (
-    <Stack maxWidth="95%">
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableBody>
-            <TableRow key={`row-keys`}>
-              {keys.map((key) => {
-                return (
-                  <TableCell align="center" key={`value-${key}`}>
-                    {key}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-            <TableRow key={`row-values`}>
-              {values.map((value, idx) => {
-                if (idx !== idxCalories) {
-                  return (
-                    <TableCell align="center" key={`value-${idx}`}>
-                      {value} g
-                    </TableCell>
-                  );
-                } else {
-                  return (
-                    <TableCell align="center" key={`value-${idx}`}>
-                      {value} kcal
-                    </TableCell>
-                  );
-                }
-              })}
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Stack>
+    <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            {keys.map((key) => (
+              <TableCell key={key} align="center">
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            {values.map((value, idx) => (
+              <TableCell key={idx} align="center">
+                {value} {keys[idx] === 'calories' ? 'kcal' : 'g'}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

@@ -1,26 +1,60 @@
-import React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
+import React, { useState, useEffect } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Typography,
+  Button,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import ReactMarkdown from 'react-markdown';
+import { styled } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
+import documentation from '../resources/doc_fr.md';
 
-const Help = ({ open, setOpen }) => {
-  const onClose = () => {
-    setOpen(false);
+const ContentWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(2),
+  maxHeight: '70vh',
+  overflowY: 'auto',
+}));
+
+const Help = () => {
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    navigate(-1);
   };
+
+  const [docContent, setDocContent] = useState('');
+
+  useEffect(() => {
+    fetch(documentation)
+      .then((response) => response.text())
+      .then((text) => setDocContent(text));
+  }, []);
+
   return (
-    <Stack>
-      <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="lg">
-        <DialogContent>
-          <Stack spacing={5}>
-            <video controls>
-              <source src="/demo.mov" type="video/mp4" />
-            </video>
-            <Button onClick={onClose}>Fermer</Button>
-          </Stack>
-        </DialogContent>
-      </Dialog>
-    </Stack>
+    <Dialog open onClose={handleClose} fullWidth maxWidth="md">
+      <DialogTitle>
+        <Typography variant="h6">Aide</Typography>
+        <IconButton
+          aria-label="fermer"
+          onClick={handleClose}
+          sx={{ position: 'absolute', right: 8, top: 8 }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent dividers>
+        <ContentWrapper>
+          <ReactMarkdown>{docContent}</ReactMarkdown>
+        </ContentWrapper>
+      </DialogContent>
+      <Button onClick={handleClose} color="primary">
+        Fermer
+      </Button>
+    </Dialog>
   );
 };
 
