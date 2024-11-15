@@ -25,7 +25,6 @@ const MainViewCustomMenu = () => {
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]);
   const [group, setGroup] = useState('');
-  const apiRef = useGridApiRef();
   const apiRef2 = useGridApiRef();
 
   useEffect(() => {
@@ -108,7 +107,6 @@ const MainViewCustomMenu = () => {
         ) : (
           <DataGridList
             filterRows={filterRows}
-            apiRef={apiRef}
             selected={rows2}
             setSelected={setRows2}
           />
