@@ -55,7 +55,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             key,
             algorithms=['RS256'],
             audience='account',
-            issuer='http://51.20.69.171/:8080/realms/foodcop-realm'
+            issuer='http://51.20.69.171:8080/realms/foodcop-realm'
         )
         print("Decoded Payload:", payload)
 
