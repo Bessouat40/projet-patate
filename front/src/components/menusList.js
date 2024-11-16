@@ -14,7 +14,7 @@ import DialogMenu from './WeekMenus/dialogMenu';
 import SaveMenuDialog from './CustomMenu/saveDialog';
 import SearchMenu from './MenusList/searchMenu';
 
-const MenuList = () => {
+const MenuList = ({ keycloak }) => {
   const [menus, setMenus] = useState({});
   const [intakes, setIntakes] = useState({});
   const [rows, setRows] = useState([]);
@@ -27,8 +27,13 @@ const MenuList = () => {
   useEffect(() => {
     const fetchMenus = async () => {
       try {
-        const resp = await fetch('/api//requireWeekMenus', {
+        const token = keycloak.token;
+
+        const resp = await fetch('/api/requireWeekMenus', {
           method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         const data = await resp.json();
         const menusData = data.menus.reduce((acc, menu) => {
@@ -47,7 +52,7 @@ const MenuList = () => {
     };
 
     fetchMenus();
-  }, [reload]);
+  }, [reload, keycloak.token]);
 
   const processMenu = (menu) => {
     const ingredients = menu.ingredients.split('#@&@#');
@@ -99,7 +104,7 @@ const MenuList = () => {
     try {
       const formData = new FormData();
       formData.append('menu_name', displayedMenu);
-      await fetch('/api//delete_menu', {
+      await fetch('/api/delete_menu', {
         method: 'POST',
         body: formData,
       });
@@ -128,6 +133,7 @@ const MenuList = () => {
           setOpen={setOpenSaveDialog}
           rows={rows}
           intakes={intakes}
+          keycloak={keycloak}
           menuName={displayedMenu}
         />
       )}

@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Help from './help';
 
-const NavBar = () => {
+const NavBar = ({ authenticated, keycloakInstance }) => {
+  const handleLogout = () => {
+    keycloakInstance.logout({ redirectUri: 'http://51.20.69.171/' });
+  };
+
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
@@ -37,6 +40,11 @@ const NavBar = () => {
         <IconButton color="inherit" component={Link} to="/help">
           <HelpIcon />
         </IconButton>
+        {authenticated && (
+          <IconButton onClick={handleLogout} color="inherit">
+            <LogoutIcon />
+          </IconButton>
+        )}
       </Toolbar>
     </AppBar>
   );

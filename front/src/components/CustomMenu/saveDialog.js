@@ -16,15 +16,15 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
-import keycloak from './keycloak';
+// import keycloak from './keycloak';
 
 const SaveMenuDialog = ({
   open,
   setOpen,
   rows,
   intakes,
-  userDetails,
   menuName = '',
+  keycloak,
 }) => {
   const [menu, setMenu] = useState(menuName);
   const [jour, setJour] = useState('lundi');
@@ -56,8 +56,13 @@ const SaveMenuDialog = ({
     formData.append('menuDetails', JSON.stringify(rows));
 
     try {
-      await fetch('/api//saveMenu', {
+      const token = keycloak.token;
+
+      await fetch('/api/saveMenu', {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
       setOpen(false);

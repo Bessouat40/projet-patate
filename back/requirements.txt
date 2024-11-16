@@ -3,6 +3,8 @@ SQLAlchemy
 python-dotenv
 python-multipart
 psycopg2-binary
+requests
+python-jose==3.3.0
 numpy==1.25.0
 pandas==1.5.2
 uvicorn==0.20.0

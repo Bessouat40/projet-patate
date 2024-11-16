@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Keycloak from 'keycloak-js';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
 
 import MainViewCustomMenu from './components/mainViewCustomMenu';
 import WeekMenus from './components/mainViewWeekMenus';
@@ -9,48 +13,78 @@ import About from './components/about';
 import NavBar from './components/navbar';
 import MenuList from './components/menusList';
 import Help from './components/help';
+import { keycloak } from './keycloak';
+
+const ProtectedRoute = ({ authenticated, children }) => {
+  if (authenticated === null) {
+    return <div>Chargement...</div>;
+  }
+
+  if (!authenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
 
 const App = () => {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [keycloakInstance, setKeycloakInstance] = useState();
-  const [userDetails, setUserDetails] = useState(null);
+  const [authenticated, setAuthenticated] = useState(null);
+  const [keycloakInitialized, setKeycloakInitialized] = useState(false);
 
   useEffect(() => {
-    const keycloakConfig = {
-      url: 'http://localhost:8080',
-      realm: 'foodcop-realm',
-      clientId: 'foodcop',
-    };
-
-    const _keycloakInstance = new Keycloak(keycloakConfig);
-
-    _keycloakInstance.init({ onLoad: 'login-required' }).then((auth) => {
-      console.log('auth : ' + auth);
-      setAuthenticated(auth);
-      if (auth) {
-        setUserDetails(keycloak.tokenParsed);
-      }
-    });
-
-    setKeycloakInstance(_keycloakInstance);
-    return () => {
-      if (keycloakInstance) {
-        keycloakInstance.logout();
+    const initKeycloak = async () => {
+      try {
+        const auth = await keycloak.init({ onLoad: 'login-required' });
+        console.log('Keycloak init:', auth);
+        setAuthenticated(auth);
+      } catch (error) {
+        console.error('Keycloak initialization failed', error);
+        setAuthenticated(false);
+      } finally {
+        setKeycloakInitialized(true);
       }
     };
+
+    initKeycloak();
   }, []);
+
+  if (!keycloakInitialized) {
+    return <div>Chargement de l'application...</div>;
+  }
+
   return (
     <Router>
       <NavBar
         authenticated={authenticated}
         setAuthenticated={setAuthenticated}
-        keycloakInstance={keycloakInstance}
+        keycloakInstance={keycloak}
       />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/customMenu" element={<MainViewCustomMenu />} />
-        <Route path="/weekMenus" element={<WeekMenus />} />
-        <Route path="/menus" element={<MenuList />} />
+        <Route
+          path="/customMenu"
+          element={
+            <ProtectedRoute authenticated={authenticated}>
+              <MainViewCustomMenu keycloak={keycloak} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/weekMenus"
+          element={
+            <ProtectedRoute authenticated={authenticated}>
+              <WeekMenus keycloak={keycloak} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/menus"
+          element={
+            <ProtectedRoute authenticated={authenticated}>
+              <MenuList keycloak={keycloak} />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/help" element={<Help />} />
       </Routes>

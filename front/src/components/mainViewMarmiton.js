@@ -16,7 +16,7 @@ const MainViewMarmiton = () => {
     setFood('');
     alert(link);
     const link_ = { url: link };
-    const resp = await fetch('/api//food', {
+    const resp = await fetch('/api/food', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

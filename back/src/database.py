@@ -24,6 +24,45 @@ class Database:
             weekMenus = connection.execute(query1, {"user_id": user_id}).fetchall()
             menus = connection.execute(query2, {"user_id": user_id}).fetchall()
         return weekMenus, menus
+
+    def add_new_user_and_initialize_week_menus(self, user_id, username):
+        """Add a new user and initialize weekMenus if the user does not exist"""
+        check_user_query = text("SELECT * FROM users WHERE id = :user_id")
+        add_user_query = text("INSERT INTO users (id, username) VALUES (:user_id, :username)")
+        initialize_week_menus_query = text("""
+            INSERT INTO weekMenus (jour, phase, menu, user_id)
+            VALUES 
+            ('lundi', 'matin', '', :user_id),
+            ('lundi', 'midi', '', :user_id),
+            ('lundi', 'soir', '', :user_id),
+            ('mardi', 'matin', '', :user_id),
+            ('mardi', 'midi', '', :user_id),
+            ('mardi', 'soir', '', :user_id),
+            ('mercredi', 'matin', '', :user_id),
+            ('mercredi', 'midi', '', :user_id),
+            ('mercredi', 'soir', '', :user_id),
+            ('jeudi', 'matin', '', :user_id),
+            ('jeudi', 'midi', '', :user_id),
+            ('jeudi', 'soir', '', :user_id),
+            ('vendredi', 'matin', '', :user_id),
+            ('vendredi', 'midi', '', :user_id),
+            ('vendredi', 'soir', '', :user_id),
+            ('samedi', 'matin', '', :user_id),
+            ('samedi', 'midi', '', :user_id),
+            ('samedi', 'soir', '', :user_id),
+            ('dimanche', 'matin', '', :user_id),
+            ('dimanche', 'midi', '', :user_id),
+            ('dimanche', 'soir', '', :user_id)
+        """)
+
+        with self.engine.begin() as connection:
+            user = connection.execute(check_user_query, {"user_id": user_id}).fetchone()
+            if user is None:
+                connection.execute(add_user_query, {"user_id": user_id, "username": username})
+                connection.execute(initialize_week_menus_query, {"user_id": user_id})
+                print(f"Utilisateur {username} ajouté avec des weekMenus initialisés.")
+            else:
+                print(f"Utilisateur {username} déjà existant.")
     
     def addMenuToDayPhase(self, menu, day, phase, menuDetails, intakes, user_id):
         """Add menu to the day and phase"""
@@ -43,7 +82,7 @@ class Database:
         query2 = text("""
             INSERT INTO menus (menu, ingredients, quantite, intakes, user_id)
             VALUES (:menu, :ingredients, :quantite, :intakes, :user_id)
-            ON CONFLICT (menu, ingredients, user_id) DO NOTHING
+            ON CONFLICT (menu, ingredients, quantite, user_id) DO NOTHING
         """)
         
         with self.engine.begin() as connection:

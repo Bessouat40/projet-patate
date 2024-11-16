@@ -4,7 +4,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import SaveMenuDialog from './saveDialog';
 import IntakesTable from '../intakesTable';
 
-const Results = ({ intakes, rows, userDetails }) => {
+const Results = ({ intakes, rows, userDetails, keycloak }) => {
   const [open, setOpen] = useState(false);
   const [keys, setKeys] = useState([]);
   const [portion, setPortion] = useState(null);
@@ -55,6 +55,7 @@ const Results = ({ intakes, rows, userDetails }) => {
             setOpen={setOpen}
             rows={rows}
             intakes={intakes}
+            keycloak={keycloak}
           />
         </Stack>
       ) : null}

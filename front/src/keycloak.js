@@ -1,8 +1,7 @@
 import Keycloak from 'keycloak-js';
-const keycloak = new Keycloak({
-  url: 'http://localhost:8080/auth',
-  realm: 'Keycloak-react-auth',
-  clientId: 'React-auth',
-});
 
-export default keycloak;
+export const keycloak = new Keycloak({
+  url: 'http://51.20.69.171/:8080/',
+  realm: 'foodcop-realm',
+  clientId: 'foodcop',
+});

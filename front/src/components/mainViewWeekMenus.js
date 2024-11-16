@@ -23,7 +23,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontSize: 16,
 }));
 
-const WeekMenus = () => {
+const WeekMenus = ({ keycloak }) => {
   const [rows, setRows] = useState(null);
   const [dayMenu, setDayMenu] = useState('');
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
@@ -47,8 +47,13 @@ const WeekMenus = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch('/api//requireWeekMenus', {
+      const token = keycloak.token;
+
+      const response = await fetch('/api/requireWeekMenus', {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       const data = await response.json();
       const { menus: fetchedMenus, weekMenus } = data;
@@ -74,7 +79,7 @@ const WeekMenus = () => {
     } catch (error) {
       console.error('Erreur lors de la récupération des données :', error);
     }
-  }, [joursSemaine]);
+  }, [joursSemaine, keycloak.token]);
 
   useEffect(() => {
     fetchData();
@@ -93,7 +98,7 @@ const WeekMenus = () => {
       formData.append('menu_name', dayMenu);
       formData.append('phase', selectedPhase);
       formData.append('jour', joursSemaine[selectedDayIndex]);
-      await fetch('/api//delete_week_menu', {
+      await fetch('/api/delete_week_menu', {
         body: formData,
         method: 'POST',
       });

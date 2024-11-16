@@ -1,8 +1,12 @@
-from fastapi import FastAPI, Form, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, status, Form
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from typing import List
 from json import loads, dumps
+from jose import jwt, JWTError
+import requests
+from sqlalchemy import create_engine, text
 
 from back.src.database import Database
 from back import Configuration, Menu
@@ -12,6 +16,62 @@ Configuration("back/data/aliments2_2020_sous_groupes.csv")
 app = FastAPI()
 
 db = Database()
+
+security = HTTPBearer()
+
+jwks = None
+
+def get_jwks():
+    global jwks
+    if jwks is None:
+        url = "http://keycloak:8080/realms/foodcop-realm/.well-known/openid-configuration"
+        print('url : ', url)
+        response = requests.get(url)
+        if response.status_code != 200:
+            raise Exception("Impossible de récupérer la configuration OpenID")
+        config = response.json()
+        jwks_uri = config["jwks_uri"]
+        response = requests.get(jwks_uri)
+        if response.status_code != 200:
+            raise Exception("Impossible de récupérer les JWKS")
+        jwks = response.json()
+    return jwks
+
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = credentials.credentials
+    try:
+        unverified_header = jwt.get_unverified_header(token)
+        print("Unverified Header:", unverified_header)
+        kid = unverified_header['kid']
+        jwks = get_jwks()
+        key = next((k for k in jwks['keys'] if k['kid'] == kid), None)
+        if key is None:
+            raise HTTPException(status_code=401, detail="Clé publique non trouvée")
+        print('token : ', token)
+        print('key : ', key)
+        print('jwks : ', jwks)
+        payload = jwt.decode(
+            token,
+            key,
+            algorithms=['RS256'],
+            audience='account',
+            issuer='http://51.20.69.171/:8080/realms/foodcop-realm'
+        )
+        print("Decoded Payload:", payload)
+
+        user_id = payload.get('sub')
+        username = payload.get('preferred_username')
+        if user_id is None or username is None:
+            raise HTTPException(status_code=401, detail="Informations utilisateur manquantes dans le jeton")
+        with db.engine.connect() as conn:
+            result = conn.execute(text("SELECT * FROM users WHERE id = :user_id"), {'user_id': user_id})
+            user = result.fetchone()
+            if user is None:
+                db.add_new_user_and_initialize_week_menus(user_id, username)
+        return user_id
+    except JWTError as e:
+        raise HTTPException(status_code=401, detail="Jeton invalide")
+
 
 class Item(BaseModel):
     QUANTITY: str
@@ -39,11 +99,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def get_current_user():
-    # Stub function to get current user. Replace with actual authentication logic.
-    user_id = 1
-    return user_id
-
 @app.post('/requireFood')
 async def get_data():
     try:
@@ -59,17 +114,17 @@ async def save_data(
     phase: str = Form(...),
     menuDetails: str = Form(...),
     intakes: str = Form(...),
-    user_id: int = Depends(get_current_user)
+    user_id: str = Depends(get_current_user)
 ):
-    try:
-        intakes = dumps(loads(intakes))
-        db.addMenuToDayPhase(menu, jour, phase, menuDetails, intakes, user_id)
-        return {"message": "Menu saved successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    # try:
+    intakes = dumps(loads(intakes))
+    db.addMenuToDayPhase(menu, jour, phase, menuDetails, intakes, user_id)
+    return {"message": "Menu saved successfully"}
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=str(e))
 
 @app.post('/requireWeekMenus')
-async def require_data(user_id: int = Depends(get_current_user)):
+async def require_data(user_id: str = Depends(get_current_user)):
     try:
         weekMenus, menus = db.require(user_id)
         weekMenusResp = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in weekMenus]
@@ -90,7 +145,7 @@ async def calcul_menu_intakes(items: List[Item]):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post('/delete_menu')
-async def delete_menu(menu_name: str = Form(...), user_id: int = Depends(get_current_user)):
+async def delete_menu(menu_name: str = Form(...), user_id: str = Depends(get_current_user)):
     try:
         db.delete_menu_from_menu_list(menu_name, user_id)
         return {"message": "Menu deleted successfully"}
@@ -102,7 +157,7 @@ async def delete_week_menu(
     menu_name: str = Form(...),
     phase: str = Form(...),
     jour: str = Form(...),
-    user_id: int = Depends(get_current_user)
+    user_id: str = Depends(get_current_user)
 ):
     try:
         db.delete_menu_from_week_calendar(menu_name, phase, jour, user_id)

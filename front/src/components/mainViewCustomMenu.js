@@ -17,7 +17,7 @@ import DataGridList from './CustomMenu/dataGridList';
 import SearchFood from './CustomMenu/searchFood';
 import AnalyzeMenu from './CustomMenu/AnalyzeMenu';
 
-const MainViewCustomMenu = ({ userDetails }) => {
+const MainViewCustomMenu = ({ userDetails, keycloak }) => {
   const [rows, setRows] = useState([]);
   const [rows2, setRows2] = useState([]);
   const [intakes, setIntakes] = useState({});
@@ -29,7 +29,7 @@ const MainViewCustomMenu = ({ userDetails }) => {
 
   useEffect(() => {
     const sendFetch = async () => {
-      const resp = await fetch('/api//requireFood', {
+      const resp = await fetch('/api/requireFood', {
         method: 'POST',
       });
       const data = await resp.json();
@@ -117,7 +117,7 @@ const MainViewCustomMenu = ({ userDetails }) => {
           setIntakes={setIntakes}
           intakes={intakes}
         />
-        <Results intakes={intakes} rows={rows2} />
+        <Results intakes={intakes} rows={rows2} keycloak={keycloak} />
       </Paper>
     </Container>
   );
