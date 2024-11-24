@@ -24,7 +24,7 @@ jwks = None
 def get_jwks():
     global jwks
     if jwks is None:
-        url = "http://keycloak:8080/realms/foodcop-realm/.well-known/openid-configuration"
+        url = "https://keycloak:8080/realms/foodcop-realm/.well-known/openid-configuration"
         print('url : ', url)
         response = requests.get(url)
         if response.status_code != 200:
@@ -55,7 +55,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             key,
             algorithms=['RS256'],
             audience='account',
-            issuer='http://51.20.69.171:8080/realms/foodcop-realm'
+            issuer='https://51.20.69.171:8080/realms/foodcop-realm'
         )
         print("Decoded Payload:", payload)
 

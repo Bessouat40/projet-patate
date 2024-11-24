@@ -1,0 +1,37 @@
+{
+  "realm": "foodcop-realm",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "foodcop",
+      "rootUrl": "https://51.20.69.171",
+      "redirectUris": ["https://51.20.69.171/*", "https://51.20.69.171:3000/*"],
+      "webOrigins": ["https://51.20.69.171", "https://51.20.69.171:3000"],
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "baseUrl": "/"
+    }
+  ],
+  "users": [
+    {
+      "username": "test",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "test"
+        }
+      ]
+    },
+    {
+      "username": "test2",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "test2"
+        }
+      ]
+    }
+  ]
+}
