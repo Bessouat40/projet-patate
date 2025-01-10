@@ -49,7 +49,7 @@ const WeekMenus = ({ keycloak }) => {
     try {
       const token = keycloak.token;
 
-      const response = await fetch('/api/requireWeekMenus', {
+      const response = await fetch('http://localhost:8000/requireWeekMenus', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -98,7 +98,7 @@ const WeekMenus = ({ keycloak }) => {
       formData.append('menu_name', dayMenu);
       formData.append('phase', selectedPhase);
       formData.append('jour', joursSemaine[selectedDayIndex]);
-      await fetch('/api/delete_week_menu', {
+      await fetch('http://localhost:8000/delete_week_menu', {
         body: formData,
         method: 'POST',
       });

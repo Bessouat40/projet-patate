@@ -58,7 +58,7 @@ const SaveMenuDialog = ({
     try {
       const token = keycloak.token;
 
-      await fetch('/api/saveMenu', {
+      await fetch('http://localhost:8000/saveMenu', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

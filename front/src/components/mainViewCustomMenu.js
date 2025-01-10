@@ -29,7 +29,7 @@ const MainViewCustomMenu = ({ userDetails, keycloak }) => {
 
   useEffect(() => {
     const sendFetch = async () => {
-      const resp = await fetch('/api/requireFood', {
+      const resp = await fetch('http://localhost:8000/requireFood', {
         method: 'POST',
       });
       const data = await resp.json();
@@ -112,10 +112,10 @@ const MainViewCustomMenu = ({ userDetails, keycloak }) => {
           />
         )}
         <AnalyzeMenu
+          keycloak={keycloak}
           apiRef2={apiRef2}
           rows2={rows2}
           setIntakes={setIntakes}
-          intakes={intakes}
         />
         <Results intakes={intakes} rows={rows2} keycloak={keycloak} />
       </Paper>

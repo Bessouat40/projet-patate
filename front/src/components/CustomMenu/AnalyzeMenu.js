@@ -1,13 +1,15 @@
 import React from 'react';
 import { Box, Button } from '@mui/material';
 
-const AnalyzeMenu = ({ rows2, intakes, setIntakes }) => {
+const AnalyzeMenu = ({ rows2, keycloak, setIntakes }) => {
+  const token = keycloak.token;
   const onSendMenu = async () => {
     const menu = JSON.stringify(rows2);
-    const resp = await fetch('/api/menu', {
+    const resp = await fetch('http://localhost:8000/menu', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: menu,
     });

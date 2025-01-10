@@ -7,7 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const NavBar = ({ authenticated, keycloakInstance }) => {
   const handleLogout = () => {
-    keycloakInstance.logout({ redirectUri: 'http://51.20.69.171/' });
+    keycloakInstance.logout({ redirectUri: 'http://localhost/' });
   };
 
   return (

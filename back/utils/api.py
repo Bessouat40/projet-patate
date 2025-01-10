@@ -24,7 +24,7 @@ jwks = None
 def get_jwks():
     global jwks
     if jwks is None:
-        url = "https://keycloak:8080/realms/foodcop-realm/.well-known/openid-configuration"
+        url = "http://localhost:8080/realms/foodcopRealm3/.well-known/openid-configuration"
         print('url : ', url)
         response = requests.get(url)
         if response.status_code != 200:
@@ -55,7 +55,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             key,
             algorithms=['RS256'],
             audience='account',
-            issuer='https://51.20.69.171:8080/realms/foodcop-realm'
+            issuer='http://localhost:8080/realms/foodcopRealm3'
         )
         print("Decoded Payload:", payload)
 
@@ -93,7 +93,7 @@ class Url(BaseModel):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -126,6 +126,7 @@ async def save_data(
 @app.post('/requireWeekMenus')
 async def require_data(user_id: str = Depends(get_current_user)):
     try:
+        print('user id : ', user_id)
         weekMenus, menus = db.require(user_id)
         weekMenusResp = [{"id": row[0], "jour": row[1], "phase": row[2], "menu": row[3]} for row in weekMenus]
         menusResp = [{"id": row[0], "menu": row[1], "ingredients": row[2], "quantite": row[3], "intakes": row[4]} for row in menus]
@@ -134,8 +135,9 @@ async def require_data(user_id: str = Depends(get_current_user)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post('/menu')
-async def calcul_menu_intakes(items: List[Item]):
+async def calcul_menu_intakes(items: List[Item], user_id: str = Depends(get_current_user)):
     try:
+        print('user id : ', user_id)
         food_dict = {}
         for item in items:
             food_dict[item.ALIMENT] = float(item.QUANTITY)

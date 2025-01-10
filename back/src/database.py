@@ -27,7 +27,8 @@ class Database:
 
     def add_new_user_and_initialize_week_menus(self, user_id, username):
         """Add a new user and initialize weekMenus if the user does not exist"""
-        check_user_query = text("SELECT * FROM users WHERE id = :user_id")
+        check_user_query_by_id = text("SELECT * FROM users WHERE id = :user_id")
+        check_user_query_by_name = text("SELECT * FROM users WHERE username = :username")
         add_user_query = text("INSERT INTO users (id, username) VALUES (:user_id, :username)")
         initialize_week_menus_query = text("""
             INSERT INTO weekMenus (jour, phase, menu, user_id)
@@ -56,13 +57,19 @@ class Database:
         """)
 
         with self.engine.begin() as connection:
-            user = connection.execute(check_user_query, {"user_id": user_id}).fetchone()
-            if user is None:
-                connection.execute(add_user_query, {"user_id": user_id, "username": username})
-                connection.execute(initialize_week_menus_query, {"user_id": user_id})
-                print(f"Utilisateur {username} ajouté avec des weekMenus initialisés.")
-            else:
-                print(f"Utilisateur {username} déjà existant.")
+            user_by_id = connection.execute(check_user_query_by_id, {"user_id": user_id}).fetchone()
+            if user_by_id:
+                print(f"Utilisateur {username} déjà existant via ID = {user_id}")
+                return
+
+            user_by_name = connection.execute(check_user_query_by_name, {"username": username}).fetchone()
+            if user_by_name:
+                print(f"Username '{username}' déjà utilisé, aucun nouvel enregistrement.")
+                return
+
+        connection.execute(add_user_query, {"user_id": user_id, "username": username})
+        connection.execute(initialize_week_menus_query, {"user_id": user_id})
+        print(f"Utilisateur {username} ajouté avec des weekMenus initialisés.")
     
     def addMenuToDayPhase(self, menu, day, phase, menuDetails, intakes, user_id):
         """Add menu to the day and phase"""

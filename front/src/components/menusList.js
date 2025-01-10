@@ -29,7 +29,7 @@ const MenuList = ({ keycloak }) => {
       try {
         const token = keycloak.token;
 
-        const resp = await fetch('/api/requireWeekMenus', {
+        const resp = await fetch('http://localhost:8000/requireWeekMenus', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ const MenuList = ({ keycloak }) => {
     try {
       const formData = new FormData();
       formData.append('menu_name', displayedMenu);
-      await fetch('/api/delete_menu', {
+      await fetch('http://localhost:8000/delete_menu', {
         method: 'POST',
         body: formData,
       });
