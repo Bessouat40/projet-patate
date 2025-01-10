@@ -27,7 +27,7 @@ const MenuList = () => {
   useEffect(() => {
     const fetchMenus = async () => {
       try {
-        const resp = await fetch('/api//requireWeekMenus', {
+        const resp = await fetch('http://localhost:8000/requireWeekMenus', {
           method: 'POST',
         });
         const data = await resp.json();
@@ -99,7 +99,7 @@ const MenuList = () => {
     try {
       const formData = new FormData();
       formData.append('menu_name', displayedMenu);
-      await fetch('/api//delete_menu', {
+      await fetch('http://localhost:8000/delete_menu', {
         method: 'POST',
         body: formData,
       });

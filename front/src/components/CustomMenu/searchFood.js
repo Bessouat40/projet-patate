@@ -16,6 +16,7 @@ const SearchFood = ({ setFilter, rows }) => {
     setSearched('');
     requestSearchFood(searched);
   };
+
   return (
     <TextField
       sx={{

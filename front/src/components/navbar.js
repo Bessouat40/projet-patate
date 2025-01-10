@@ -26,6 +26,9 @@ const NavBar = () => {
         <Button color="inherit" component={Link} to="/weekMenus">
           Menus de la Semaine
         </Button>
+        <Button color="inherit" component={Link} to="/foodgpt">
+          Foodgpt
+        </Button>
         <Button color="inherit" component={Link} to="/menus">
           Menus
         </Button>

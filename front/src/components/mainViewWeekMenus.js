@@ -47,7 +47,7 @@ const WeekMenus = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch('/api//requireWeekMenus', {
+      const response = await fetch('http://localhost:8000/requireWeekMenus', {
         method: 'POST',
       });
       const data = await response.json();
@@ -93,7 +93,7 @@ const WeekMenus = () => {
       formData.append('menu_name', dayMenu);
       formData.append('phase', selectedPhase);
       formData.append('jour', joursSemaine[selectedDayIndex]);
-      await fetch('/api//delete_week_menu', {
+      await fetch('http://localhost:8000/delete_week_menu', {
         body: formData,
         method: 'POST',
       });

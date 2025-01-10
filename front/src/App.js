@@ -7,6 +7,7 @@ import About from './components/about';
 import NavBar from './components/navbar';
 import MenuList from './components/menusList';
 import Help from './components/help';
+import UploadAndDisplay from './components/foodgpt';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/customMenu" element={<MainViewCustomMenu />} />
         <Route path="/weekMenus" element={<WeekMenus />} />
         <Route path="/menus" element={<MenuList />} />
+        <Route path="/foodgpt" element={<UploadAndDisplay />} />
         <Route path="/about" element={<About />} />
         <Route path="/help" element={<Help />} />
       </Routes>

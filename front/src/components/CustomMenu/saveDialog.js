@@ -48,7 +48,7 @@ const SaveMenuDialog = ({ open, setOpen, rows, intakes, menuName = '' }) => {
     formData.append('menuDetails', JSON.stringify(rows));
 
     try {
-      await fetch('/api//saveMenu', {
+      await fetch('http://localhost:8000/saveMenu', {
         method: 'POST',
         body: formData,
       });
