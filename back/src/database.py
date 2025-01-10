@@ -3,6 +3,10 @@ from dotenv import load_dotenv, find_dotenv
 from os import environ
 import json
 
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 load_dotenv(find_dotenv())
 
 POSTGRES_USER=environ.get("POSTGRES_USER")
@@ -18,6 +22,29 @@ class Database() :
         self.engine = create_engine(f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{PORT}/{POSTGRES_DB}")
         self.conn = self.engine.connect()
         self.add_data = []
+
+    def create_user(self, username, hashed_password):
+        query = text("""
+            INSERT INTO users (username, hashed_password) 
+            VALUES (:username, :hashed_password)
+        """)
+        with self.engine.begin() as connection:
+            connection.execute(query, {
+                "username": username,
+                "hashed_password": hashed_password
+            })
+
+    def get_user_by_username(self, username):
+        query = text("SELECT id, username, hashed_password FROM users WHERE username = :username")
+        with self.engine.begin() as connection:
+            row = connection.execute(query, {"username": username}).fetchone()
+        return row  # (id, username, hashed_password) ou None si pas trouvé
+
+    def verify_password(self, plain_password, hashed_password):
+        return pwd_context.verify(plain_password, hashed_password)
+
+    def get_password_hash(self, password):
+        return pwd_context.hash(password)
 
     def require(self) :
         """Require informations to Postgres database

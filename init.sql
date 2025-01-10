@@ -6,6 +6,12 @@ CREATE TABLE weekMenus
     menu VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE menus
 (
     id SERIAL PRIMARY KEY,

@@ -3,3 +3,4 @@ from .src._generic.singleton import Singleton
 from .src.configuration import Configuration
 from .src.food import Food
 from .src.menu import Menu
+from .src.auth import *

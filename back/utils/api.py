@@ -7,10 +7,15 @@ from ..src._generic.generic_functions import find_food
 from back import Configuration
 from back import Menu
 from json import loads, dumps
+from ..src.auth import create_access_token
+from datetime import timedelta
+from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import FastAPI, Depends, HTTPException, status, Form
 
 from back.src.database import Database
 
 Configuration("back/data/aliments2_2020_sous_groupes.csv")
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 app = FastAPI()
 
@@ -41,6 +46,38 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/register")
+def register_user(username: str = Form(...), password: str = Form(...)):
+    # vérifier si user existe déjà
+    row = db.get_user_by_username(username)
+    if row:
+        raise HTTPException(status_code=400, detail="Username already taken")
+    # hasher le mot de passe et insérer
+    hashed_pw = db.get_password_hash(password)
+    db.create_user(username, hashed_pw)
+    return {"message": "User created successfully"}
+
+@app.post("/login")
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    # form_data.username, form_data.password
+    user = db.get_user_by_username(form_data.username)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    user_id, db_username, db_hashed = user
+    if not db.verify_password(form_data.password, db_hashed):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    # Générer un token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": db_username, "user_id": user_id},
+        expires_delta=access_token_expires
+    )
+    return {
+        "access_token": access_token,
+        "token_type": "bearer"
+    }
 
 @app.post('/requireFood')
 async def get_data():
